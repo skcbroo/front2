@@ -16,31 +16,15 @@ export default function Layout({ children }) {
             {isLogado && (
                 <nav className="bg-white border-b border-gray-200 shadow px-6 py-4 flex justify-between items-center">
                     <div className="flex items-center space-x-6">
-                        <Link to="/produtos" className="text-gray-700 hover:text-blue-600 font-semibold">
-                            Créditos
-                        </Link>
-
+                        <Link to="/produtos" className="text-gray-700 hover:text-blue-600 font-semibold">Créditos</Link>
                         {role === "admin" && (
                             <>
-                                <Link to="/admin/dashboard" className="text-gray-700 hover:text-blue-600 font-semibold">
-                                    Dashboard
-                                </Link>
-                                <Link to="/admin/creditos" className="text-gray-700 hover:text-blue-600 font-semibold">
-                                    Cadastrar
-                                </Link>
-                                <Link to="/admin/usuarios" className="text-gray-700 hover:text-blue-600 font-semibold">
-                                    Usuários
-                                </Link>
+                                <Link to="/admin/dashboard" className="text-gray-700 hover:text-blue-600 font-semibold">Dashboard</Link>
+                                <Link to="/admin/creditos" className="text-gray-700 hover:text-blue-600 font-semibold">Cadastrar</Link>
+                                <Link to="/admin/usuarios" className="text-gray-700 hover:text-blue-600 font-semibold">Usuários</Link>
                             </>
                         )}
-
-                        {role === "cliente" && (
-                            <Link to="/meus-ativos" className="text-gray-700 hover:text-blue-600 font-semibold">
-                                Meus Ativos
-                            </Link>
-                        )}
                     </div>
-
                     <button
                         onClick={logout}
                         className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
