@@ -7,7 +7,6 @@ export default function NavbarLayout({ children }) {
         <div className="min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
             {/* Navbar */}
             <nav className="bg-blue-500 text-white shadow-md px-6 py-4 flex items-center justify-between select-none">
-
                 <div className="flex items-center gap-2">
                     <img
                         src="/logo3.png"
@@ -25,6 +24,12 @@ export default function NavbarLayout({ children }) {
                     <Link to="/creditos" className="hover:underline cursor-pointer select-none">
                         Créditos
                     </Link>
+
+                    {role === "cliente" && (
+                        <Link to="/meus-ativos" className="hover:underline cursor-pointer select-none">
+                            Meus Ativos
+                        </Link>
+                    )}
 
                     {role === "admin" && (
                         <>
