@@ -20,7 +20,7 @@ export default function MeusAtivos() {
         },
       })
       .then((res) => setCotas(res.data))
-      .catch((err) => setErro("Erro ao carregar ativos"));
+      .catch(() => setErro("Erro ao carregar ativos"));
   }, []);
 
   return (
@@ -37,7 +37,13 @@ export default function MeusAtivos() {
               <p><strong>Matéria:</strong> {cota.creditoJudicial.materia}</p>
               <p><strong>Quantidade de cotas:</strong> {cota.quantidade}</p>
               <p><strong>Fase:</strong> {cota.creditoJudicial.fase}</p>
-              <p><strong>Valor do crédito:</strong> R$ {cota.creditoJudicial.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+              <p>
+                <strong>Valor do crédito:</strong>{" "}
+                {cota.creditoJudicial.valor.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </p>
             </div>
           ))}
         </div>
