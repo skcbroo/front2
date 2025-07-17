@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import NavbarLayout from "../components/Navbar";
 
 export default function MeusAtivos() {
   const [cotas, setCotas] = useState([]);
@@ -24,30 +25,53 @@ export default function MeusAtivos() {
   }, []);
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Meus Ativos</h1>
-      {erro && <p className="text-red-500">{erro}</p>}
-      {cotas.length === 0 ? (
-        <p>Você ainda não possui cotas adquiridas.</p>
-      ) : (
-        <div className="grid grid-cols-1 gap-4">
-          {cotas.map((cota) => (
-            <div key={cota.id} className="border p-4 rounded shadow">
-              <p><strong>Área:</strong> {cota.creditoJudicial.area}</p>
-              <p><strong>Matéria:</strong> {cota.creditoJudicial.materia}</p>
-              <p><strong>Quantidade de cotas:</strong> {cota.quantidade}</p>
-              <p><strong>Fase:</strong> {cota.creditoJudicial.fase}</p>
-              <p>
-                <strong>Valor do crédito:</strong>{" "}
-                {cota.creditoJudicial.valor.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <NavbarLayout>
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold mb-6 select-none cursor-default">
+          Meus Ativos
+        </h2>
+
+        {erro && (
+          <p className="text-red-600 font-medium mb-4 select-none">
+            {erro}
+          </p>
+        )}
+
+        {cotas.length === 0 ? (
+          <p className="text-gray-600 select-none">
+            Você ainda não possui cotas adquiridas.
+          </p>
+        ) : (
+          <ul className="space-y-4">
+            {cotas.map((cota) => (
+              <li
+                key={cota.id}
+                className="bg-white border rounded-xl p-4 shadow-md select-none cursor-default"
+              >
+                <p>
+                  <strong>📚 Área:</strong> {cota.creditoJudicial.area}
+                </p>
+                <p>
+                  <strong>📝 Matéria:</strong> {cota.creditoJudicial.materia}
+                </p>
+                <p>
+                  <strong>⚖️ Fase:</strong> {cota.creditoJudicial.fase}
+                </p>
+                <p>
+                  <strong>🔢 Quantidade de cotas:</strong> {cota.quantidade}
+                </p>
+                <p>
+                  <strong>💰 Valor do crédito:</strong>{" "}
+                  {cota.creditoJudicial.valor.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </NavbarLayout>
   );
 }
