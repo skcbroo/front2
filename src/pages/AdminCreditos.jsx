@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
@@ -13,6 +13,7 @@ export default function AdminCreditos() {
     const [descricao, setDescricao] = useState("");
     const [quantidadeCotas, setQuantidadeCotas] = useState("");
     const [cotasAdquiridas, setCotasAdquiridas] = useState("");
+    const [status, setStatus] = useState("Cotizando"); // ⬅️ novo campo
     const [creditos, setCreditos] = useState([]);
     const [editandoId, setEditandoId] = useState(null);
     const navigate = useNavigate();
@@ -51,6 +52,7 @@ export default function AdminCreditos() {
             descricao,
             quantidadeCotas: parseInt(quantidadeCotas),
             cotasAdquiridas: parseInt(cotasAdquiridas) || 0,
+            status // ⬅️ novo campo enviado
         };
 
         try {
@@ -82,6 +84,7 @@ export default function AdminCreditos() {
         setDescricao(c.descricao || "");
         setQuantidadeCotas(c.quantidadeCotas || "");
         setCotasAdquiridas(c.cotasAdquiridas || "");
+        setStatus(c.status || "Cotizando"); // ⬅️ preencher status ao editar
         setEditandoId(c.id);
     }
 
@@ -95,6 +98,7 @@ export default function AdminCreditos() {
         setDescricao("");
         setQuantidadeCotas("");
         setCotasAdquiridas("");
+        setStatus("Cotizando"); // ⬅️ reset status
         setEditandoId(null);
     }
 
@@ -129,6 +133,14 @@ export default function AdminCreditos() {
                     <input type="number" placeholder="Quantidade total de cotas" value={quantidadeCotas} onChange={e => setQuantidadeCotas(e.target.value)} className="w-full p-2 border rounded" required />
                     <input type="number" placeholder="Cotas adquiridas (manual)" value={cotasAdquiridas} onChange={e => setCotasAdquiridas(e.target.value)} className="w-full p-2 border rounded" />
 
+                    {/* Campo de status */}
+                    <select value={status} onChange={e => setStatus(e.target.value)} className="w-full p-2 border rounded" required>
+                        <option value="">Selecione o status</option>
+                        <option value="Cotizando">Cotizando</option>
+                        <option value="Em andamento">Em andamento</option>
+                        <option value="Pago">Pago</option>
+                    </select>
+
                     <div className="flex gap-2">
                         <button type="submit" className="flex-1 bg-blue-600 text-white p-2 rounded">
                             {editandoId ? "Salvar Alterações" : "Cadastrar"}
@@ -154,6 +166,7 @@ export default function AdminCreditos() {
                             <p><strong>🏷️ Preço:</strong> {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                             <p><strong>🔢 Cotas totais:</strong> {c.quantidadeCotas}</p>
                             <p><strong>✅ Cotas adquiridas:</strong> {c.cotasAdquiridas ?? 0}</p>
+                            <p><strong>📌 Status:</strong> {c.status}</p>
 
                             <div className="flex gap-2 mt-3">
                                 <button onClick={() => preencherFormulario(c)} className="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
