@@ -9,7 +9,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import DetalhesCredito from "./pages/DetalhesCredito"; 
 import MeusCreditos from "./pages/MeusCreditos";       
 import MeusAtivos from "./pages/MeusAtivos";
-import MeusAtivos from "./pages/AdminCotas";
+import AdminCotas from "./pages/AdminCotas";
 
 
 
