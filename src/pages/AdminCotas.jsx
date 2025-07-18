@@ -22,13 +22,13 @@ export default function AdminCotas() {
 
   if (role !== "admin") navigate("/");
 
- async function fetchData() {
+async function fetchData() {
   try {
     const [usuariosRes, creditosRes, cotasRes] = await Promise.all([
       axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
-      axios.get(`${import.meta.env.VITE_API_URL}/api/creditos/cotizando`, {
+      axios.get(`${import.meta.env.VITE_API_URL}/api/creditos`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
       axios.get(`${import.meta.env.VITE_API_URL}/api/cotas`, {
@@ -43,6 +43,7 @@ export default function AdminCotas() {
     alert("Erro ao carregar dados.");
   }
 }
+
 
 
   async function handleSubmit(e) {
