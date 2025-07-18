@@ -69,66 +69,94 @@ export default function AdminUsuarios() {
   }
 
   return (
-    <NavbarLayout>
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-center select-none cursor-default">
-          👥 Gerenciamento de Usuários
-        </h2>
+  <NavbarLayout>
+    <div className="max-w-5xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6 text-center select-none cursor-default">
+        👥 Gerenciamento de Usuários
+      </h2>
 
-        {usuarios.length === 0 ? (
-          <p className="text-gray-600 text-center select-none cursor-default">
-            Nenhum usuário encontrado.
-          </p>
-        ) : (
-          <ul className="space-y-4">
-            {usuarios.map((u) => (
-              <li
-                key={u.id}
-                className="border p-4 rounded-xl bg-white shadow-md select-none cursor-default"
-              >
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                  <div>
-                    <p className="font-semibold">
-                      {u.nome} <span className="text-sm text-gray-500">({u.email})</span>
-                    </p>
-                    <p className="text-sm text-gray-600">Role: {u.role}</p>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row items-center gap-2">
-                    {u.role !== "admin" && (
-                      <button
-                        onClick={() => promover(u.email)}
-                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-                      >
-                        Promover
-                      </button>
-                    )}
-                  </div>
+      {usuarios.length === 0 ? (
+        <p className="text-gray-600 text-center select-none cursor-default">
+          Nenhum usuário encontrado.
+        </p>
+      ) : (
+        <ul className="space-y-4">
+          {usuarios.map((u) => (
+            <li
+              key={u.id}
+              className="border p-4 rounded-xl bg-white shadow-md select-none cursor-default"
+            >
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div>
+                  <p className="font-semibold">
+                    {u.nome} <span className="text-sm text-gray-500">({u.email})</span>
+                  </p>
+                  <p className="text-sm text-gray-600">Role: {u.role}</p>
                 </div>
 
-                {/* CAMPO DE ALTERAR SENHA */}
-                <div className="mt-4 flex flex-col sm:flex-row gap-2 items-start sm:items-center">
-                  <input
-                    type="password"
-                    placeholder="Nova senha"
-                    value={novaSenha[u.id] || ""}
-                    onChange={(e) =>
-                      setNovaSenha((prev) => ({ ...prev, [u.id]: e.target.value }))
-                    }
-                    className="p-2 border rounded w-full sm:w-64"
-                  />
+                <div className="flex flex-col sm:flex-row items-center gap-2">
+                  {u.role !== "admin" && (
+                    <button
+                      onClick={() => promover(u.email)}
+                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+                    >
+                      Promover
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Botão para iniciar alteração de senha */}
+              <div className="mt-4">
+                {novaSenha[u.id] === undefined ? (
                   <button
-                    onClick={() => alterarSenha(u.id)}
+                    onClick={() =>
+                      setNovaSenha((prev) => ({ ...prev, [u.id]: "" }))
+                    }
                     className="bg-blue-600 text-white px-4 py-2 rounded"
                   >
                     Alterar Senha
                   </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </NavbarLayout>
-  );
+                ) : (
+                  <div className="flex flex-col sm:flex-row gap-2 mt-2">
+                    <input
+                      type="password"
+                      placeholder="Nova senha"
+                      value={novaSenha[u.id]}
+                      onChange={(e) =>
+                        setNovaSenha((prev) => ({
+                          ...prev,
+                          [u.id]: e.target.value,
+                        }))
+                      }
+                      className="p-2 border rounded w-full sm:w-64"
+                    />
+                    <button
+                      onClick={() => alterarSenha(u.id)}
+                      className="bg-green-600 text-white px-4 py-2 rounded"
+                    >
+                      Salvar
+                    </button>
+                    <button
+                      onClick={() =>
+                        setNovaSenha((prev) => {
+                          const atualizado = { ...prev };
+                          delete atualizado[u.id];
+                          return atualizado;
+                        })
+                      }
+                      className="bg-gray-300 text-gray-800 px-4 py-2 rounded"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </NavbarLayout>
+);
 }
