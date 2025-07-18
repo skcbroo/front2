@@ -40,11 +40,15 @@ export default function NavbarLayout({ children }) {
                             <Link to="/admin/creditos" className="hover:underline cursor-pointer select-none">
                                 Gerenciar Créditos
                             </Link>
+                            <Link to="/admin/cotas" className="hover:underline cursor-pointer select-none">
+                                Gerenciar Cotas
+                            </Link>
                             <Link to="/admin/usuarios" className="hover:underline cursor-pointer select-none">
                                 Usuários
                             </Link>
                         </>
                     )}
+
 
                     <Link to="/" className="hover:underline cursor-pointer select-none">
                         Sair
