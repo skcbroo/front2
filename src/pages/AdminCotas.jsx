@@ -17,10 +17,17 @@ export default function AdminCotas() {
 
   const navigate = useNavigate();
 
-  const role = localStorage.getItem("role");
-  const token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
+const token = localStorage.getItem("token");
 
-  if (role !== "admin") navigate("/");
+useEffect(() => {
+  if (role !== "admin") {
+    navigate("/");
+  } else {
+    fetchData();
+  }
+}, []);
+
 
  async function fetchData() {
   try {
