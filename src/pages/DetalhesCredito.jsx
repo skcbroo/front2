@@ -105,13 +105,17 @@ export default function DetalhesCredito() {
             <hr className="border-gray-300" />
 
             {/* Cotas */}
-            <div className="space-y-1">
-                <p><strong>📦 Cotas totais:</strong> {totalCotas}</p>
-                <p><strong>{cotasDisponiveis > 0 ? '🟢' : '🔴'} Cotas disponíveis:</strong> {cotasDisponiveis}</p>
-                <p><strong>💵 Preço por cota:</strong>{' '}
-                    {precoPorCota.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                </p>
-            </div>
+          <div className="space-y-1">
+              <p><strong>📦 Cotas totais:</strong> {totalCotas}</p>
+              <p><strong>{cotasDisponiveis > 0 ? '🟢' : '🔴'} Cotas disponíveis:</strong> {cotasDisponiveis}</p>
+              <p><strong>💵 Preço por cota:</strong> {precoPorCota.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+
+              {credito.cotasDoUsuario > 0 && (
+              <p className="text-sm text-blue-600 font-medium mt-2">
+              🔐 Você já possui <strong>{credito.cotasDoUsuario}</strong> cota(s) deste crédito.
+            </p>
+            )}
+          </div>
 
             {/* Aquisição */}
             {cotasDisponiveis > 0 ? (
