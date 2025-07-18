@@ -137,7 +137,7 @@ export default function AdminCotas() {
             <option value="">Selecione um usuário</option>
             {usuarios.map((u) => (
               <option key={u.id} value={u.id}>
-                {u.nome} ({u.telefone})
+                {u.nome} 
               </option>
             ))}
           </select>
