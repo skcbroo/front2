@@ -22,31 +22,28 @@ export default function AdminCotas() {
 
   if (role !== "admin") navigate("/");
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const [usuariosRes, creditosRes, cotasRes] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(`${import.meta.env.VITE_API_URL}/api/creditos`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(`${import.meta.env.VITE_API_URL}/api/cotas`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
+ async function fetchData() {
+  try {
+    const [usuariosRes, creditosRes, cotasRes] = await Promise.all([
+      axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      axios.get(`${import.meta.env.VITE_API_URL}/api/creditos/cotizando`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      axios.get(`${import.meta.env.VITE_API_URL}/api/cotas`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+    ]);
 
-        setUsuarios(usuariosRes.data);
-        setCreditos(creditosRes.data);
-        setCotas(cotasRes.data);
-      } catch (err) {
-        alert("Erro ao carregar dados.");
-      }
-    }
+    setUsuarios(usuariosRes.data);
+    setCreditos(creditosRes.data);
+    setCotas(cotasRes.data);
+  } catch (err) {
+    alert("Erro ao carregar dados.");
+  }
+}
 
-    fetchData();
-  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
