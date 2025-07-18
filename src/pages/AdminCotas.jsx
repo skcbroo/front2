@@ -17,54 +17,50 @@ export default function AdminCotas() {
 
   const navigate = useNavigate();
 
-const role = localStorage.getItem("role");
-const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  const token = localStorage.getItem("token");
 
-useEffect(() => {
-  if (role !== "admin") {
-    navigate("/");
-  } else {
+  if (role !== "admin") navigate("/");
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [usuariosRes, creditosRes, cotasRes] = await Promise.all([
+          axios.get(${import.meta.env.VITE_API_URL}/api/usuarios, {
+            headers: { Authorization: Bearer ${token} },
+          }),
+          axios.get(${import.meta.env.VITE_API_URL}/api/creditos, {
+            headers: { Authorization: Bearer ${token} },
+          }),
+          axios.get(${import.meta.env.VITE_API_URL}/api/cotas, {
+            headers: { Authorization: Bearer ${token} },
+          }),
+        ]);
+
+        setUsuarios(usuariosRes.data);
+        setCreditos(creditosRes.data);
+        setCotas(cotasRes.data);
+      } catch (err) {
+        alert("Erro ao carregar dados.");
+      }
+    }
+
     fetchData();
-  }
-}, []);
-
-
- async function fetchData() {
-  try {
-    const [usuariosRes, creditosRes, cotasRes] = await Promise.all([
-      axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-      axios.get(`${import.meta.env.VITE_API_URL}/api/creditos/cotizando`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-      axios.get(`${import.meta.env.VITE_API_URL}/api/cotas`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-    ]);
-
-    setUsuarios(usuariosRes.data);
-    setCreditos(creditosRes.data);
-    setCotas(cotasRes.data);
-  } catch (err) {
-    alert("Erro ao carregar dados.");
-  }
-}
-
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/cotas`,
+        ${import.meta.env.VITE_API_URL}/api/cotas,
         {
           usuarioId: Number(usuarioSelecionado),
           creditoJudicialId: Number(creditoSelecionado),
           quantidade: Number(quantidade),
         },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: Bearer ${token} },
         }
       );
 
@@ -80,8 +76,8 @@ useEffect(() => {
 
   async function atualizarCotas() {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cotas`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await axios.get(${import.meta.env.VITE_API_URL}/api/cotas, {
+        headers: { Authorization: Bearer ${token} },
       });
       setCotas(res.data);
     } catch (err) {
@@ -92,8 +88,8 @@ useEffect(() => {
   async function removerCota(id) {
     if (!confirm("Tem certeza que deseja remover esta cota?")) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/cotas/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      await axios.delete(${import.meta.env.VITE_API_URL}/api/cotas/${id}, {
+        headers: { Authorization: Bearer ${token} },
       });
       atualizarCotas();
     } catch (err) {
@@ -104,10 +100,10 @@ useEffect(() => {
   async function salvarEdicao(id) {
     try {
       await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/cotas/${id}`,
+        ${import.meta.env.VITE_API_URL}/api/cotas/${id},
         { usuarioId: Number(novoUsuarioId) },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: Bearer ${token} },
         }
       );
       setEditandoCotaId(null);
