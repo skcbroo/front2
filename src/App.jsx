@@ -26,7 +26,7 @@ function App() {
                 <Route path="/meus-creditos" element={<MeusCreditos />} />   
                 <Route path="/creditos/:id" element={<DetalhesCredito />} /> 
                 <Route path="/meus-ativos" element={<MeusAtivos />} />
-                <Route path="/meus-ativos" element={<MeusAtivos />} />
+                <Route path="/admin/cotas" element={<AdminCotas />} />
             </Routes>
         </BrowserRouter>
     );
