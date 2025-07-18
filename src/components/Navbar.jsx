@@ -10,7 +10,7 @@ export default function NavbarLayout({ children }) {
 
                 <div className="flex items-center gap-2">
                     <img
-                        src="/MIDLEJ.png"
+                        src="/logo3.png"
                         alt="Logo Midlej Capital"
                         className="h-10"
                         draggable="false"
