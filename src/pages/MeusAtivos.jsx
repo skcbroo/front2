@@ -30,6 +30,10 @@ export default function MeusAtivos() {
     carregarAtivos();
   }, []);
 
+  function irParaDetalhes(id) {
+    navigate(`/creditos/${id}`);
+  }
+
   return (
     <NavbarLayout>
       <div className="max-w-3xl mx-auto p-4">
@@ -40,12 +44,16 @@ export default function MeusAtivos() {
         ) : (
           <ul className="space-y-4">
             {ativos.map((ativo) => (
-              <li key={ativo.id} className="bg-white border rounded-xl p-4 shadow-md select-none cursor-default">
+              <li
+                key={ativo.id}
+                className="bg-white border rounded-xl p-4 shadow-md select-none cursor-pointer hover:bg-gray-100 transition"
+                onClick={() => irParaDetalhes(ativo.id)}
+              >
                 <p><strong>📄 Processo:</strong> {ativo.numeroProcesso}</p>
                 <p><strong>💰 Valor do crédito:</strong> {ativo.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                 <p><strong>💵 Preço por cota:</strong> {(ativo.preco / ativo.quantidadeCotas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                 <p><strong>🎯 Cotas adquiridas:</strong> {ativo.cotasCompradas}</p>
-                <p><strong>📉 Deságio:</strong> {(ativo.desagio).toFixed(2)}%</p>
+                <p><strong>📉 Deságio:</strong> {ativo.desagio.toFixed(2)}%</p>
               </li>
             ))}
           </ul>
