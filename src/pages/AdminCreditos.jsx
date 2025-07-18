@@ -3,6 +3,30 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
 
+function InputMoeda({ value, onChange }) {
+    const formatarValor = (val) => {
+        const numero = parseFloat(val.replace(/[\D]/g, '')) / 100;
+        if (isNaN(numero)) return '';
+        return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    };
+
+    const handleChange = (e) => {
+        const entrada = e.target.value;
+        const somenteNumeros = entrada.replace(/[^\d]/g, '');
+        onChange(somenteNumeros);
+    };
+
+    return (
+        <input
+            type="text"
+            value={formatarValor(value)}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+        />
+    );
+}
+
 export default function AdminCreditos() {
     const [valor, setValor] = useState("");
     const [area, setArea] = useState("");
@@ -13,7 +37,7 @@ export default function AdminCreditos() {
     const [descricao, setDescricao] = useState("");
     const [quantidadeCotas, setQuantidadeCotas] = useState("");
     const [cotasAdquiridas, setCotasAdquiridas] = useState("");
-    const [status, setStatus] = useState("Cotizando"); // ⬅️ novo campo
+    const [status, setStatus] = useState("Cotizando");
     const [creditos, setCreditos] = useState([]);
     const [editandoId, setEditandoId] = useState(null);
     const navigate = useNavigate();
@@ -37,8 +61,8 @@ export default function AdminCreditos() {
     async function handleSubmit(e) {
         e.preventDefault();
         const token = localStorage.getItem("token");
-        const valorNum = parseFloat(valor);
-        const precoNum = parseFloat(preco);
+        const valorNum = parseFloat(valor) / 100;
+        const precoNum = parseFloat(preco) / 100;
         const desagio = parseFloat(((1 - (precoNum / valorNum)) * 100).toFixed(2));
 
         const dados = {
@@ -52,7 +76,7 @@ export default function AdminCreditos() {
             descricao,
             quantidadeCotas: parseInt(quantidadeCotas),
             cotasAdquiridas: parseInt(cotasAdquiridas) || 0,
-            status // ⬅️ novo campo enviado
+            status
         };
 
         try {
@@ -75,16 +99,16 @@ export default function AdminCreditos() {
     }
 
     function preencherFormulario(c) {
-        setValor(c.valor);
+        setValor((c.valor * 100).toString());
         setArea(c.area);
         setFase(c.fase);
         setMateria(c.materia);
-        setPreco(c.preco);
+        setPreco((c.preco * 100).toString());
         setNumeroProcesso(c.numeroProcesso || "");
         setDescricao(c.descricao || "");
         setQuantidadeCotas(c.quantidadeCotas || "");
         setCotasAdquiridas(c.cotasAdquiridas || "");
-        setStatus(c.status || "Cotizando"); // ⬅️ preencher status ao editar
+        setStatus(c.status || "Cotizando");
         setEditandoId(c.id);
     }
 
@@ -98,7 +122,7 @@ export default function AdminCreditos() {
         setDescricao("");
         setQuantidadeCotas("");
         setCotasAdquiridas("");
-        setStatus("Cotizando"); // ⬅️ reset status
+        setStatus("Cotizando");
         setEditandoId(null);
     }
 
@@ -123,17 +147,16 @@ export default function AdminCreditos() {
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4 mb-10 select-none cursor-default">
-                    <input type="number" placeholder="Expectativa de recebimento" value={valor} onChange={e => setValor(e.target.value)} className="w-full p-2 border rounded" required />
+                    <InputMoeda value={valor} onChange={setValor} />
                     <input type="text" placeholder="Área" value={area} onChange={e => setArea(e.target.value)} className="w-full p-2 border rounded" required />
                     <input type="text" placeholder="Fase" value={fase} onChange={e => setFase(e.target.value)} className="w-full p-2 border rounded" required />
                     <input type="text" placeholder="Matéria" value={materia} onChange={e => setMateria(e.target.value)} className="w-full p-2 border rounded" required />
-                    <input type="number" placeholder="Valor de aquisição" value={preco} onChange={e => setPreco(e.target.value)} className="w-full p-2 border rounded" required />
+                    <InputMoeda value={preco} onChange={setPreco} />
                     <input type="text" placeholder="Número do processo" value={numeroProcesso} onChange={e => setNumeroProcesso(e.target.value)} className="w-full p-2 border rounded" required />
                     <textarea placeholder="Descrição do caso" value={descricao} onChange={e => setDescricao(e.target.value)} className="w-full p-2 border rounded h-24" required />
                     <input type="number" placeholder="Quantidade total de cotas" value={quantidadeCotas} onChange={e => setQuantidadeCotas(e.target.value)} className="w-full p-2 border rounded" required />
                     <input type="number" placeholder="Cotas adquiridas (manual)" value={cotasAdquiridas} onChange={e => setCotasAdquiridas(e.target.value)} className="w-full p-2 border rounded" />
 
-                    {/* Campo de status */}
                     <select value={status} onChange={e => setStatus(e.target.value)} className="w-full p-2 border rounded" required>
                         <option value="">Selecione o status</option>
                         <option value="Cotizando">Cotizando</option>
