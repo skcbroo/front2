@@ -8,14 +8,19 @@ export default function DetalhesCredito() {
   const [quantidadeSelecionada, setQuantidadeSelecionada] = useState(1);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/creditos/${id}`)
-      .then(async res => {
-        const json = await res.json();
-        if (!res.ok) return setCredito(null);
-        setCredito(json);
-      })
-      .catch(() => setCredito(null));
-  }, [id]);
+  const token = localStorage.getItem('token');
+
+  fetch(`${import.meta.env.VITE_API_URL}/api/creditos/${id}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {}
+  })
+    .then(async res => {
+      const json = await res.json();
+      if (!res.ok) return setCredito(null);
+      setCredito(json);
+    })
+    .catch(() => setCredito(null));
+}, [id]);
+
 
   if (!credito) {
     return (
