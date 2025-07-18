@@ -9,6 +9,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import DetalhesCredito from "./pages/DetalhesCredito"; 
 import MeusCreditos from "./pages/MeusCreditos";       
 import MeusAtivos from "./pages/MeusAtivos";
+import MeusAtivos from "./pages/AdminCotas";
 
 
 
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/meus-creditos" element={<MeusCreditos />} />   
                 <Route path="/creditos/:id" element={<DetalhesCredito />} /> 
+                <Route path="/meus-ativos" element={<MeusAtivos />} />
                 <Route path="/meus-ativos" element={<MeusAtivos />} />
             </Routes>
         </BrowserRouter>
