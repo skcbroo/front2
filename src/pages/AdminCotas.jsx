@@ -42,11 +42,11 @@ export default function AdminCotas() {
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/api/cotas`, {
-      usuarioId: usuarioSelecionado,
-      creditoJudicialId: creditoSelecionado,
-      quantidade: parseInt(quantidade),
+      usuarioId: Number(usuarioSelecionado),
+      creditoJudicialId: Number(creditoSelecionado),
+      quantidade: Number(quantidade),
       }, {
-        headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` }
       });
 
 
