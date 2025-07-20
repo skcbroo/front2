@@ -56,7 +56,7 @@ export default function Login() {
 
                     <div>
                         <label className="block mb-1 font-medium">
-                            Email address
+                            Email
                         </label>
                         <input
                             type="email"
@@ -70,7 +70,7 @@ export default function Login() {
 
                     <div>
                         <label className="block mb-1 font-medium">
-                            Password
+                            Senha
                         </label>
                         <input
                             type="password"
@@ -90,7 +90,7 @@ export default function Login() {
                         to="/esqueci-senha"
                           className="text-blue-600 hover:underline cursor-pointer"
                             >
-                          Forgot password?
+                          Esqueci a senha
                         </Link>
 
                     </div>
