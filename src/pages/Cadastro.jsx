@@ -28,7 +28,7 @@ export default function Cadastro() {
         senha,
       });
 
-      setMensagem(`Conta criada! Verifique seu e-mail (${email}) para ativar o acesso.`);
+      setMensagem(`Verifique seu e-mail para ativar o acesso.`);
       setNome("");
       setEmail("");
       setSenha("");
