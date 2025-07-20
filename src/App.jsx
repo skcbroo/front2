@@ -11,6 +11,7 @@ import MeusAtivos from "./pages/MeusAtivos";
 import AdminCotas from "./pages/AdminCotas";
 import EsqueciSenha from "./pages/EsqueciSenha";
 import ResetarSenha from "./pages/ResetarSenha";
+import VerificarEmail from "./pages/VerificarEmail";
 
 
 
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/creditos/:id" element={<DetalhesCredito />} /> 
                 <Route path="/meus-ativos" element={<MeusAtivos />} />
                 <Route path="/admin/cotas" element={<AdminCotas />} />
+                <Route path="/verificar-email/:token" element={<VerificarEmail />} />
             </Routes>
         </BrowserRouter>
     );
