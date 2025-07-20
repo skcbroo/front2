@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -84,9 +86,13 @@ export default function Login() {
                         <label className="flex items-center">
                             <input type="checkbox" className="mr-2 cursor-pointer" /> Remember me
                         </label>
-                        <a href="#" className="text-blue-600 hover:underline cursor-pointer">
-                            Forgot password?
-                        </a>
+                        <Link
+                        to="/esqueci-senha"
+                          className="text-blue-600 hover:underline cursor-pointer"
+                            >
+                          Forgot password?
+                        </Link>
+
                     </div>
 
                     <div className="flex gap-2">
