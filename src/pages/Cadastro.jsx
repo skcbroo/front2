@@ -35,7 +35,7 @@ export default function Cadastro() {
       setConfirmarSenha("");
 
       // Opcional: navegar após X segundos
-      // setTimeout(() => navigate("/"), 4000);
+       setTimeout(() => navigate("/"), 5000);
     } catch (err) {
       setErro("Erro ao cadastrar. E-mail já existe?");
     }
