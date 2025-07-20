@@ -9,6 +9,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import DetalhesCredito from "./pages/DetalhesCredito";     
 import MeusAtivos from "./pages/MeusAtivos";
 import AdminCotas from "./pages/AdminCotas";
+import EsqueciSenha from "./pages/EsqueciSenha";
+import ResetarSenha from "./pages/ResetarSenha";
 
 
 
@@ -18,6 +20,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
+                <Route path="/esqueci-senha" element={<EsqueciSenha />} />
+                <Route path="/resetar-senha/:token" element={<ResetarSenha />} />
                 <Route path="/creditos" element={<Creditos />} />
                 <Route path="/admin/creditos" element={<AdminCreditos />} />
                 <Route path="/admin/usuarios" element={<AdminUsuarios />} />
