@@ -6,11 +6,19 @@ export default function Cadastro() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [confirmarSenha, setConfirmarSenha] = useState("");
     const [erro, setErro] = useState("");
     const navigate = useNavigate();
 
     async function handleCadastro(e) {
         e.preventDefault();
+        setErro("");
+
+        if (senha !== confirmarSenha) {
+            setErro("As senhas não coincidem.");
+            return;
+        }
+
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
                 nome,
@@ -39,6 +47,7 @@ export default function Cadastro() {
                             placeholder="Nome"
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
+                            required
                         />
                         <input
                             className="w-full p-2 border border-gray-300 rounded"
@@ -46,6 +55,7 @@ export default function Cadastro() {
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                         <input
                             className="w-full p-2 border border-gray-300 rounded"
@@ -53,6 +63,15 @@ export default function Cadastro() {
                             placeholder="Senha"
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
+                            required
+                        />
+                        <input
+                            className="w-full p-2 border border-gray-300 rounded"
+                            type="password"
+                            placeholder="Confirmar Senha"
+                            value={confirmarSenha}
+                            onChange={(e) => setConfirmarSenha(e.target.value)}
+                            required
                         />
                         <button
                             type="submit"
