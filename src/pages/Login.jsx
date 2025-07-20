@@ -39,7 +39,7 @@ export default function Login() {
                         Midlej Capital
                     </h1>
                     <p className="text-lg text-blue-100 whitespace-nowrap text-center">
-                        Créditos judiciais selecionados, Justiça no papel, lucro na conta
+                        Especialistas em transformar sentenças em renda
                     </p>
                 </div>
             </div>
