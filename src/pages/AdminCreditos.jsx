@@ -5,7 +5,7 @@ import NavbarLayout from "../components/Navbar";
 
 function InputMoeda({ value, onChange }) {
     const formatarValor = (val) => {
-        const numero = parseFloat(val.replace(/[\D]/g, '')) / 100;
+        const numero = parseFloat(val.replace(/\D/g, '')) / 100;
         if (isNaN(numero)) return '';
         return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     };
@@ -21,7 +21,7 @@ function InputMoeda({ value, onChange }) {
             type="text"
             value={formatarValor(value)}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800"
             required
         />
     );
@@ -141,23 +141,23 @@ export default function AdminCreditos() {
 
     return (
         <NavbarLayout>
-            <div className="max-w-3xl mx-auto">
-                <h2 className="text-2xl font-bold mb-4 select-none cursor-default">
+            <div className="max-w-4xl mx-auto">
+                <h2 className="text-2xl font-bold mb-4 select-none cursor-default text-gray-800">
                     {editandoId ? "Editar Crédito Judicial" : "Cadastrar Crédito Judicial"}
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4 mb-10 select-none cursor-default">
                     <InputMoeda value={valor} onChange={setValor} />
-                    <input type="text" placeholder="Área" value={area} onChange={e => setArea(e.target.value)} className="w-full p-2 border rounded" required />
-                    <input type="text" placeholder="Fase" value={fase} onChange={e => setFase(e.target.value)} className="w-full p-2 border rounded" required />
-                    <input type="text" placeholder="Matéria" value={materia} onChange={e => setMateria(e.target.value)} className="w-full p-2 border rounded" required />
+                    <input type="text" placeholder="Área" value={area} onChange={e => setArea(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    <input type="text" placeholder="Fase" value={fase} onChange={e => setFase(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    <input type="text" placeholder="Matéria" value={materia} onChange={e => setMateria(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
                     <InputMoeda value={preco} onChange={setPreco} />
-                    <input type="text" placeholder="Número do processo" value={numeroProcesso} onChange={e => setNumeroProcesso(e.target.value)} className="w-full p-2 border rounded" required />
-                    <textarea placeholder="Descrição do caso" value={descricao} onChange={e => setDescricao(e.target.value)} className="w-full p-2 border rounded h-24" required />
-                    <input type="number" placeholder="Quantidade total de cotas" value={quantidadeCotas} onChange={e => setQuantidadeCotas(e.target.value)} className="w-full p-2 border rounded" required />
-                    <input type="number" placeholder="Cotas adquiridas (manual)" value={cotasAdquiridas} onChange={e => setCotasAdquiridas(e.target.value)} className="w-full p-2 border rounded" />
+                    <input type="text" placeholder="Número do processo" value={numeroProcesso} onChange={e => setNumeroProcesso(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    <textarea placeholder="Descrição do caso" value={descricao} onChange={e => setDescricao(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded h-24 bg-[#F9FAFB] text-gray-800" required />
+                    <input type="number" placeholder="Quantidade total de cotas" value={quantidadeCotas} onChange={e => setQuantidadeCotas(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    <input type="number" placeholder="Cotas adquiridas (manual)" value={cotasAdquiridas} onChange={e => setCotasAdquiridas(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" />
 
-                    <select value={status} onChange={e => setStatus(e.target.value)} className="w-full p-2 border rounded" required>
+                    <select value={status} onChange={e => setStatus(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required>
                         <option value="">Selecione o status</option>
                         <option value="Cotizando">Cotizando</option>
                         <option value="Em andamento">Em andamento</option>
@@ -165,22 +165,22 @@ export default function AdminCreditos() {
                     </select>
 
                     <div className="flex gap-2">
-                        <button type="submit" className="flex-1 bg-blue-600 text-white p-2 rounded">
+                        <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
                             {editandoId ? "Salvar Alterações" : "Cadastrar"}
                         </button>
                         {editandoId && (
-                            <button type="button" onClick={resetarFormulario} className="flex-1 bg-gray-500 text-white p-2 rounded">
+                            <button type="button" onClick={resetarFormulario} className="flex-1 bg-gray-500 hover:bg-gray-600 text-white p-2 rounded">
                                 Cancelar
                             </button>
                         )}
                     </div>
                 </form>
 
-                <h2 className="text-xl mb-4 font-semibold select-none cursor-default">Créditos cadastrados</h2>
+                <h2 className="text-xl mb-4 font-semibold select-none cursor-default text-gray-800">Créditos cadastrados</h2>
 
                 <ul className="space-y-4">
                     {creditos.map(c => (
-                        <li key={c.id} className="bg-white border rounded-xl p-4 shadow-md select-none cursor-default">
+                        <li key={c.id} className="bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl p-4 shadow-md select-none cursor-default text-gray-700">
                             <p><strong>💰 Valor:</strong> {c.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                             <p><strong>📚 Área:</strong> {c.area}</p>
                             <p><strong>⚖️ Fase:</strong> {c.fase}</p>
@@ -192,8 +192,8 @@ export default function AdminCreditos() {
                             <p><strong>📌 Status:</strong> {c.status}</p>
 
                             <div className="flex gap-2 mt-3">
-                                <button onClick={() => preencherFormulario(c)} className="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
-                                <button onClick={() => excluirCredito(c.id)} className="bg-red-500 text-white px-3 py-1 rounded">Excluir</button>
+                                <button onClick={() => preencherFormulario(c)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Editar</button>
+                                <button onClick={() => excluirCredito(c.id)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Excluir</button>
                             </div>
                         </li>
                     ))}
