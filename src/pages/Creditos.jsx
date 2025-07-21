@@ -28,18 +28,18 @@ export default function Creditos() {
                         <Link
                             to={`/creditos/${c.id}`}
                             key={c.id}
-                            className="block bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl shadow-sm hover:shadow-md transition-all px-6 py-8 text-[#2D3748] min-h-[340px] flex flex-col justify-between"
+                            className="block w-[360px] bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl shadow-sm hover:shadow-md transition-all px-5 py-6 text-[#2D3748] min-h-[300px] flex flex-col justify-between"
                         >
-                            {/* Valor principal */}
+                            {/* Cabeçalho */}
                             <div>
                                 <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">
                                     Valor estimado de recebimento
                                 </h3>
-                                <p className="text-3xl font-bold text-[#1A202C] mb-6">
+                                <p className="text-2xl font-bold text-[#1A202C] mb-4">
                                     {c.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                                 </p>
 
-                                {/* Dados agrupados */}
+                                {/* Dados em grid */}
                                 <div className="grid grid-cols-2 gap-y-2 text-sm text-[#4A5568]">
                                     <div>
                                         <span className="font-semibold block">Área</span>
@@ -60,8 +60,8 @@ export default function Creditos() {
                                 </div>
                             </div>
 
-                            {/* Linha separadora + valor de aquisição + cotas */}
-                            <div className="mt-6 border-t border-[#E2E8F0] pt-4">
+                            {/* Rodapé */}
+                            <div className="mt-5 border-t border-[#E2E8F0] pt-3">
                                 <div className="text-sm mb-1">
                                     <span className="font-semibold text-[#2B6CB0]">Valor de aquisição</span>
                                     <div className="text-[#2B6CB0] font-bold">
