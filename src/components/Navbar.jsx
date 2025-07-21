@@ -4,15 +4,15 @@ export default function NavbarLayout({ children }) {
     const role = localStorage.getItem("role");
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-            {/* Navbar */}
-           <nav className="bg-[#2F5871] text-white shadow-md px-6 py-4 flex items-center justify-between select-none">
+        <div className="min-h-screen bg-[#2F5871] text-white">
+            {/* Navbar branca */}
+            <nav className="bg-white text-black shadow-md px-6 py-4 flex items-center justify-between select-none">
 
                 <div className="flex items-center gap-2">
                     <img
                         src="/logonova.png"
-                        alt="Logo Midlej Capital"
-                        className="h-14" // aumentei o tamanho da logo
+                        alt="Logo"
+                        className="h-14"
                         draggable="false"
                     />
                 </div>
@@ -53,7 +53,7 @@ export default function NavbarLayout({ children }) {
             </nav>
 
             {/* Conteúdo da página */}
-            <div className="bg-white text-gray-800 p-10 min-h-[calc(100vh-80px)]">
+            <div className="p-10 min-h-[calc(100vh-80px)]">
                 {children}
             </div>
         </div>
