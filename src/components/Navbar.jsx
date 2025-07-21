@@ -12,7 +12,7 @@ export default function NavbarLayout({ children }) {
                     <img
                         src="/logonova.png"
                         alt="Logo"
-                        className="h-14"
+                        className="h-15"
                         draggable="false"
                     />
                 </div>
