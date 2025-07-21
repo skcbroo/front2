@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NavbarLayout from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import RetornoVsCDIChart from "../RetornoVsCDIChart"; // 👈 novo import
+import RetornoVsCDIChart from "../components/RetornoVsCDIChart"; 
 
 export default function MeusAtivos() {
   const [ativos, setAtivos] = useState([]);
