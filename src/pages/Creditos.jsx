@@ -40,39 +40,32 @@ export default function Creditos() {
                                 </p>
                             </div>
 
-                            {/* Conteúdo em colunas */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-[#4A5568]">
-                                {/* Coluna 1: informações técnicas */}
-                                <div className="space-y-1">
-                                    <div>
-                                        <span className="font-semibold">Área:</span> {c.area}
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Fase:</span> {c.fase}
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Matéria:</span> {c.materia}
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Deságio:</span> {c.desagio}%
-                                    </div>
+                            {/* Grid de informações */}
+                            <div className="grid grid-cols-2 gap-y-2 gap-x-8 text-sm text-[#4A5568]">
+                                {/* Coluna 1 */}
+                                <div>
+                                    <p><span className="font-semibold">Área:</span> {c.area}</p>
+                                    <p><span className="font-semibold">Fase:</span> {c.fase}</p>
+                                    <p><span className="font-semibold">Matéria:</span> {c.materia}</p>
+                                    <p><span className="font-semibold">Deságio:</span> {c.desagio}%</p>
                                 </div>
 
-                                {/* Coluna 2: valores financeiros */}
-                                <div className="space-y-1">
-                                    <div>
-                                        <span className="font-semibold text-[#2B6CB0]">Valor de aquisição:</span>
-                                        <div className="text-[#2B6CB0] font-bold">
+                                {/* Coluna 2 */}
+                                <div>
+                                    <p>
+                                        <span className="font-semibold">Cotas disponíveis:</span><br />
+                                        {disponiveis} de {c.quantidadeCotas}
+                                    </p>
+                                    <p className="mt-2">
+                                        <span className="font-semibold text-[#2B6CB0]">Valor de aquisição:</span><br />
+                                        <span className="text-[#2B6CB0] font-bold">
                                             {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Cotas disponíveis:</span>
-                                        <div>{c.quantidadeCotas - (c.cotas?.reduce((soma, ct) => soma + ct.quantidade, 0) || 0)} de {c.quantidadeCotas}</div>
-                                    </div>
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </Link>
+
 
 
                     );
