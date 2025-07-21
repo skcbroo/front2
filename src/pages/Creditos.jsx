@@ -28,9 +28,9 @@ export default function Creditos() {
                         <Link
                             to={`/creditos/${c.id}`}
                             key={c.id}
-                            className="block bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl shadow-sm hover:shadow-md transition-all px-6 py-5 text-[#2D3748] w-full max-w-5xl mx-auto"
+                            className="block bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl shadow-sm hover:shadow-md transition-all px-6 py-5 text-[#2D3748] w-full max-w-6xl mx-auto"
                         >
-                            {/* Valor no topo */}
+                            {/* Valor estimado no topo */}
                             <div className="mb-4">
                                 <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">
                                     Valor estimado de recebimento
@@ -40,35 +40,29 @@ export default function Creditos() {
                                 </p>
                             </div>
 
-                            {/* Conteúdo em colunas */}
+                            {/* Conteúdo dividido em duas colunas */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-[#4A5568]">
-                                {/* Coluna 1: informações técnicas */}
+                                {/* Coluna 1: dados técnicos */}
                                 <div className="space-y-1">
-                                    <div>
-                                        <span className="font-semibold">Área:</span> {c.area}
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Fase:</span> {c.fase}
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Matéria:</span> {c.materia}
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Deságio:</span> {c.desagio}%
-                                    </div>
+                                    <div><span className="font-semibold">Área:</span> {c.area}</div>
+                                    <div><span className="font-semibold">Fase:</span> {c.fase}</div>
+                                    <div><span className="font-semibold">Matéria:</span> {c.materia}</div>
+                                    <div><span className="font-semibold">Deságio:</span> {c.desagio}%</div>
                                 </div>
 
-                                {/* Coluna 2: valores financeiros */}
+                                {/* Coluna 2: cotas e aquisição */}
                                 <div className="space-y-1">
+                                    <div>
+                                        <span className="font-semibold">Cotas disponíveis:</span>
+                                        <div>
+                                            {c.quantidadeCotas - (c.cotas?.reduce((soma, ct) => soma + ct.quantidade, 0) || 0)} de {c.quantidadeCotas}
+                                        </div>
+                                    </div>
                                     <div>
                                         <span className="font-semibold text-[#2B6CB0]">Valor de aquisição:</span>
                                         <div className="text-[#2B6CB0] font-bold">
                                             {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                                         </div>
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold">Cotas disponíveis:</span>
-                                        <div>{c.quantidadeCotas - (c.cotas?.reduce((soma, ct) => soma + ct.quantidade, 0) || 0)} de {c.quantidadeCotas}</div>
                                     </div>
                                 </div>
                             </div>
