@@ -1,5 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import useCDI from '../hooks/useCDI';
+import useCDI from '../useCDI';
 
 export default function RetornoVsCDIChart() {
   const { taxaCDI, loading } = useCDI();
