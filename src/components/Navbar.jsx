@@ -4,7 +4,7 @@ export default function NavbarLayout({ children }) {
     const role = localStorage.getItem("role");
 
     return (
-        <div className="min-h-screen bg-[#2F5871] text-white">
+        <div className="min-h-screen bg-[#16242e] text-white">
             {/* Navbar branca */}
             <nav className="bg-white text-black shadow-md px-6 py-2 flex items-center justify-between select-none">
 
@@ -12,7 +12,7 @@ export default function NavbarLayout({ children }) {
                     <img
                         src="/logonova.png"
                         alt="Logo"
-                        className="h-15"
+                        className="h-14"
                         draggable="false"
                     />
                 </div>
