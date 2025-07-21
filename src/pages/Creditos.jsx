@@ -28,7 +28,7 @@ export default function Creditos() {
                         <Link
                             to={`/creditos/${c.id}`}
                             key={c.id}
-                            className="block bg-gradient-to-br from-[#F0F4FF] to-[#E2ECFF] border border-[#CBD5E1] rounded-xl shadow-md hover:shadow-lg transition-all px-6 py-5 text-[#2D3748] w-full max-w-5xl mx-auto"
+                            className="block bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md hover:shadow-lg transition-all px-6 py-5 text-[#2D3748] w-full max-w-5xl mx-auto"
                         >
                             {/* Valor no topo */}
                             <div className="mb-4">
