@@ -28,7 +28,7 @@ export default function Creditos() {
                         <Link
                             to={`/creditos/${c.id}`}
                             key={c.id}
-                            className="block bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl shadow-sm hover:shadow-md transition-all px-6 py-5 text-[#2D3748] w-full max-w-5xl mx-auto"
+                            className="block bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl shadow-sm hover:shadow-md transition-all px-6 py-5 text-[#2D3748] w-full max-w-5xl mx-auto h-full"
                         >
                             {/* Valor no topo */}
                             <div className="mb-4">
@@ -40,23 +40,27 @@ export default function Creditos() {
                                 </p>
                             </div>
 
-                            {/* Duas colunas lado a lado, alinhadas verticalmente */}
-                            <div className="grid grid-cols-2 gap-6 text-sm text-[#4A5568]">
-                                {/* Coluna 1 */}
-                                <div className="space-y-1">
-                                    <p><span className="font-semibold">Área:</span> {c.area}</p>
-                                    <p><span className="font-semibold">Fase:</span> {c.fase}</p>
-                                    <p><span className="font-semibold">Matéria:</span> {c.materia}</p>
-                                    <p><span className="font-semibold">Deságio:</span> {c.desagio}%</p>
+                            {/* Layout horizontal equilibrado */}
+                            <div className="grid grid-cols-2 gap-6 text-sm text-[#4A5568] h-full">
+                                {/* Coluna esquerda */}
+                                <div className="flex flex-col justify-between">
+                                    <div>
+                                        <p><span className="font-semibold">Área:</span> {c.area}</p>
+                                        <p><span className="font-semibold">Fase:</span> {c.fase}</p>
+                                        <p><span className="font-semibold">Matéria:</span> {c.materia}</p>
+                                    </div>
+                                    <div className="mt-auto">
+                                        <p><span className="font-semibold">Deságio:</span> {c.desagio}%</p>
+                                    </div>
                                 </div>
 
-                                {/* Coluna 2 */}
-                                <div className="flex flex-col justify-between items-start h-full">
+                                {/* Coluna direita */}
+                                <div className="flex flex-col justify-between items-end text-right">
                                     <div>
                                         <p className="font-semibold">Cotas disponíveis:</p>
                                         <p>{disponiveis} de {c.quantidadeCotas}</p>
                                     </div>
-                                    <div className="mt-auto">
+                                    <div>
                                         <p className="font-semibold text-[#2B6CB0]">Valor de aquisição:</p>
                                         <p className="text-[#2B6CB0] font-bold">
                                             {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
@@ -67,6 +71,7 @@ export default function Creditos() {
                         </Link>
                     );
                 })}
+
 
             </div>
 
