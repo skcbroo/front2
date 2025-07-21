@@ -4,9 +4,9 @@ export default function NavbarLayout({ children }) {
     const role = localStorage.getItem("role");
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#283142] to-[#1e2736] text-white font-sans">
+        <div className="min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#2F5871] text-white">
             {/* Navbar branca */}
-           <nav className="bg-gradient-to-r from-white to-[#2F5871] text-white shadow-md px-6 py-2 flex items-center justify-between select-none">
+           <nav className="bg-gradient-to-r from-white via-[#A6B8C7] to-[#2F5871] text-white shadow-md px-6 py-2 flex items-center justify-between select-none">
 
                 <div className="flex items-center gap-2">
                     <img
