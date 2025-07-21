@@ -6,101 +6,172 @@ export default function NavbarLayout({ children }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#283e51] via-[#485563] to-[#2f5871] text-white font-sans">
-      {/* Navbar glassmorphism */}
-      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-[1100px] w-[95vw] rounded-2xl bg-white/20 shadow-2xl backdrop-blur-lg px-8 py-3 flex items-center justify-between border border-white/20">
-        
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <img
-            src="/logonova.png"
-            alt="Midlej Capital"
-            className="h-10 object-contain drop-shadow"
-            draggable="false"
-          />
-        </div>
-        
-        {/* Hamburger menu (mobile only) */}
-        <button
-          className="sm:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-300"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Abrir menu"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 8h16M4 16h16"}
+    <div className="min-h-screen bg-gradient-to-b from-[#1e2a38] to-[#283849] text-white font-sans">
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 w-full bg-[#16202bdd] backdrop-blur-sm shadow-md z-50">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-12 h-16">
+          {/* Logo */}
+          <div>
+            <img
+              src="/logonova.png"
+              alt="Midlej Capital"
+              className="h-10 md:h-12 object-contain select-none"
+              draggable={false}
             />
-          </svg>
-        </button>
+          </div>
 
-        {/* Menu (desktop & mobile) */}
-        <div
-          className={`flex-col sm:flex-row sm:flex gap-6 text-[15px] font-medium items-center transition-all duration-300 
-                      ${menuOpen ? "flex bg-[#203344]/80 absolute top-16 right-8 rounded-xl px-6 py-5 shadow-lg" : "hidden sm:flex"}`}
-        >
-          <Link 
-            to="/creditos"
-            className="hover:text-yellow-300 transition-all duration-200 px-2 py-1 rounded-md hover:bg-white/10"
-          >
-            Créditos
-          </Link>
-          {role === "cliente" && (
+          {/* Desktop Menu */}
+          <div className="hidden sm:flex gap-8 text-sm font-semibold">
             <Link
-              to="/meus-ativos"
-              className="hover:text-yellow-300 transition-all duration-200 px-2 py-1 rounded-md hover:bg-white/10"
+              to="/creditos"
+              className="hover:text-yellow-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
             >
-              Meus Ativos
+              Créditos
             </Link>
-          )}
-          {role === "admin" && (
-            <>
+
+            {role === "cliente" && (
               <Link
-                to="/admin/dashboard"
-                className="hover:text-yellow-300 transition-all duration-200 px-2 py-1 rounded-md hover:bg-white/10"
+                to="/meus-ativos"
+                className="hover:text-yellow-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
               >
-                Dashboard
+                Meus Ativos
               </Link>
-              <Link
-                to="/admin/creditos"
-                className="hover:text-yellow-300 transition-all duration-200 px-2 py-1 rounded-md hover:bg-white/10"
-              >
-                Gerenciar Créditos
-              </Link>
-              <Link
-                to="/admin/cotas"
-                className="hover:text-yellow-300 transition-all duration-200 px-2 py-1 rounded-md hover:bg-white/10"
-              >
-                Gerenciar Cotas
-              </Link>
-              <Link
-                to="/admin/usuarios"
-                className="hover:text-yellow-300 transition-all duration-200 px-2 py-1 rounded-md hover:bg-white/10"
-              >
-                Usuários
-              </Link>
-            </>
-          )}
-          <Link
-            to="/"
-            className="hover:text-red-400 transition-all duration-200 px-2 py-1 rounded-md hover:bg-white/10"
+            )}
+
+            {role === "admin" && (
+              <>
+                <Link
+                  to="/admin/dashboard"
+                  className="hover:text-yellow-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/admin/creditos"
+                  className="hover:text-yellow-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
+                >
+                  Gerenciar Créditos
+                </Link>
+                <Link
+                  to="/admin/cotas"
+                  className="hover:text-yellow-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
+                >
+                  Gerenciar Cotas
+                </Link>
+                <Link
+                  to="/admin/usuarios"
+                  className="hover:text-yellow-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
+                >
+                  Usuários
+                </Link>
+              </>
+            )}
+
+            <Link
+              to="/"
+              className="hover:text-red-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+            >
+              Sair
+            </Link>
+          </div>
+
+          {/* Mobile Burger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            className="sm:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
           >
-            Sair
-          </Link>
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={
+                  menuOpen
+                    ? "M6 18L18 6M6 6l12 12" // X icon
+                    : "M4 6h16M4 12h16M4 18h16" // Hamburger icon
+                }
+              />
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="sm:hidden bg-[#16202bee] backdrop-blur-md border-t border-yellow-400/30">
+            <nav className="flex flex-col gap-4 p-6 text-base font-semibold">
+              <Link
+                to="/creditos"
+                className="hover:text-yellow-400 transition-colors duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                Créditos
+              </Link>
+
+              {role === "cliente" && (
+                <Link
+                  to="/meus-ativos"
+                  className="hover:text-yellow-400 transition-colors duration-200"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Meus Ativos
+                </Link>
+              )}
+
+              {role === "admin" && (
+                <>
+                  <Link
+                    to="/admin/dashboard"
+                    className="hover:text-yellow-400 transition-colors duration-200"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/admin/creditos"
+                    className="hover:text-yellow-400 transition-colors duration-200"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Gerenciar Créditos
+                  </Link>
+                  <Link
+                    to="/admin/cotas"
+                    className="hover:text-yellow-400 transition-colors duration-200"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Gerenciar Cotas
+                  </Link>
+                  <Link
+                    to="/admin/usuarios"
+                    className="hover:text-yellow-400 transition-colors duration-200"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Usuários
+                  </Link>
+                </>
+              )}
+
+              <Link
+                to="/"
+                className="hover:text-red-500 transition-colors duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                Sair
+              </Link>
+            </nav>
+          </div>
+        )}
       </nav>
-      
-      {/* Espaçamento compensando navbar flutuante */}
-      <div className="pt-28 px-6 md:px-10 pb-10 min-h-[calc(100vh-112px)] transition-all duration-200">
+
+      {/* Compensar navbar */}
+      <main className="pt-16 px-6 md:px-12 pb-12 min-h-[calc(100vh-64px)] bg-gradient-to-b from-[#283142] to-[#1e2736]">
         {children}
-      </div>
+      </main>
     </div>
   );
 }
