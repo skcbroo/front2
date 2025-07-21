@@ -180,31 +180,22 @@ export default function AdminCreditos() {
 
                 <ul className="space-y-4">
                     {creditos.map(c => (
-                          <li key={c.id} className="bg-[#F7FAFC] border border-[#CBD5E0] rounded-xl p-5 shadow-sm hover:shadow-md transition duration-300 text-[#2D3748]">
-    <p><strong className="text-[#D4AF37]">💰 Valor:</strong> {c.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-    <p><strong>📚 Área:</strong> <span className="text-[#2F5871]">{c.area}</span></p>
-    <p><strong>⚖️ Fase:</strong> <span className="text-[#2F5871]">{c.fase}</span></p>
-    <p><strong>📝 Matéria:</strong> <span className="text-[#2D3748]">{c.materia}</span></p>
-    <p><strong className="text-blue-800">📉 Deságio:</strong> {c.desagio}%</p>
-    <p><strong className="text-[#2BBF77]">🏷️ Preço:</strong> {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-    <p><strong>🔢 Cotas totais:</strong> {c.quantidadeCotas}</p>
-    <p><strong>✅ Cotas adquiridas:</strong> {c.cotasAdquiridas ?? 0}</p>
-    <p><strong>📌 Status:</strong> <span className={
-        c.status === 'Pago' ? 'text-green-600 font-semibold' :
-        c.status === 'Em andamento' ? 'text-yellow-600 font-semibold' :
-        'text-gray-600 font-semibold'
-    }>{c.status}</span></p>
+                        <li key={c.id} className="bg-white border rounded-xl p-4 shadow-md select-none cursor-default">
+                            <p><strong>💰 Valor:</strong> {c.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                            <p><strong>📚 Área:</strong> {c.area}</p>
+                            <p><strong>⚖️ Fase:</strong> {c.fase}</p>
+                            <p><strong>📝 Matéria:</strong> {c.materia}</p>
+                            <p><strong>📉 Deságio:</strong> {c.desagio}%</p>
+                            <p><strong>🏷️ Preço:</strong> {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                            <p><strong>🔢 Cotas totais:</strong> {c.quantidadeCotas}</p>
+                            <p><strong>✅ Cotas adquiridas:</strong> {c.cotasAdquiridas ?? 0}</p>
+                            <p><strong>📌 Status:</strong> {c.status}</p>
 
-    <div className="flex gap-2 mt-4">
-        <button onClick={() => preencherFormulario(c)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition">
-            Editar
-        </button>
-        <button onClick={() => excluirCredito(c.id)} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition">
-            Excluir
-        </button>
-    </div>
-</li>
-
+                            <div className="flex gap-2 mt-3">
+                                <button onClick={() => preencherFormulario(c)} className="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
+                                <button onClick={() => excluirCredito(c.id)} className="bg-red-500 text-white px-3 py-1 rounded">Excluir</button>
+                            </div>
+                        </li>
                     ))}
                 </ul>
             </div>
