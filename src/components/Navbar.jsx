@@ -12,12 +12,9 @@ export default function NavbarLayout({ children }) {
                     <img
                         src="/logonova.png"
                         alt="Logo Midlej Capital"
-                        className="h-10"
+                        className="h-14" // aumentei o tamanho da logo
                         draggable="false"
                     />
-                    <span className="text-xl font-bold cursor-default select-none">
-                        Midlej Capital
-                    </span>
                 </div>
 
                 {/* Menu */}
@@ -48,7 +45,6 @@ export default function NavbarLayout({ children }) {
                             </Link>
                         </>
                     )}
-
 
                     <Link to="/" className="hover:underline cursor-pointer select-none">
                         Sair
