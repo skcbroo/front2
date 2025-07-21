@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NavbarLayout from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import RetornoVsCDIChart from "../RetornoVsCDIChart"; // 👈 novo import
 
 export default function MeusAtivos() {
   const [ativos, setAtivos] = useState([]);
@@ -58,6 +59,12 @@ export default function MeusAtivos() {
             ))}
           </ul>
         )}
+
+        {/* 📈 Gráfico de comparação com CDI */}
+        <div className="mt-10">
+          <h3 className="text-xl font-semibold mb-2">Comparativo de Retorno</h3>
+          <RetornoVsCDIChart />
+        </div>
       </div>
     </NavbarLayout>
   );
