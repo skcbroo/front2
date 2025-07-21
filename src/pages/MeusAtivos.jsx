@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NavbarLayout from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import RetornoVsCDIChart from "../components/RetornoVsCDIChart"; 
 
 export default function MeusAtivos() {
   const [ativos, setAtivos] = useState([]);
@@ -19,8 +18,8 @@ export default function MeusAtivos() {
 
     const carregarAtivos = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/ativos`, {
-          headers: { Authorization: `Bearer ${token}` },
+        const res = await axios.get(${import.meta.env.VITE_API_URL}/api/ativos, {
+          headers: { Authorization: Bearer ${token} },
         });
         setAtivos(res.data);
       } catch (err) {
@@ -32,7 +31,7 @@ export default function MeusAtivos() {
   }, []);
 
   function irParaDetalhes(id) {
-    navigate(`/creditos/${id}`);
+    navigate(/creditos/${id});
   }
 
   return (
@@ -59,12 +58,6 @@ export default function MeusAtivos() {
             ))}
           </ul>
         )}
-
-        {/* 📈 Gráfico de comparação com CDI */}
-        <div className="mt-10">
-          <h3 className="text-xl font-semibold mb-2">Comparativo de Retorno</h3>
-          <RetornoVsCDIChart />
-        </div>
       </div>
     </NavbarLayout>
   );
