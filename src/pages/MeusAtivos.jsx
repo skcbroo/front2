@@ -18,8 +18,8 @@ export default function MeusAtivos() {
 
     const carregarAtivos = async () => {
       try {
-        const res = await axios.get(${import.meta.env.VITE_API_URL}/api/ativos, {
-          headers: { Authorization: Bearer ${token} },
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/ativos`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
         setAtivos(res.data);
       } catch (err) {
@@ -31,7 +31,7 @@ export default function MeusAtivos() {
   }, []);
 
   function irParaDetalhes(id) {
-    navigate(/creditos/${id});
+    navigate(`/creditos/${id}`);
   }
 
   return (
