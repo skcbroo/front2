@@ -28,45 +28,42 @@ export default function Creditos() {
                         <Link
                             to={`/creditos/${c.id}`}
                             key={c.id}
-                            className="block bg-[#F9FAFB] border border-[#CBD5E1] rounded-xl shadow-sm hover:shadow-md transition-all px-6 py-5 text-[#2D3748] w-full max-w-6xl mx-auto"
+                            className="bg-white border border-[#CBD5E1] rounded-xl shadow hover:shadow-md transition-all p-6 w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-x-20"
                         >
-                            {/* Valor estimado no topo */}
-                            <div className="mb-4">
+                            {/* Bloco da esquerda */}
+                            <div className="flex-1">
                                 <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">
                                     Valor estimado de recebimento
                                 </h3>
-                                <p className="text-3xl font-bold text-[#1A202C]">
+                                <p className="text-3xl font-bold text-[#1A202C] mb-4">
                                     {c.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                                 </p>
-                            </div>
 
-                            {/* Conteúdo dividido em duas colunas */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-[#4A5568]">
-                                {/* Coluna 1: dados técnicos */}
-                                <div className="space-y-1">
+                                <div className="space-y-1 text-sm text-[#4A5568]">
                                     <div><span className="font-semibold">Área:</span> {c.area}</div>
                                     <div><span className="font-semibold">Fase:</span> {c.fase}</div>
                                     <div><span className="font-semibold">Matéria:</span> {c.materia}</div>
                                     <div><span className="font-semibold">Deságio:</span> {c.desagio}%</div>
                                 </div>
+                            </div>
 
-                                {/* Coluna 2: cotas e aquisição */}
-                                <div className="space-y-1">
-                                    <div>
-                                        <span className="font-semibold">Cotas disponíveis:</span>
-                                        <div>
-                                            {c.quantidadeCotas - (c.cotas?.reduce((soma, ct) => soma + ct.quantidade, 0) || 0)} de {c.quantidadeCotas}
-                                        </div>
+                            {/* Bloco da direita */}
+                            <div className="flex-1 mt-6 md:mt-0 space-y-4 text-sm text-[#4A5568]">
+                                <div>
+                                    <span className="font-semibold">Cotas disponíveis:</span>
+                                    <div className="text-base">
+                                        {c.quantidadeCotas - (c.cotas?.reduce((soma, ct) => soma + ct.quantidade, 0) || 0)} de {c.quantidadeCotas}
                                     </div>
-                                    <div>
-                                        <span className="font-semibold text-[#2B6CB0]">Valor de aquisição:</span>
-                                        <div className="text-[#2B6CB0] font-bold">
-                                            {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                                        </div>
+                                </div>
+                                <div>
+                                    <span className="font-semibold text-[#2B6CB0]">Valor de aquisição:</span>
+                                    <div className="text-[#2B6CB0] font-bold text-base">
+                                        {c.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                                     </div>
                                 </div>
                             </div>
                         </Link>
+
 
 
                     );
