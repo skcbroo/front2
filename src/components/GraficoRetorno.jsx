@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
+const dadosGrafico = [
   { mes: "Jan", valor: 2.3 },
   { mes: "Fev", valor: 3.1 },
   { mes: "Mar", valor: 4.8 },
@@ -18,18 +18,24 @@ const data = [
   { mes: "Jun", valor: 6.7 },
 ];
 
-export default function GraficoExemplo() {
+export default function GraficoRetorno() {
   return (
     <div className="mt-10 bg-white p-4 rounded-xl shadow-md">
       <h3 className="text-lg font-semibold mb-2">Gráfico de Retorno Simulado</h3>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
+        <LineChart data={dadosGrafico}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="mes" />
           <YAxis unit="%" />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="valor" stroke="#8884d8" strokeWidth={2} name="Retorno" />
+          <Line
+            type="monotone"
+            dataKey="valor"
+            stroke="#8884d8"
+            strokeWidth={2}
+            name="Retorno"
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
