@@ -30,18 +30,17 @@ export default function Login() {
         <div className="max-w-md text-center">
           <img
             src="/logonova.png"
-            alt="Logo Midlej Capital"
+            alt="Logo"
             className="mx-auto h-24 mb-6"
             draggable="false"
           />
-          <h1 className="text-4xl font-bold mb-3 text-white">Midlej Capital</h1>
           <p className="text-lg text-white/90">
             Transformando sentenças judiciais em oportunidades reais
           </p>
         </div>
       </div>
 
-      {/* Lado direito com o formulário */}
+      {/* Lado direito com formulário */}
       <div className="flex-1 bg-white text-gray-800 flex items-center justify-center shadow-xl">
         <form
           onSubmit={handleSubmit}
@@ -55,7 +54,7 @@ export default function Login() {
             <label className="block mb-1 font-medium text-sm text-gray-700">E-mail</label>
             <input
               type="email"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -67,7 +66,7 @@ export default function Login() {
             <label className="block mb-1 font-medium text-sm text-gray-700">Senha</label>
             <input
               type="password"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="********"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
@@ -80,7 +79,7 @@ export default function Login() {
               <input type="checkbox" className="mr-2 cursor-pointer" />
               Lembrar-me
             </label>
-            <Link to="/esqueci-senha" className="text-blue-600 hover:underline">
+            <Link to="/esqueci-senha" className="text-green-600 hover:underline">
               Esqueci a senha
             </Link>
           </div>
@@ -88,21 +87,21 @@ export default function Login() {
           <div className="flex gap-2">
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white w-full p-2 rounded transition"
+              className="bg-green-600 hover:bg-green-700 text-white w-full p-2 rounded transition"
             >
               Entrar
             </button>
             <button
               type="button"
               onClick={() => navigate("/cadastro")}
-              className="border border-blue-600 text-blue-600 w-full p-2 rounded hover:bg-blue-50 transition"
+              className="border border-green-600 text-green-600 w-full p-2 rounded hover:bg-green-50 transition"
             >
               Cadastrar
             </button>
           </div>
 
           <p className="text-center text-sm mt-6 text-gray-400">
-            © {new Date().getFullYear()} Midlej Capital. Todos os direitos reservados.
+            © {new Date().getFullYear()}. Todos os direitos reservados.
           </p>
         </form>
       </div>
