@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
@@ -35,30 +35,30 @@ export default function AdminDashboard() {
     return (
         <NavbarLayout>
             <div className="max-w-5xl mx-auto">
-                <h2 className="text-2xl font-bold mb-8 text-center select-none cursor-default">
-                    📊 Painel Administrativo
+                <h2 className="text-2xl font-bold mb-8 text-center text-gray-800 select-none cursor-default">
+                    Painel Administrativo
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 select-none cursor-default">
                     <div
                         onClick={() => navigate("/admin/usuarios")}
-                        className="bg-blue-100 p-6 rounded-xl shadow text-center cursor-pointer hover:shadow-lg transition"
+                        className="bg-white border border-[#CBD5E1] p-6 rounded-xl shadow text-center cursor-pointer hover:shadow-lg transition text-gray-800"
                     >
-                        <p className="text-lg font-semibold">👤 Usuários</p>
-                        <p className="text-4xl mt-2 font-bold">{usuarios}</p>
+                        <p className="text-lg font-semibold">Usuários</p>
+                        <p className="text-4xl mt-2 font-bold text-blue-700">{usuarios}</p>
                     </div>
 
                     <div
                         onClick={() => navigate("/admin/creditos")}
-                        className="bg-green-100 p-6 rounded-xl shadow text-center cursor-pointer hover:shadow-lg transition"
+                        className="bg-white border border-[#CBD5E1] p-6 rounded-xl shadow text-center cursor-pointer hover:shadow-lg transition text-gray-800"
                     >
-                        <p className="text-lg font-semibold">💰 Créditos</p>
-                        <p className="text-4xl mt-2 font-bold">{creditos}</p>
+                        <p className="text-lg font-semibold">Créditos</p>
+                        <p className="text-4xl mt-2 font-bold text-green-700">{creditos}</p>
                     </div>
 
-                    <div className="bg-yellow-100 p-6 rounded-xl shadow text-center">
-                        <p className="text-lg font-semibold">🧾 Pedidos</p>
-                        <p className="text-4xl mt-2 font-bold">{pedidos}</p>
+                    <div className="bg-white border border-[#CBD5E1] p-6 rounded-xl shadow text-center text-gray-800">
+                        <p className="text-lg font-semibold">Pedidos</p>
+                        <p className="text-4xl mt-2 font-bold text-yellow-600">{pedidos}</p>
                     </div>
                 </div>
             </div>
