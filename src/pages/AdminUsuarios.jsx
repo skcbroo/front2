@@ -72,7 +72,7 @@ export default function AdminUsuarios() {
   <NavbarLayout>
     <div className="max-w-5xl mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-center select-none cursor-default">
-        👥 Gerenciamento de Usuários
+         Gerenciamento de Usuários
       </h2>
 
       {usuarios.length === 0 ? (
