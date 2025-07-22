@@ -25,18 +25,17 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white justify-center">
-      {/* Lado esquerdo com logo e descrição */}
+      {/* Lado esquerdo com logo e slogan */}
       <div className="flex-1 flex items-center justify-center p-8 select-none cursor-default">
         <div className="max-w-md text-center">
           <img
             src="/logonova.png"
             alt="Logo"
-            className="mx-auto h-24 mb-6"
+            className="mx-auto h-28 mb-6"
             draggable="false"
           />
-          <p className="text-lg text-white/90">
-            Transformando sentenças judiciais em oportunidades reais
-          </p>
+          <p className="text-xl font-semibold mb-1">Transformando sentenças judiciais</p>
+          <p className="text-lg text-white opacity-80">em oportunidades reais</p>
         </div>
       </div>
 
@@ -44,17 +43,17 @@ export default function Login() {
       <div className="flex-1 bg-white text-gray-800 flex items-center justify-center shadow-xl">
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-sm space-y-5 px-8 py-12 select-none cursor-default"
+          className="w-full max-w-sm space-y-4 px-8 py-10 select-none cursor-default"
         >
-          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold mb-4 text-center">
             Acesso à Plataforma
           </h2>
 
           <div>
-            <label className="block mb-1 font-medium text-sm text-gray-700">E-mail</label>
+            <label className="block mb-1 font-medium">E-mail</label>
             <input
               type="email"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
               placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -63,10 +62,10 @@ export default function Login() {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium text-sm text-gray-700">Senha</label>
+            <label className="block mb-1 font-medium">Senha</label>
             <input
               type="password"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
               placeholder="********"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
@@ -74,12 +73,15 @@ export default function Login() {
             />
           </div>
 
-          <div className="flex justify-between items-center text-sm text-gray-600">
+          <div className="flex justify-between items-center text-sm">
             <label className="flex items-center">
               <input type="checkbox" className="mr-2 cursor-pointer" />
               Lembrar-me
             </label>
-            <Link to="/esqueci-senha" className="text-green-600 hover:underline">
+            <Link
+              to="/esqueci-senha"
+              className="text-[#222B3B] hover:underline"
+            >
               Esqueci a senha
             </Link>
           </div>
@@ -87,22 +89,22 @@ export default function Login() {
           <div className="flex gap-2">
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white w-full p-2 rounded transition"
+              className="bg-[#222B3B] hover:bg-[#1a212f] text-white w-full p-2 rounded transition"
             >
               Entrar
             </button>
             <button
               type="button"
               onClick={() => navigate("/cadastro")}
-              className="border border-green-600 text-green-600 w-full p-2 rounded hover:bg-green-50 transition"
+              className="border border-[#222B3B] text-[#222B3B] w-full p-2 rounded hover:bg-[#f0f1f3] transition"
             >
               Cadastrar
             </button>
           </div>
 
-          <p className="text-center text-sm mt-6 text-gray-400">
-            © {new Date().getFullYear()}. Todos os direitos reservados.
-          </p>
+          <div className="text-center text-sm mt-4 text-gray-500">
+            © 2025. Todos os direitos reservados.
+          </div>
         </form>
       </div>
     </div>
