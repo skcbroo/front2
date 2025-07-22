@@ -147,22 +147,61 @@ export default function AdminCreditos() {
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4 mb-10 select-none cursor-default">
-                    <InputMoeda value={valor} onChange={setValor} />
-                    <input type="text" placeholder="Área" value={area} onChange={e => setArea(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
-                    <input type="text" placeholder="Fase" value={fase} onChange={e => setFase(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
-                    <input type="text" placeholder="Matéria" value={materia} onChange={e => setMateria(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
-                    <InputMoeda value={preco} onChange={setPreco} />
-                    <input type="text" placeholder="Número do processo" value={numeroProcesso} onChange={e => setNumeroProcesso(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
-                    <textarea placeholder="Descrição do caso" value={descricao} onChange={e => setDescricao(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded h-24 bg-[#F9FAFB] text-gray-800" required />
-                    <input type="number" placeholder="Quantidade total de cotas" value={quantidadeCotas} onChange={e => setQuantidadeCotas(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
-                    <input type="number" placeholder="Cotas adquiridas (manual)" value={cotasAdquiridas} onChange={e => setCotasAdquiridas(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" />
 
-                    <select value={status} onChange={e => setStatus(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required>
-                        <option value="">Selecione o status</option>
-                        <option value="Cotizando">Cotizando</option>
-                        <option value="Em andamento">Em andamento</option>
-                        <option value="Pago">Pago</option>
-                    </select>
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Valor do Crédito</label>
+                        <InputMoeda value={valor} onChange={setValor} />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Área</label>
+                        <input type="text" value={area} onChange={e => setArea(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Fase</label>
+                        <input type="text" value={fase} onChange={e => setFase(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Matéria</label>
+                        <input type="text" value={materia} onChange={e => setMateria(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Preço de Oferta</label>
+                        <InputMoeda value={preco} onChange={setPreco} />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Número do Processo</label>
+                        <input type="text" value={numeroProcesso} onChange={e => setNumeroProcesso(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Descrição do Caso</label>
+                        <textarea value={descricao} onChange={e => setDescricao(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded h-24 bg-[#F9FAFB] text-gray-800" required />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Quantidade Total de Cotas</label>
+                        <input type="number" value={quantidadeCotas} onChange={e => setQuantidadeCotas(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Cotas Adquiridas (Manual)</label>
+                        <input type="number" value={cotasAdquiridas} onChange={e => setCotasAdquiridas(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-gray-700 font-medium">Status</label>
+                        <select value={status} onChange={e => setStatus(e.target.value)} className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800" required>
+                            <option value="">Selecione o status</option>
+                            <option value="Cotizando">Cotizando</option>
+                            <option value="Em andamento">Em andamento</option>
+                            <option value="Pago">Pago</option>
+                        </select>
+                    </div>
 
                     <div className="flex gap-2">
                         <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
@@ -174,6 +213,7 @@ export default function AdminCreditos() {
                             </button>
                         )}
                     </div>
+
                 </form>
 
                 <h2 className="text-xl mb-4 font-semibold select-none cursor-default text-gray-800">Créditos cadastrados</h2>
