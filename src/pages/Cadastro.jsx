@@ -12,34 +12,41 @@ export default function Cadastro() {
   const navigate = useNavigate();
 
   async function handleCadastro(e) {
-    e.preventDefault();
-    setErro("");
-    setMensagem("");
+  e.preventDefault();
+  setErro("");
+  setMensagem("");
 
-    if (senha !== confirmarSenha) {
-      setErro("As senhas não coincidem.");
-      return;
-    }
-
-    try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
-        nome,
-        email,
-        senha,
-      });
-
-      setMensagem(`Verifique seu e-mail para ativar o acesso.`);
-      setNome("");
-      setEmail("");
-      setSenha("");
-      setConfirmarSenha("");
-
-      // Opcional: navegar após X segundos
-       setTimeout(() => navigate("/"), 5000);
-    } catch (err) {
-      setErro("Erro ao cadastrar. E-mail já existe?");
-    }
+  // Verifica se o nome contém pelo menos duas palavras
+  const partesNome = nome.trim().split(" ");
+  if (partesNome.length < 2) {
+    setErro("Por favor, insira seu nome completo.");
+    return;
   }
+
+  if (senha !== confirmarSenha) {
+    setErro("As senhas não coincidem.");
+    return;
+  }
+
+  try {
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+      nome,
+      email,
+      senha,
+    });
+
+    setMensagem(`Verifique seu e-mail para ativar o acesso.`);
+    setNome("");
+    setEmail("");
+    setSenha("");
+    setConfirmarSenha("");
+
+    setTimeout(() => navigate("/"), 5000);
+  } catch (err) {
+    setErro("Erro ao cadastrar. E-mail já existe?");
+  }
+}
+
 
   return (
     <div className="flex min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
@@ -57,7 +64,7 @@ export default function Cadastro() {
             <input
               className="w-full p-2 border border-gray-300 rounded"
               type="text"
-              placeholder="Nome"
+              placeholder="Nome completo"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               required
