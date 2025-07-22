@@ -22,7 +22,7 @@ export default function Creditos() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto select-none cursor-default">
                 {creditos.map((c) => {
                     const adquiridas = c.cotas?.reduce((soma, cota) => soma + cota.quantidade, 0) || 0;
-                    const disponiveis = c.quantidadeCotas - adquiridas;
+                    const disponiveis = c.quantidadeCotas - c.cotasAdquiridas;
 
                     return (
                         <Link
