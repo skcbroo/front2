@@ -1,4 +1,3 @@
-// Atualizado: Creditos.jsx com exibição de cotas totais e disponíveis
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -24,12 +23,25 @@ export default function Creditos() {
                     const adquiridas = c.cotas?.reduce((soma, cota) => soma + cota.quantidade, 0) || 0;
                     const disponiveis = c.quantidadeCotas - c.cotasAdquiridas;
 
+                    const statusMap = {
+                        cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
+                        andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
+                        pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
+                    };
+
+                    const statusInfo = statusMap[c.status] || { texto: "Desconhecido", cor: "bg-gray-200 text-gray-700" };
+
                     return (
                         <Link
                             to={`/creditos/${c.id}`}
                             key={c.id}
                             className="block bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md hover:shadow-lg transition-all px-6 py-5 text-[#2D3748] w-full max-w-5xl mx-auto"
                         >
+                            {/* Badge de status */}
+                            <div className={`inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 ${statusInfo.cor}`}>
+                                {statusInfo.texto}
+                            </div>
+
                             {/* Valor no topo */}
                             <div className="mb-4">
                                 <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">
@@ -40,17 +52,14 @@ export default function Creditos() {
                                 </p>
                             </div>
 
-                            {/* Duas colunas lado a lado, alinhadas verticalmente */}
+                            {/* Duas colunas lado a lado */}
                             <div className="grid grid-cols-2 gap-6 text-sm text-[#4A5568]">
-                                {/* Coluna 1 */}
                                 <div className="space-y-1">
                                     <p><span className="font-semibold">Área:</span> {c.area}</p>
                                     <p><span className="font-semibold">Fase:</span> {c.fase}</p>
                                     <p><span className="font-semibold">Matéria:</span> {c.materia}</p>
                                     <p><span className="font-semibold">Deságio:</span> {c.desagio}%</p>
                                 </div>
-
-                                {/* Coluna 2 */}
                                 <div className="flex flex-col justify-between items-start h-full">
                                     <div>
                                         <p className="font-semibold">Cotas disponíveis:</p>
@@ -67,11 +76,7 @@ export default function Creditos() {
                         </Link>
                     );
                 })}
-
-
-
             </div>
-
         </NavbarLayout>
     );
 }
