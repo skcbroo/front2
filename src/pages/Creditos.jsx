@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
 
-export default function Creditos() {
+export default function Creditos() {//
     const [creditos, setCreditos] = useState([]);
 
     useEffect(() => {
