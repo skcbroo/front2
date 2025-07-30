@@ -27,9 +27,11 @@ export default function Creditos() {
                         cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
                         andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
                         pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
+                        disponivel: { texto: "Disponível", cor: "bg-gray-200 text-gray-800" },
                     };
 
-                    const statusInfo = statusMap[c.status] || { texto: "Desconhecido", cor: "bg-gray-200 text-gray-700" };
+                    const statusChave = (c.status || "").toLowerCase().trim();
+                    const statusInfo = statusMap[statusChave] || { texto: "Desconhecido", cor: "bg-gray-200 text-gray-700" };
 
                     return (
                         <Link
