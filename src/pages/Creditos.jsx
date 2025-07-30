@@ -25,7 +25,7 @@ export default function Creditos() {//
 
                     const statusMap = {
                         cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
-                        em andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
+                        andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
                         pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
                         disponivel: { texto: "Disponível", cor: "bg-gray-200 text-gray-800" },
                     };
