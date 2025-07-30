@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
 
-export default function Creditos() {//
+export default function Creditos() {
     const [creditos, setCreditos] = useState([]);
 
     useEffect(() => {
@@ -12,6 +12,25 @@ export default function Creditos() {//
             .catch((err) => console.error("Erro ao buscar créditos:", err));
     }, []);
 
+    const statusMap = {
+        cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
+        andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
+        pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
+        disponivel: { texto: "Disponível", cor: "bg-gray-200 text-gray-800" },
+    };
+
+    const ordemStatus = {
+        cotizando: 0,
+        andamento: 1,
+        pago: 2,
+    };
+
+    const creditosOrdenados = [...creditos].sort((a, b) => {
+        const statusA = (a.status || "").toLowerCase().trim();
+        const statusB = (b.status || "").toLowerCase().trim();
+        return (ordemStatus[statusA] ?? 99) - (ordemStatus[statusB] ?? 99);
+    });
+
     return (
         <NavbarLayout>
             <h2 className="text-2xl font-bold text-center mb-6 select-none cursor-default">
@@ -19,19 +38,15 @@ export default function Creditos() {//
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto select-none cursor-default">
-                {creditos.map((c) => {
+                {creditosOrdenados.map((c) => {
                     const adquiridas = c.cotas?.reduce((soma, cota) => soma + cota.quantidade, 0) || 0;
                     const disponiveis = c.quantidadeCotas - c.cotasAdquiridas;
 
-                    const statusMap = {
-                        cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
-                        andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
-                        pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
-                        disponivel: { texto: "Disponível", cor: "bg-gray-200 text-gray-800" },
-                    };
-
                     const statusChave = (c.status || "").toLowerCase().trim();
-                    const statusInfo = statusMap[statusChave] || { texto: "Desconhecido", cor: "bg-gray-200 text-gray-700" };
+                    const statusInfo = statusMap[statusChave] || {
+                        texto: "Desconhecido",
+                        cor: "bg-gray-200 text-gray-700",
+                    };
 
                     return (
                         <Link
