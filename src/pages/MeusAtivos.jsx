@@ -34,12 +34,12 @@ export default function MeusAtivos() {
         navigate(`/creditos/${id}`);
     }
 
- const statusMap = {
-    cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
-    andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
-    pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
-    disponivel: { texto: "Disponível", cor: "bg-gray-200 text-gray-800" },
-};
+    const statusMap = {
+        cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
+        andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
+        pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
+        disponivel: { texto: "Disponível", cor: "bg-gray-200 text-gray-800" },
+    };
 
     return (
         <NavbarLayout>
@@ -48,30 +48,32 @@ export default function MeusAtivos() {
                     Meus Ativos
                 </h2>
 
-               
-{ativos.map((ativo) => {
-    const precoPorCota = ativo.preco / ativo.quantidadeCotas;
-    const valorInvestido = precoPorCota * ativo.cotasCompradas;
-    const retornoEsperado = (ativo.valor / ativo.quantidadeCotas) * ativo.cotasCompradas;
+                {ativos.length === 0 ? (
+                    <p className="text-center text-gray-700">Você ainda não possui ativos adquiridos.</p>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto select-none cursor-default">
+                        {ativos.map((ativo) => {
+                            const precoPorCota = ativo.preco / ativo.quantidadeCotas;
+                            const valorInvestido = precoPorCota * ativo.cotasCompradas;
+                            const retornoEsperado = (ativo.valor / ativo.quantidadeCotas) * ativo.cotasCompradas;
 
-    // 🔽 Aqui o tratamento robusto de status
-    const statusRaw = ativo.status || ativo.creditoJudicial?.status || "";
-    const statusChave = statusRaw.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    const statusInfo = statusMap[statusChave] || {
-        texto: "Desconhecido",
-        cor: "bg-gray-200 text-gray-700",
-    };
+                            const statusRaw = ativo.status || ativo.creditoJudicial?.status || "";
+                            const statusChave = statusRaw.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                            const statusInfo = statusMap[statusChave] || {
+                                texto: "Desconhecido",
+                                cor: "bg-gray-200 text-gray-700",
+                            };
 
-    return (
-        <div
-            key={ativo.id}
-            className="bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md hover:shadow-lg transition-all px-6 py-5 text-[#2D3748] cursor-pointer"
-            onClick={() => irParaDetalhes(ativo.id)}
-        >
-            {/* Badge de status */}
-            <div className={`inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 ${statusInfo.cor}`}>
-                {statusInfo.texto}
-            </div>
+                            return (
+                                <div
+                                    key={ativo.id}
+                                    className="bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md hover:shadow-lg transition-all px-6 py-5 text-[#2D3748] cursor-pointer"
+                                    onClick={() => irParaDetalhes(ativo.id)}
+                                >
+                                    {/* Badge de status */}
+                                    <div className={`inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 ${statusInfo.cor}`}>
+                                        {statusInfo.texto}
+                                    </div>
 
                                     {/* Número do processo */}
                                     <div className="mb-4">
@@ -112,7 +114,6 @@ export default function MeusAtivos() {
                         })}
                     </div>
                 )}
-                {/* <GraficoRetorno /> */}
             </div>
         </NavbarLayout>
     );
