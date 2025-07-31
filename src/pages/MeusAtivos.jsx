@@ -57,7 +57,7 @@ export default function MeusAtivos() {
                             const valorInvestido = precoPorCota * ativo.cotasCompradas;
                             const retornoEsperado = (ativo.valor / ativo.quantidadeCotas) * ativo.cotasCompradas;
 
-                            const statusChave = (ativo.creditoJudicial?.status || "").toLowerCase().trim();
+                            const statusChave = (ativo.status || ativo.creditoJudicial?.status || "").toLowerCase().trim();
                             const statusInfo = statusMap[statusChave] || {
                                 texto: "Desconhecido",
                                 cor: "bg-gray-200 text-gray-700",
