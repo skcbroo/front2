@@ -60,8 +60,8 @@ export default function MeusAtivos() {
           </div>
         )}
 
-        {/* Gráfico após os cards */}
-        <GraficoRetorno />
+        {/* Gráfico após os cards 
+        <GraficoRetorno />*/}
       </div>
     </NavbarLayout>
   );
