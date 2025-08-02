@@ -68,6 +68,7 @@ const options = {
     y: {
       grid: { display: false }, // remove linha horizontal
       ticks: {
+         stepSize: 10000,
         callback: function (value) {
           return value.toLocaleString('pt-BR', {
             style: 'currency',
