@@ -32,7 +32,7 @@ export default function GraficoRetorno() {
   }, []);
 
   const valores = dados.map((d) => d.valor);
-  const maxY = Math.max(...valores, 0) + 10000;
+  const maxY = valores.length > 0 ? valores[valores.length - 1] : 0;
 
   const data = {
     labels: dados.map((d) => d.mes),
@@ -89,7 +89,7 @@ export default function GraficoRetorno() {
   return (
     <div
       style={{
-        backgroundColor: "rgba(255, 255, 255, 0.65)",
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
         borderRadius: "1rem",
         padding: "1rem",
       }}
