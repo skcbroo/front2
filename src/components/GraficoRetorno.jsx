@@ -32,7 +32,8 @@ export default function GraficoRetorno() {
   }, []);
 
   const valores = dados.map((d) => d.valor);
-  const maxY = valores.length > 0 ? valores[valores.length - 1] : 0;
+  const valorMax = valores.length > 0 ? valores[valores.length - 1] : 0;
+  const maxY = Math.ceil((valorMax + 1) / 10000) * 10000; // múltiplo de 10 mil acima do último valor
 
   const data = {
     labels: dados.map((d) => d.mes),
