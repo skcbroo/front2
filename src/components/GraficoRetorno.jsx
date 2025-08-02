@@ -48,37 +48,39 @@ export default function GraficoRetorno() {
     ],
   };
 
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false, // ❌ remove legenda
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const valor = context.parsed.y || 0;
-            return valor.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            });
-          },
-        },
-      },
+const options = {
+  responsive: true,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          return context.formattedValue;
+        }
+      }
     },
-    scales: {
-      y: {
-        ticks: {
-          callback: function (value) {
-            return value.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            });
-          },
-        },
-      },
+  },
+  scales: {
+    x: {
+      grid: { display: false }, // remove linha vertical
+      ticks: { color: '#4A5568' }
     },
-  };
+    y: {
+      grid: { display: false }, // remove linha horizontal
+      ticks: {
+        callback: function (value) {
+          return value.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 2
+          });
+        },
+        color: '#4A5568'
+      }
+    }
+  }
+};
+
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
