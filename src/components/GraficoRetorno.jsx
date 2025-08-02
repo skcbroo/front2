@@ -44,31 +44,35 @@ export default function GraficoRetorno() {
         <p>Carregando dados...</p>
       ) : (
         <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={dadosGrafico}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="mes" />
-            <YAxis
-              tickFormatter={(value) =>
-                value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
-              }
-            />
-            <Tooltip
-              formatter={(value) =>
-                value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
-              }
-            />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="valor"
-              stroke="#0074D9"
-              strokeWidth={2}
-              name="Retorno"
-              dot={{ r: 4 }}
-              activeDot={{ r: 6 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+  <LineChart
+    data={dadosGrafico}
+    margin={{ top: 10, right: 30, left: 60, bottom: 5 }} // <-- Aqui está o ajuste
+  >
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="mes" />
+    <YAxis
+      tickFormatter={(value) =>
+        value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+      }
+    />
+    <Tooltip
+      formatter={(value) =>
+        value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+      }
+    />
+    <Legend />
+    <Line
+      type="monotone"
+      dataKey="valor"
+      stroke="#0074D9"
+      strokeWidth={2}
+      name="Retorno"
+      dot={{ r: 4 }}
+      activeDot={{ r: 6 }}
+    />
+  </LineChart>
+</ResponsiveContainer>
+
       )}
     </div>
   );
