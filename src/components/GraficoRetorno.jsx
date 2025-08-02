@@ -1,26 +1,17 @@
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip } from "chart.js";
 import axios from "axios";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
 export default function GraficoRetorno() {
   const [dados, setDados] = useState([]);
 
-  const token = localStorage.getItem("token");
-
   useEffect(() => {
-    const carregar = async () => {
+    async function carregar() {
       try {
+        const token = localStorage.getItem("token");
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/retorno-projetado`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -28,64 +19,64 @@ export default function GraficoRetorno() {
       } catch (err) {
         console.error("Erro ao buscar retorno projetado:", err);
       }
-    };
+    }
 
     carregar();
   }, []);
 
-  const chartData = {
+  const data = {
     labels: dados.map((d) => d.mes),
     datasets: [
       {
         data: dados.map((d) => d.valor),
-        borderColor: "#007bff",
-        backgroundColor: "#007bff",
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        fill: false,
-        tension: 0.3,
+        borderColor: "#0074D9",
+        backgroundColor: "#0074D9",
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        tension: 0.4,
       },
     ],
   };
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: { display: false },
-    tooltip: {
-      callbacks: {
-        label: function (context) {
-          return context.formattedValue;
-        }
-      }
-    },
-  },
-  scales: {
-    x: {
-      grid: { display: false }, // remove linha vertical
-      ticks: { color: '#4A5568' }
-    },
-    y: {
-      grid: { display: false }, // remove linha horizontal
-      ticks: {
-         stepSize: 10000,
-        callback: function (value) {
-          return value.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-            minimumFractionDigits: 2
-          });
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return context.parsed.y.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+          },
+          title: () => null,
         },
-        color: '#4A5568'
-      }
-    }
-  }
-};
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: "#4A5568" },
+      },
+      y: {
+        min: 0,
+        max: 60000,
+        ticks: {
+          stepSize: 10000,
+          callback: function (value) {
+            return value.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+              minimumFractionDigits: 2,
+            });
+          },
+          color: "#4A5568",
+        },
+        grid: { display: false },
+      },
+    },
+  };
 
-
-  return (
-    <div className="bg-white p-6 rounded-xl shadow-md">
-      <Line data={chartData} options={chartOptions} />
-    </div>
-  );
+  return <Line data={data} options={options} />;
 }
