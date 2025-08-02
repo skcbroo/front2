@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NavbarLayout from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import GraficoRetorno from "../components/GraficoRetorno";
+
 
 export default function MeusAtivos() {
     const [ativos, setAtivos] = useState([]);
@@ -134,6 +136,7 @@ export default function MeusAtivos() {
                                 );
                             })}
                     </div>
+            <GraficoRetorno />
                 )}
             </div>
         </NavbarLayout>
