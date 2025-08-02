@@ -1,79 +1,88 @@
+import { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import axios from "axios";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
   Tooltip,
   Legend,
-  ResponsiveContainer,
-} from "recharts";
-import { useEffect, useState } from "react";
-import axios from "axios";
+} from "chart.js";
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export default function GraficoRetorno() {
-  const [dadosGrafico, setDadosGrafico] = useState([]);
-  const [carregando, setCarregando] = useState(true);
+  const [dados, setDados] = useState([]);
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const carregar = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/retorno-projetado`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDados(res.data);
+      } catch (err) {
+        console.error("Erro ao buscar retorno projetado:", err);
+      }
+    };
 
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/api/retorno-projetado`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        // Opcional: garantir que os dados venham ordenados por mês
-        // const ordenado = res.data.sort((a, b) =>
-        //   new Date("01/" + a.mes) - new Date("01/" + b.mes)
-        // );
-        setDadosGrafico(res.data);
-        setCarregando(false);
-      })
-      .catch((err) => {
-        console.error("Erro ao carregar gráfico:", err);
-        setCarregando(false);
-      });
+    carregar();
   }, []);
 
+  const chartData = {
+    labels: dados.map((d) => d.mes),
+    datasets: [
+      {
+        data: dados.map((d) => d.valor),
+        borderColor: "#007bff",
+        backgroundColor: "#007bff",
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        fill: false,
+        tension: 0.3,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false, // ❌ remove legenda
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const valor = context.parsed.y || 0;
+            return valor.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: function (value) {
+            return value.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+          },
+        },
+      },
+    },
+  };
+
   return (
-    <div className="mt-10 bg-white p-4 rounded-xl shadow-md">
-      <h3 className="text-lg font-semibold mb-2">Gráfico de Retorno Projetado</h3>
-
-      {carregando ? (
-        <p>Carregando dados...</p>
-      ) : (
-        <ResponsiveContainer width="100%" height={400}>
-  <LineChart
-    data={dadosGrafico}
-    margin={{ top: 10, right: 30, left: 60, bottom: 5 }} // <-- Aqui está o ajuste
-  >
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="mes" />
-    <YAxis
-      tickFormatter={(value) =>
-        value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
-      }
-    />
-    <Tooltip
-      formatter={(value) =>
-        value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
-      }
-    />
-    <Legend />
-    <Line
-      type="monotone"
-      dataKey="valor"
-      stroke="#0074D9"
-      strokeWidth={2}
-      name="Retorno"
-      dot={{ r: 4 }}
-      activeDot={{ r: 6 }}
-    />
-  </LineChart>
-</ResponsiveContainer>
-
-      )}
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <Line data={chartData} options={chartOptions} />
     </div>
   );
 }
