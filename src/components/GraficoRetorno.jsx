@@ -23,6 +23,10 @@ export default function GraficoRetorno() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+        // Opcional: garantir que os dados venham ordenados por mês
+        // const ordenado = res.data.sort((a, b) =>
+        //   new Date("01/" + a.mes) - new Date("01/" + b.mes)
+        // );
         setDadosGrafico(res.data);
         setCarregando(false);
       })
@@ -39,12 +43,20 @@ export default function GraficoRetorno() {
       {carregando ? (
         <p>Carregando dados...</p>
       ) : (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={400}>
           <LineChart data={dadosGrafico}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
-            <YAxis unit="R$" />
-            <Tooltip formatter={(value) => `R$ ${value.toLocaleString("pt-BR")}`} />
+            <YAxis
+              tickFormatter={(value) =>
+                value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+              }
+            />
+            <Tooltip
+              formatter={(value) =>
+                value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+              }
+            />
             <Legend />
             <Line
               type="monotone"
@@ -52,6 +64,8 @@ export default function GraficoRetorno() {
               stroke="#0074D9"
               strokeWidth={2}
               name="Retorno"
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
             />
           </LineChart>
         </ResponsiveContainer>
