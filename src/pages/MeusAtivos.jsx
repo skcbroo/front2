@@ -136,8 +136,7 @@ export default function MeusAtivos() {
                                 );
                             })}
                     </div>
-            <GraficoRetorno />
-                )}
+                )}<GraficoRetorno />
             </div>
         </NavbarLayout>
     );
