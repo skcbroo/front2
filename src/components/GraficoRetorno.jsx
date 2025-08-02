@@ -91,10 +91,10 @@ export default function GraficoRetorno() {
   return (
     <div
       style={{
-        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
         borderRadius: "1rem",
         padding: "1rem",
-        height: "250px",
+        height: "300px",
       }}
     >
       <Line data={data} options={options} />
