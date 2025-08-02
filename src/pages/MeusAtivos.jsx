@@ -4,7 +4,6 @@ import NavbarLayout from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import GraficoRetorno from "../components/GraficoRetorno";
 
-
 export default function MeusAtivos() {
     const [ativos, setAtivos] = useState([]);
     const navigate = useNavigate();
@@ -136,7 +135,15 @@ export default function MeusAtivos() {
                                 );
                             })}
                     </div>
-                )}<GraficoRetorno />
+                )}
+
+                {/* Título + Gráfico */}
+                <div className="mt-10">
+                    <h3 className="text-xl font-semibold text-center mb-4 select-none cursor-default">
+                        Retorno Projetado
+                    </h3>
+                    <GraficoRetorno />
+                </div>
             </div>
         </NavbarLayout>
     );
