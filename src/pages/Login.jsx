@@ -59,10 +59,10 @@ export default function Login() {
               className="mx-auto h-28 mb-6"
               draggable="false"
             />
-            <p className="text-2xl font-semibold text-black/90 mb-1">
+            <p className="text-black/80 text-lg">
               Transformando sentenças judiciais
             </p>
-            <p className="text-2xl font-semibold text-black/90 mb-1">
+            <p className="text-black/80 text-lg">
               em oportunidades reais
             </p>
           </div>
@@ -195,6 +195,7 @@ export default function Login() {
     </NavbarLayout>
   );
 }
+
 
 
 
