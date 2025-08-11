@@ -49,7 +49,7 @@ export default function Login() {
     <NavbarLayout>
       <h1 className="sr-only">Midlej Capital — Plataforma de Créditos Judiciais</h1>
 
-      <div className="flex min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B]">
+     <div className="flex min-h-screen bg-transparent">
         {/* Lateral esquerda (branding) */}
         <section className="hidden lg:flex flex-1 items-center justify-center select-none cursor-default">
           <div className="max-w-lg text-center px-10">
@@ -195,3 +195,4 @@ export default function Login() {
     </NavbarLayout>
   );
 }
+
