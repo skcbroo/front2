@@ -44,7 +44,7 @@ export default function Home() {
             {/* Ilustração/Logo */}
             <div className="flex justify-center md:justify-end">
               <img
-                src="/logonova.png"
+                src="/banner-sobe-burtin.jpg"
                 alt="Midlej Capital"
                 className="h-28 md:h-36 select-none"
                 draggable="false"
