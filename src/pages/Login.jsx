@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import NavbarLayout from "../components/Navbar";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,10 @@ export default function Login() {
   }
 
   return (
+     <NavbarLayout>
+      {/* Título oculto para acessibilidade/SEO */}
+      <h1 className="sr-only">Midlej Capital — Plataforma de Créditos Judiciais</h1>
+       
     <div className="flex min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white justify-center">
       {/* Lado esquerdo com logo e slogan */}
       <div className="flex-1 flex items-center justify-center p-8 select-none cursor-default">
@@ -108,5 +113,7 @@ export default function Login() {
         </form>
       </div>
     </div>
+        </NavbarLayout>
   );
 }
+
