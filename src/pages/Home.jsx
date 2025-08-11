@@ -182,7 +182,7 @@ export default function Home() {
       <span className="font-semibold">Email:</span> contato@midlejcapital.com.br
     </p>
     <p>
-      <span className="font-semibold">Telefone:</span> 61 9 9820-4846
+      <span className="font-semibold">Telefone:</span> 61 99620-4646
     </p>
   </div>
 </div>
