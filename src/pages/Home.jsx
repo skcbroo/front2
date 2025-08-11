@@ -44,7 +44,7 @@ export default function Home() {
             {/* Imagem */}
             <div className="flex justify-center md:justify-end">
               <img
-                src="/banner-sobe-burtin.jpg"
+                src="/buss.jpg"
                 alt="Reunião de negócios"
                 className="w-48 md:w-72 lg:w-96 rounded-lg object-cover select-none"
                 draggable="false"
