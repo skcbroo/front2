@@ -1,7 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavbarLayout({ children }) {
     const role = localStorage.getItem("role");
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("role");
+        localStorage.removeItem("token"); // remove token também
+        navigate("/login"); // redireciona para página de login
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white">
@@ -49,9 +56,12 @@ export default function NavbarLayout({ children }) {
                                 </>
                             )}
 
-                            <Link to="/" className="hover:underline cursor-pointer select-none">
+                            <button
+                                onClick={handleLogout}
+                                className="hover:underline cursor-pointer select-none bg-transparent border-none text-white"
+                            >
                                 Sair
-                            </Link>
+                            </button>
                         </>
                     ) : (
                         <Link to="/login" className="hover:underline cursor-pointer select-none">
