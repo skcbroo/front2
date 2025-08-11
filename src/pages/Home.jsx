@@ -165,9 +165,9 @@ export default function Home() {
       <footer className="bg-transparent text-sm mt-12">
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-6 text-[#2D3748]">
           <p>
-            A MIDLEJ Capital detém uma plataforma digital que atua como correspondente Bancário para facilitar
+            A MIDLEJ Capital detém uma plataforma digital que atua como correspondente bancário para facilitar
             o processo de contratação de empréstimos. A MIDLEJ Capital não é instituição financeira e não
-            fornece crédito ao mercado. A MIDLEJ Capital atua como Correspondente Bancário, seguimos as
+            fornece crédito ao mercado. A MIDLEJ Capital atua como correspondente bancário, seguimos as
             diretrizes da Resolução CMN Nº 4.935 do Banco Central do Brasil. A taxa de juros praticada no
             produto de crédito pessoal pode variar de 15,80% a 17,90% a.m. (481,44% a 621,38% a.a.). Nossa
             empresa tem o compromisso de total transparência com nossos clientes. Antes de iniciar o
