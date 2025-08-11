@@ -167,24 +167,26 @@ export default function Home() {
       aplicáveis, impostos (IOF) e o custo efetivo total (CET).
     </p>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div>
-        <h4 className="text-lg font-bold text-[#1A202C]">MIDLEJ</h4>
-        <p>Capital</p>
-        <p className="mt-2">© 2023 by Midlej Tecnology.</p>
-      </div>
-      <div>
-        <p>
-          <span className="font-semibold">Endereço:</span> QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF.
-        </p>
-        <p>
-          <span className="font-semibold">Email:</span> contato@midlejcapital.com.br
-        </p>
-        <p>
-          <span className="font-semibold">Telefone:</span> 61 9 9820-4846
-        </p>
-      </div>
-    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center text-center md:text-left">
+  <div className="flex flex-col items-center md:items-center">
+    <h4 className="text-lg font-bold text-[#1A202C]">MIDLEJ</h4>
+    <p>Capital</p>
+    <p className="mt-2">© 2023 by Midlej Tecnology.</p>
+  </div>
+  
+  <div className="flex flex-col items-center md:items-center">
+    <p>
+      <span className="font-semibold">Endereço:</span> QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF.
+    </p>
+    <p>
+      <span className="font-semibold">Email:</span> contato@midlejcapital.com.br
+    </p>
+    <p>
+      <span className="font-semibold">Telefone:</span> 61 9 9820-4846
+    </p>
+  </div>
+</div>
+
   </div>
 </footer>
 
