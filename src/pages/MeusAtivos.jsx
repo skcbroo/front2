@@ -49,6 +49,8 @@ export default function MeusAtivos() {
         disponivel: 3,
     };
 
+    const temCotas = ativos.some(a => (a.cotasCompradas ?? 0) > 0);
+
     return (
         <NavbarLayout>
             <div className="max-w-7xl mx-auto p-4">
@@ -57,7 +59,9 @@ export default function MeusAtivos() {
                 </h2>
 
                 {ativos.length === 0 ? (
-                    <p className="text-center text-gray-700">Você ainda não possui ativos adquiridos.</p>
+                    <p className="text-center text-gray-700">
+                        Você ainda não possui ativos adquiridos.
+                    </p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto select-none cursor-default">
                         {[...ativos]
@@ -137,13 +141,15 @@ export default function MeusAtivos() {
                     </div>
                 )}
 
-                {/* Título + Gráfico */}
-                <div className="mt-10">
-                    <h3 className="text-xl font-semibold text-center mb-4 select-none cursor-default">
-                        Retorno Projetado
-                    </h3>
-                    <GraficoRetorno />
-                </div>
+                {/* Gráfico só aparece se houver pelo menos 1 cota */}
+                {temCotas && (
+                    <div className="mt-10">
+                        <h3 className="text-xl font-semibold text-center mb-4 select-none cursor-default">
+                            Retorno Projetado
+                        </h3>
+                        <GraficoRetorno />
+                    </div>
+                )}
             </div>
         </NavbarLayout>
     );
