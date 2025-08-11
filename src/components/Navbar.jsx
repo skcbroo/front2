@@ -6,8 +6,8 @@ export default function NavbarLayout({ children }) {
 
     const handleLogout = () => {
         localStorage.removeItem("role");
-        localStorage.removeItem("token"); // remove token também
-        navigate("/login"); // redireciona para página de login
+        localStorage.removeItem("token");
+        navigate("/login");
     };
 
     return (
@@ -15,14 +15,16 @@ export default function NavbarLayout({ children }) {
             {/* Navbar */}
             <nav className="bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white shadow-md px-6 py-2 flex items-center justify-between select-none">
 
-                {/* Logo */}
+                {/* Logo clicável */}
                 <div className="flex items-center gap-2">
-                    <img
-                        src="/logonova.png"
-                        alt="Logo"
-                        className="h-14"
-                        draggable="false"
-                    />
+                    <Link to="/">
+                        <img
+                            src="/logonova.png"
+                            alt="Logo"
+                            className="h-14 cursor-pointer"
+                            draggable="false"
+                        />
+                    </Link>
                 </div>
 
                 {/* Menu */}
