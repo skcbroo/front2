@@ -7,7 +7,7 @@ export default function NavbarLayout({ children }) {
     const handleLogout = () => {
         localStorage.removeItem("role");
         localStorage.removeItem("token");
-        navigate("/login");
+        navigate("/"); // Redireciona para a página inicial
     };
 
     return (
@@ -29,12 +29,12 @@ export default function NavbarLayout({ children }) {
 
                 {/* Menu */}
                 <div className="flex gap-4 text-sm">
+                    <Link to="/creditos" className="hover:underline cursor-pointer select-none">
+                        Créditos
+                    </Link>
+
                     {role ? (
                         <>
-                            <Link to="/creditos" className="hover:underline cursor-pointer select-none">
-                                Créditos
-                            </Link>
-
                             {role === "cliente" && (
                                 <Link to="/meus-ativos" className="hover:underline cursor-pointer select-none">
                                     Meus Ativos
@@ -80,5 +80,3 @@ export default function NavbarLayout({ children }) {
         </div>
     );
 }
-
-
