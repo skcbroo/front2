@@ -41,15 +41,15 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ilustração/Logo */}
+            {/* Imagem */}
             <div className="flex justify-center md:justify-end">
-  <img
-    src="/banner-sobe-burtin.jpg"
-    alt="Reunião de negócios"
-    className="w-48 md:w-72 lg:w-96 rounded-lg object-cover select-none"
-    draggable="false"
-  />
-</div>
+              <img
+                src="/banner-sobe-burtin.jpg"
+                alt="Reunião de negócios"
+                className="w-48 md:w-72 lg:w-96 rounded-lg object-cover select-none"
+                draggable="false"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -151,6 +151,41 @@ export default function Home() {
           />
         </div>
       </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#1A202C] text-gray-200 text-sm mt-12">
+        <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
+          <p>
+            A MIDLEJ Capital detém uma plataforma digital que atua como correspondente Bancário para facilitar
+            o processo de contratação de empréstimos. A MIDLEJ Capital não é instituição financeira e não
+            fornece crédito ao mercado. A MIDLEJ Capital atua como Correspondente Bancário, seguimos as
+            diretrizes da Resolução CMN Nº 4.935 do Banco Central do Brasil. A taxa de juros praticada no
+            produto de crédito pessoal pode variar de 15,80% a 17,90% a.m. (481,44% a 621,38% a.a.). Nossa
+            empresa tem o compromisso de total transparência com nossos clientes. Antes de iniciar o
+            preenchimento de uma proposta, será exibido de forma clara: a taxa de juros utilizada, tarifas
+            aplicáveis, impostos (IOF) e o custo efetivo total (CET).
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h4 className="text-lg font-bold">MIDLEJ</h4>
+              <p>Capital</p>
+              <p className="mt-2">© 2023 by Midlej Tecnology.</p>
+            </div>
+            <div>
+              <p>
+                <span className="font-semibold">Endereço:</span> QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF.
+              </p>
+              <p>
+                <span className="font-semibold">Email:</span> contato@midlejcapital.com.br
+              </p>
+              <p>
+                <span className="font-semibold">Telefone:</span> 61 9 9820-4846
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </NavbarLayout>
   );
 }
