@@ -154,7 +154,7 @@ export default function Home() {
 
       
      {/* FOOTER INSTITUCIONAL */}
-<footer className="bg-[#EBF4FF] border-t border-[#CBD5E1] text-sm mt-12">
+<footer className="bg-transparent text-sm mt-12">
   <div className="max-w-6xl mx-auto px-6 py-8 space-y-6 text-[#2D3748]">
     <p>
       A MIDLEJ Capital detém uma plataforma digital que atua como correspondente Bancário para facilitar
