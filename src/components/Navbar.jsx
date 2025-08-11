@@ -5,9 +5,10 @@ export default function NavbarLayout({ children }) {
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white">
-            {/* Navbar branca */}
-           <nav className="bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white shadow-md px-6 py-2 flex items-center justify-between select-none">
+            {/* Navbar */}
+            <nav className="bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white shadow-md px-6 py-2 flex items-center justify-between select-none">
 
+                {/* Logo */}
                 <div className="flex items-center gap-2">
                     <img
                         src="/logonova.png"
@@ -19,36 +20,44 @@ export default function NavbarLayout({ children }) {
 
                 {/* Menu */}
                 <div className="flex gap-4 text-sm">
-                    <Link to="/creditos" className="hover:underline cursor-pointer select-none">
-                        Créditos
-                    </Link>
-
-                    {role === "cliente" && (
-                        <Link to="/meus-ativos" className="hover:underline cursor-pointer select-none">
-                            Meus Ativos
-                        </Link>
-                    )}
-
-                    {role === "admin" && (
+                    {role ? (
                         <>
-                            <Link to="/admin/dashboard" className="hover:underline cursor-pointer select-none">
-                                Dashboard
+                            <Link to="/creditos" className="hover:underline cursor-pointer select-none">
+                                Créditos
                             </Link>
-                            <Link to="/admin/creditos" className="hover:underline cursor-pointer select-none">
-                                Gerenciar Créditos
-                            </Link>
-                            <Link to="/admin/cotas" className="hover:underline cursor-pointer select-none">
-                                Gerenciar Cotas
-                            </Link>
-                            <Link to="/admin/usuarios" className="hover:underline cursor-pointer select-none">
-                                Usuários
+
+                            {role === "cliente" && (
+                                <Link to="/meus-ativos" className="hover:underline cursor-pointer select-none">
+                                    Meus Ativos
+                                </Link>
+                            )}
+
+                            {role === "admin" && (
+                                <>
+                                    <Link to="/admin/dashboard" className="hover:underline cursor-pointer select-none">
+                                        Dashboard
+                                    </Link>
+                                    <Link to="/admin/creditos" className="hover:underline cursor-pointer select-none">
+                                        Gerenciar Créditos
+                                    </Link>
+                                    <Link to="/admin/cotas" className="hover:underline cursor-pointer select-none">
+                                        Gerenciar Cotas
+                                    </Link>
+                                    <Link to="/admin/usuarios" className="hover:underline cursor-pointer select-none">
+                                        Usuários
+                                    </Link>
+                                </>
+                            )}
+
+                            <Link to="/" className="hover:underline cursor-pointer select-none">
+                                Sair
                             </Link>
                         </>
+                    ) : (
+                        <Link to="/login" className="hover:underline cursor-pointer select-none">
+                            Entrar
+                        </Link>
                     )}
-
-                    <Link to="/" className="hover:underline cursor-pointer select-none">
-                        Sair
-                    </Link>
                 </div>
             </nav>
 
