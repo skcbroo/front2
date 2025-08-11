@@ -1,119 +1,197 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [lembrar, setLembrar] = useState(false);
+  const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // carrega email salvo
+  useEffect(() => {
+    const saved = localStorage.getItem("login_email");
+    if (saved) {
+      setEmail(saved);
+      setLembrar(true);
+    }
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setErro("");
+    setLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-        email,
-        senha,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        { email, senha }
+      );
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
+
+      // persiste e-mail se marcar lembrar
+      if (lembrar) localStorage.setItem("login_email", email);
+      else localStorage.removeItem("login_email");
+
       navigate("/creditos");
     } catch (err) {
-      alert("Credenciais inválidas");
+      setErro("E-mail ou senha inválidos.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-     <NavbarLayout>
-      {/* Título oculto para acessibilidade/SEO */}
+    <NavbarLayout>
       <h1 className="sr-only">Midlej Capital — Plataforma de Créditos Judiciais</h1>
-       
-    <div className="flex min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white justify-center">
-      {/* Lado esquerdo com logo e slogan */}
-      <div className="flex-1 flex items-center justify-center p-8 select-none cursor-default">
-        <div className="max-w-md text-center">
-          <img
-            src="/logonova.png"
-            alt="Logo"
-            className="mx-auto h-28 mb-6"
-            draggable="false"
-          />
-          <p className="text-xl font-semibold mb-1">Transformando sentenças judiciais</p>
-          <p className="text-lg text-white opacity-80">em oportunidades reais</p>
-        </div>
-      </div>
 
-      {/* Lado direito com formulário */}
-      <div className="flex-1 bg-white text-gray-800 flex items-center justify-center shadow-xl">
-        <form
-          onSubmit={handleSubmit}
-          className="w-full max-w-sm space-y-4 px-8 py-10 select-none cursor-default"
-        >
-          <h2 className="text-2xl font-semibold mb-4 text-center">
-            Acesso à Plataforma
-          </h2>
+      <div className="flex min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B]">
+        {/* Lateral esquerda (branding) */}
+        <section className="hidden lg:flex flex-1 items-center justify-center select-none cursor-default">
+          <div className="max-w-lg text-center px-10">
+            <img
+              src="/logonova.png"
+              alt="Midlej Capital"
+              className="mx-auto h-28 mb-6"
+              draggable="false"
+            />
+            <p className="text-2xl font-semibold text-white/90 mb-1">
+              Transformando sentenças judiciais
+            </p>
+            <p className="text-white/80 text-lg">
+              em oportunidades reais
+            </p>
+          </div>
+        </section>
 
-          <div>
-            <label className="block mb-1 font-medium">E-mail</label>
+        {/* Card de login */}
+        <section className="flex-1 flex items-center justify-center p-6">
+          <form
+            onSubmit={handleSubmit}
+            className="w-full max-w-md bg-white/90 backdrop-blur-xl text-gray-800 rounded-2xl shadow-2xl border border-white/40 px-8 py-10"
+            aria-labelledby="titulo-login"
+          >
+            <div className="lg:hidden mb-6 text-center select-none cursor-default">
+              <img src="/logonova.png" alt="" className="mx-auto h-16 mb-3" />
+              <p className="text-sm text-gray-600">
+                Transformando sentenças judiciais em oportunidades reais
+              </p>
+            </div>
+
+            <h2 id="titulo-login" className="text-2xl font-semibold text-center mb-6 select-none cursor-default">
+              Acesso à Plataforma
+            </h2>
+
+            {/* E-mail */}
+            <label className="block mb-1 font-medium select-none cursor-default" htmlFor="email">
+              E-mail
+            </label>
             <input
+              id="email"
               type="email"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
+              className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
               placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="email"
             />
-          </div>
 
-          <div>
-            <label className="block mb-1 font-medium">Senha</label>
-            <input
-              type="password"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
-              placeholder="********"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="flex justify-between items-center text-sm">
-            <label className="flex items-center">
-              <input type="checkbox" className="mr-2 cursor-pointer" />
-              Lembrar-me
+            {/* Senha */}
+            <label className="block mt-4 mb-1 font-medium select-none cursor-default" htmlFor="senha">
+              Senha
             </label>
-            <Link
-              to="/esqueci-senha"
-              className="text-[#222B3B] hover:underline"
-            >
-              Esqueci a senha
-            </Link>
-          </div>
+            <div className="relative">
+              <input
+                id="senha"
+                type={mostrarSenha ? "text" : "password"}
+                className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#222B3B] pr-12"
+                placeholder="********"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                onClick={() => setMostrarSenha((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
+                aria-label={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+                title={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+              >
+                {mostrarSenha ? (
+                  // Eye-off
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M3 3l18 18" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M10.58 10.58a3 3 0 104.24 4.24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9.88 4.24A10.94 10.94 0 0121 12a10.94 10.94 0 01-2.1 3.37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M6.61 6.61A10.94 10.94 0 003 12c2 3.5 5.5 6 9 6 1.01 0 1.99-.15 2.9-.44" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ) : (
+                  // Eye
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="12" r="3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </button>
+            </div>
 
-          <div className="flex gap-2">
-            <button
-              type="submit"
-              className="bg-[#222B3B] hover:bg-[#1a212f] text-white w-full p-2 rounded transition"
-            >
-              Entrar
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate("/cadastro")}
-              className="border border-[#222B3B] text-[#222B3B] w-full p-2 rounded hover:bg-[#f0f1f3] transition"
-            >
-              Cadastrar
-            </button>
-          </div>
+            {/* Lembrar + Esqueci */}
+            <div className="flex justify-between items-center text-sm mt-3">
+              <label className="flex items-center select-none cursor-default">
+                <input
+                  type="checkbox"
+                  className="mr-2 cursor-pointer"
+                  checked={lembrar}
+                  onChange={(e) => setLembrar(e.target.checked)}
+                />
+                Lembrar-me
+              </label>
+              <Link to="/esqueci-senha" className="text-[#222B3B] hover:underline">
+                Esqueci a senha
+              </Link>
+            </div>
 
-          <div className="text-center text-sm mt-4 text-gray-500">
-            © 2025. Todos os direitos reservados.
-          </div>
-        </form>
+            {/* Erro */}
+            {erro && (
+              <div className="mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-3">
+                {erro}
+              </div>
+            )}
+
+            {/* Ações */}
+            <div className="flex gap-2 mt-6">
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full p-3 rounded-lg text-white transition ${
+                  loading
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-[#222B3B] hover:bg-[#1a212f]"
+                }`}
+              >
+                {loading ? "Entrando..." : "Entrar"}
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate("/cadastro")}
+                className="w-full p-3 rounded-lg border border-[#222B3B] text-[#222B3B] hover:bg-[#f0f1f3] transition"
+              >
+                Cadastrar
+              </button>
+            </div>
+
+            <p className="text-center text-xs mt-6 text-gray-500 select-none cursor-default">
+              © 2025. Todos os direitos reservados.
+            </p>
+          </form>
+        </section>
       </div>
-    </div>
-        </NavbarLayout>
+    </NavbarLayout>
   );
 }
-
