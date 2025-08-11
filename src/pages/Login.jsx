@@ -62,7 +62,7 @@ export default function Login() {
             <p className="text-2xl font-semibold text-black/90 mb-1">
               Transformando sentenças judiciais
             </p>
-            <p className="text-black/80 text-lg">
+            <p className="text-2xl font-semibold text-black/90 mb-1">
               em oportunidades reais
             </p>
           </div>
@@ -195,5 +195,6 @@ export default function Login() {
     </NavbarLayout>
   );
 }
+
 
 
