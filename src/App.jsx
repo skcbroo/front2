@@ -20,8 +20,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/home" element={<Home />} />
-                <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/esqueci-senha" element={<EsqueciSenha />} />
                 <Route path="/resetar-senha/:token" element={<ResetarSenha />} />
@@ -39,4 +39,5 @@ function App() {
 }
 
 export default App;
+
 
