@@ -43,13 +43,13 @@ export default function Home() {
 
             {/* Ilustração/Logo */}
             <div className="flex justify-center md:justify-end">
-              <img
-                src="/banner-sobe-burtin.jpg"
-                alt="Midlej Capital"
-                className="h-28 md:h-36 select-none"
-                draggable="false"
-              />
-            </div>
+  <img
+    src="/banner-sobe-burtin.jpg"
+    alt="Reunião de negócios"
+    className="w-48 md:w-72 lg:w-96 rounded-lg object-cover select-none"
+    draggable="false"
+  />
+</div>
           </div>
         </div>
       </section>
