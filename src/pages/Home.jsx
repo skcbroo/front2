@@ -170,8 +170,8 @@ export default function Home() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center text-center md:text-left">
   <div className="flex flex-col items-center md:items-center">
     <h4 className="text-lg font-bold text-[#1A202C]">MIDLEJ</h4>
-    <p>Capital</p>
     <p className="mt-2">© 2023 by Midlej Tecnology.</p>
+    <p className="mt-2">CNPJ:35.340.252/0001-44</p>
   </div>
   
   <div className="flex flex-col items-center md:items-center">
