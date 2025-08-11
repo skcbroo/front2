@@ -66,7 +66,7 @@ export default function NavbarLayout({ children }) {
                             </button>
                         </>
                     ) : (
-                        <Link to="/" className="hover:underline cursor-pointer select-none">
+                        <Link to="/login" className="hover:underline cursor-pointer select-none">
                             Entrar
                         </Link>
                     )}
@@ -80,4 +80,5 @@ export default function NavbarLayout({ children }) {
         </div>
     );
 }
+
 
