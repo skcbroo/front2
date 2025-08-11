@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
 
 export default function Home() {
+  const falarComEquipe = () => {
+    const numeroEmpresa = "5561996204646";
+    const mensagem = encodeURIComponent(
+      "Olá, gostaria de falar com a equipe da Midlej Capital para saber mais sobre as oportunidades de crédito."
+    );
+    const link = `https://wa.me/${numeroEmpresa}?text=${mensagem}`;
+    window.open(link, "_blank");
+  };
+
   return (
     <NavbarLayout>
       {/* Título oculto para acessibilidade/SEO */}
@@ -26,18 +35,18 @@ export default function Home() {
               </p>
 
               <div className="mt-5 flex flex-wrap gap-3">
-                <Link
-                  to="/creditos"
+                <a
+                  href="/creditos"
                   className="inline-block bg-[#2B6CB0] text-white font-semibold rounded-lg px-5 py-2 hover:opacity-90 transition"
                 >
                   Ver créditos disponíveis
-                </Link>
-                <Link
-                  to="/contato"
+                </a>
+                <button
+                  onClick={falarComEquipe}
                   className="inline-block bg-white text-[#2B6CB0] border border-[#CBD5E1] font-semibold rounded-lg px-5 py-2 hover:bg-[#F7FAFC] transition"
                 >
                   Fale com a equipe
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -111,18 +120,18 @@ export default function Home() {
           </p>
 
           <div className="mt-4 flex gap-3 justify-center">
-            <Link
-              to="/creditos"
+            <a
+              href="/creditos"
               className="inline-block bg-[#2B6CB0] text-white font-semibold rounded-lg px-5 py-2 hover:opacity-90 transition"
             >
               Acessar créditos
-            </Link>
-            <Link
-              to="/contato"
+            </a>
+            <button
+              onClick={falarComEquipe}
               className="inline-block bg-white text-[#2B6CB0] border border-[#CBD5E1] font-semibold rounded-lg px-5 py-2 hover:bg-[#F7FAFC] transition"
             >
               Entrar em contato
-            </Link>
+            </button>
           </div>
         </div>
       </section>
@@ -152,44 +161,41 @@ export default function Home() {
         </div>
       </section>
 
-      
-     {/* FOOTER INSTITUCIONAL */}
-<footer className="bg-transparent text-sm mt-12">
-  <div className="max-w-6xl mx-auto px-6 py-8 space-y-6 text-[#2D3748]">
-    <p>
-      A MIDLEJ Capital detém uma plataforma digital que atua como correspondente Bancário para facilitar
-      o processo de contratação de empréstimos. A MIDLEJ Capital não é instituição financeira e não
-      fornece crédito ao mercado. A MIDLEJ Capital atua como Correspondente Bancário, seguimos as
-      diretrizes da Resolução CMN Nº 4.935 do Banco Central do Brasil. A taxa de juros praticada no
-      produto de crédito pessoal pode variar de 15,80% a 17,90% a.m. (481,44% a 621,38% a.a.). Nossa
-      empresa tem o compromisso de total transparência com nossos clientes. Antes de iniciar o
-      preenchimento de uma proposta, será exibido de forma clara: a taxa de juros utilizada, tarifas
-      aplicáveis, impostos (IOF) e o custo efetivo total (CET).
-    </p>
+      {/* FOOTER INSTITUCIONAL */}
+      <footer className="bg-transparent text-sm mt-12">
+        <div className="max-w-6xl mx-auto px-6 py-8 space-y-6 text-[#2D3748]">
+          <p>
+            A MIDLEJ Capital detém uma plataforma digital que atua como correspondente Bancário para facilitar
+            o processo de contratação de empréstimos. A MIDLEJ Capital não é instituição financeira e não
+            fornece crédito ao mercado. A MIDLEJ Capital atua como Correspondente Bancário, seguimos as
+            diretrizes da Resolução CMN Nº 4.935 do Banco Central do Brasil. A taxa de juros praticada no
+            produto de crédito pessoal pode variar de 15,80% a 17,90% a.m. (481,44% a 621,38% a.a.). Nossa
+            empresa tem o compromisso de total transparência com nossos clientes. Antes de iniciar o
+            preenchimento de uma proposta, será exibido de forma clara: a taxa de juros utilizada, tarifas
+            aplicáveis, impostos (IOF) e o custo efetivo total (CET).
+          </p>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center text-center md:text-left">
-  <div className="flex flex-col items-center md:items-center">
-    <h4 className="text-lg font-bold text-[#1A202C]">MIDLEJ CAPITAL</h4>
-    <p className="mt-2">© 2023 by Midlej Tecnology.</p>
-    <p className="mt-2">CNPJ:35.340.252/0001-44</p>
-  </div>
-  
-  <div className="flex flex-col items-center md:items-center">
-    <p>
-      <span className="font-semibold">Endereço:</span> QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF.
-    </p>
-    <p>
-      <span className="font-semibold">Email:</span> contato@midlejcapital.com.br
-    </p>
-    <p>
-      <span className="font-semibold">Telefone:</span> 61 99620-4646
-    </p>
-  </div>
-</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center text-center md:text-left">
+            <div className="flex flex-col items-center md:items-center">
+              <h4 className="text-lg font-bold text-[#1A202C]">MIDLEJ CAPITAL</h4>
+              <p className="mt-2">© 2023 by Midlej Tecnology.</p>
+              <p className="mt-2">CNPJ:35.340.252/0001-44</p>
+            </div>
 
-  </div>
-</footer>
-
+            <div className="flex flex-col items-center md:items-center">
+              <p>
+                <span className="font-semibold">Endereço:</span> QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF.
+              </p>
+              <p>
+                <span className="font-semibold">Email:</span> contato@midlejcapital.com.br
+              </p>
+              <p>
+                <span className="font-semibold">Telefone:</span> 61 99620-4646
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </NavbarLayout>
   );
 }
