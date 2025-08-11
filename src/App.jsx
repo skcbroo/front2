@@ -12,6 +12,7 @@ import AdminCotas from "./pages/AdminCotas";
 import EsqueciSenha from "./pages/EsqueciSenha";
 import ResetarSenha from "./pages/ResetarSenha";
 import VerificarEmail from "./pages/VerificarEmail";
+import Home from "./pages/Home";
 
 
 
@@ -19,6 +20,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/home" element={<Home />} />
                 <Route path="/" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/esqueci-senha" element={<EsqueciSenha />} />
@@ -37,3 +39,4 @@ function App() {
 }
 
 export default App;
+
