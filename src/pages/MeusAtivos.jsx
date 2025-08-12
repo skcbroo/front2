@@ -178,37 +178,47 @@ export default function MeusAtivos() {
 
         {temCotas && (
           <div className="mt-10">
-            <div className="max-w-4xl mx-auto text-gray-800">
-              <h3 className="text-xl font-semibold text-center mb-6 select-none cursor-default">
-                Resumo Financeiro
-              </h3>
-              <div className="flex flex-col gap-3 text-sm text-center md:text-left px-4 md:px-0">
-                <div>
-                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Valor aplicado</p>
-                  <p className="text-lg font-bold">
-                    {valorAplicado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Retorno projetado</p>
-                  <p className="text-lg font-bold">
-                    {retornoProjetado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Rentabilidade projetada</p>
-                  <p className="text-lg font-bold">
-                    {rentabilidade.toFixed(2)}%
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Retorno atual</p>
-                  <p className="text-lg font-bold">
-                    {retornoAtual.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Bloco refinado do resumo financeiro */}
+<div className="mt-10 max-w-4xl mx-auto">
+  <h3 className="text-xl font-semibold text-center text-gray-800 mb-6 select-none cursor-default">
+    Resumo Financeiro
+  </h3>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-gray-700 text-center">
+    <div>
+      <p className="uppercase text-xs font-semibold tracking-wider text-gray-500">
+        Valor Aplicado
+      </p>
+      <p className="text-lg font-bold">
+        {valorAplicado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+      </p>
+    </div>
+    <div>
+      <p className="uppercase text-xs font-semibold tracking-wider text-gray-500">
+        Retorno Projetado
+      </p>
+      <p className="text-lg font-bold">
+        {retornoProjetado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+      </p>
+    </div>
+    <div>
+      <p className="uppercase text-xs font-semibold tracking-wider text-gray-500">
+        Rentabilidade Projetada
+      </p>
+      <p className="text-lg font-bold">
+        {rentabilidade.toFixed(2)}%
+      </p>
+    </div>
+    <div>
+      <p className="uppercase text-xs font-semibold tracking-wider text-gray-500">
+        Retorno Atual
+      </p>
+      <p className="text-lg font-bold">
+        {retornoAtual.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+      </p>
+    </div>
+  </div>
+</div>
+
 
             <div className="mt-10">
               <GraficoRetorno />
