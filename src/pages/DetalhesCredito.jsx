@@ -59,16 +59,17 @@ export default function DetalhesCredito() {
     window.open(link, "_blank");
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseInt(e.target.value);
-    if (val > cotasDisponiveis) {
-      setQuantidadeSelecionada(cotasDisponiveis);
-    } else if (val < 1) {
-      setQuantidadeSelecionada(1);
-    } else {
-      setQuantidadeSelecionada(val);
-    }
-  };
+ const handleChange = (e) => {
+  const val = parseInt(e.target.value);
+  if (val > cotasDisponiveis) {
+    setQuantidadeSelecionada(cotasDisponiveis);
+  } else if (val < 1) {
+    setQuantidadeSelecionada(1);
+  } else {
+    setQuantidadeSelecionada(val);
+  }
+};
+
 
   return (
     <NavbarLayout>
@@ -166,3 +167,4 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
