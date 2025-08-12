@@ -101,7 +101,7 @@ export default function DetalhesCredito() {
 
             <hr className="my-4 border-t border-gray-300" />
 
-            <h2 className="text-lg font-semibold text-center text-[#2B6CB0]">Descrição</h2>
+            <h2 className="text-lg font-semibold text-center text-[#1A202C]">Descrição</h2>
             <p className="text-justify">{credito.descricao || '—'}</p>
           </div>
 
@@ -160,4 +160,5 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
