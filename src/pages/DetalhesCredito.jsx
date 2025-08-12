@@ -74,7 +74,7 @@ export default function DetalhesCredito() {
 
           {/* Processo + Valores + Descrição */}
           <div className="space-y-1 text-sm">
-            <p className="mb-1"><strong>Processo:</strong> {credito.numeroProcesso || '—'}</p>
+            {/* <p className="mb-1"><strong>Processo:</strong> {credito.numeroProcesso || '—'}</p>*/}
 
             <div className="space-y-1">
               <p><strong>Expectativa de recebimento:</strong>{' '}
@@ -155,3 +155,4 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
