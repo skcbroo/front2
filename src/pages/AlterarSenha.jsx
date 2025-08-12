@@ -8,93 +8,119 @@ export default function AlterarSenha() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setMensagem("");
     setErro("");
+    setMensagem("");
 
     if (novaSenha !== confirmarSenha) {
       setErro("A nova senha e a confirmação não coincidem.");
       return;
     }
 
+    setLoading(true);
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/api/auth/alterar-senha`,
         { senhaAtual, novaSenha },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setMensagem("Senha alterada com sucesso!");
+      setMensagem("Senha alterada com sucesso.");
       setSenhaAtual("");
       setNovaSenha("");
       setConfirmarSenha("");
-    } catch (err) {
-      setErro("Erro ao alterar senha. Verifique se a senha atual está correta.");
+    } catch {
+      setErro("Erro ao alterar senha. Verifique a senha atual.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <NavbarLayout>
-      <div className="flex justify-center items-center min-h-[calc(100vh-80px)] bg-[#F7FAFC]">
+      <div className="min-h-screen w-full flex items-center justify-center bg-transparent px-4">
         <form
           onSubmit={handleSubmit}
-          className="bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md px-8 py-6 w-full max-w-md"
+          className="w-full max-w-md bg-white/90 backdrop-blur-xl text-gray-800 rounded-2xl shadow-2xl border border-white/40 px-8 py-10"
+          aria-labelledby="titulo-alterar-senha"
         >
-          <h2 className="text-2xl font-bold text-[#2D3748] mb-6 text-center select-none cursor-default">
+          <div className="mb-6 text-center select-none cursor-default">
+            <img src="/logonova.png" alt="Midlej Capital" className="mx-auto h-16 mb-3" />
+          </div>
+
+          <h2
+            id="titulo-alterar-senha"
+            className="text-2xl font-semibold text-center mb-6 select-none cursor-default"
+          >
             Alterar Senha
           </h2>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Senha atual</label>
-              <input
-                type="password"
-                value={senhaAtual}
-                onChange={(e) => setSenhaAtual(e.target.value)}
-                required
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
+          {/* Senha atual */}
+          <label className="block mb-1 font-medium select-none cursor-default">
+            Senha atual
+          </label>
+          <input
+            type="password"
+            value={senhaAtual}
+            onChange={(e) => setSenhaAtual(e.target.value)}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
+            required
+          />
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Nova senha</label>
-              <input
-                type="password"
-                value={novaSenha}
-                onChange={(e) => setNovaSenha(e.target.value)}
-                required
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
+          {/* Nova senha */}
+          <label className="block mt-4 mb-1 font-medium select-none cursor-default">
+            Nova senha
+          </label>
+          <input
+            type="password"
+            value={novaSenha}
+            onChange={(e) => setNovaSenha(e.target.value)}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
+            required
+          />
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Confirmar nova senha</label>
-              <input
-                type="password"
-                value={confirmarSenha}
-                onChange={(e) => setConfirmarSenha(e.target.value)}
-                required
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-          </div>
+          {/* Confirmar nova senha */}
+          <label className="block mt-4 mb-1 font-medium select-none cursor-default">
+            Confirmar nova senha
+          </label>
+          <input
+            type="password"
+            value={confirmarSenha}
+            onChange={(e) => setConfirmarSenha(e.target.value)}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#222B3B]"
+            required
+          />
 
-          <button
-            type="submit"
-            className="w-full mt-6 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-all text-sm font-medium"
-          >
-            Salvar nova senha
-          </button>
-
+          {/* Mensagens */}
           {mensagem && (
-            <p className="mt-4 text-center text-green-600 text-sm">{mensagem}</p>
+            <div className="mt-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg p-3">
+              {mensagem}
+            </div>
           )}
           {erro && (
-            <p className="mt-4 text-center text-red-600 text-sm">{erro}</p>
+            <div className="mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-3">
+              {erro}
+            </div>
           )}
+
+          {/* Botão */}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full mt-6 p-3 rounded-lg text-white text-sm font-medium transition ${
+              loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#222B3B] hover:bg-[#1a212f]"
+            }`}
+          >
+            {loading ? "Salvando..." : "Salvar nova senha"}
+          </button>
+
+          <p className="text-center text-xs mt-6 text-gray-500 select-none cursor-default">
+            © 2025. Todos os direitos reservados.
+          </p>
         </form>
       </div>
     </NavbarLayout>
