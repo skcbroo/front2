@@ -80,20 +80,20 @@ export default function DetalhesCredito() {
           <div className="space-y-1 text-sm">
             <div className="space-y-1">
               <p><strong>Expectativa de recebimento:</strong>{' '}
-                <span className="text-green-700">
+                <span className="text-[#1A202C]">
                   {credito.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                 </span>
               </p>
               <p><strong>Valor de aquisição:</strong>{' '}
                 {credito.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
               </p>
-              <p><strong>Deságio:</strong>{' '}
+              {/* <p><strong>Deságio:</strong>{' '}
                 <span className="text-red-600 font-semibold">
                   {(desagio * 100).toFixed(2)}%
                 </span>
-              </p>
+              </p>/*}
               <p><strong>Lucro projetado:</strong>{' '}
-                <span className="text-blue-600 font-semibold">
+                <span className="text-green-700 font-semibold">
                   {lucroProjetado.toFixed(2)}%
                 </span>
               </p>
@@ -160,5 +160,6 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
 
