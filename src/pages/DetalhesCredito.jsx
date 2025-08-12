@@ -89,11 +89,12 @@ export default function DetalhesCredito() {
               </p>
              
               <p><strong>Lucro projetado:</strong>{' '}
-                <span className="text-green-700 font-semibold">
-                  {lucroProjetado.toFixed(2)}%
-                </span>
-              </p>
-              {credito.dataEstimadaPagamento && (
+  <span className="text-green-700 font-semibold">
+    {lucroProjetado.toFixed(2)}%
+  </span>
+</p>
+
+{credito.dataEstimadaPagamento && (
   <p><strong>Data estimada de recebimento:</strong>{' '}
     <span className="text-blue-700">
       {new Date(credito.dataEstimadaPagamento).toLocaleDateString('pt-BR')}
@@ -164,8 +165,6 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
-
-
 
 
 
