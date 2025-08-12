@@ -58,7 +58,7 @@ export default function GraficoRetorno() {
       {
         label: "CDI Acumulado",
         data: valoresCDI,
-        borderColor: "#FBBF24",           // Amarelo
+        borderColor: "#FBBF24",
         backgroundColor: "#FBBF24",
         pointRadius: 4,
         pointHoverRadius: 6,
@@ -72,12 +72,14 @@ export default function GraficoRetorno() {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: { top: 12, right: 12, left: 12 },
+      padding: { top: 12, right: 12, left: 12, bottom: 12 },
     },
     plugins: {
       legend: {
-        position: "top",
+        position: "bottom", // legenda na parte inferior
         labels: {
+          usePointStyle: true, // usa ponto no lugar da caixa
+          pointStyle: "circle", // formato do ponto igual ao do gráfico
           color: "#2D3748",
           font: { size: 12, weight: "bold" },
         },
