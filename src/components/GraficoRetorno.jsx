@@ -14,7 +14,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip)
 
 export default function GraficoRetorno() {
   const [dados, setDados] = useState([]);
-  const [cdi, setCdi] = useState([]);
 
   useEffect(() => {
     async function carregar() {
@@ -23,9 +22,7 @@ export default function GraficoRetorno() {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/retorno-projetado`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
-        setDados(res.data.retornoPorMes || []);
-        setCdi(res.data.comparativoCDI || []);
+        setDados(res.data);
       } catch (err) {
         console.error("Erro ao buscar retorno projetado:", err);
       }
@@ -34,34 +31,26 @@ export default function GraficoRetorno() {
   }, []);
 
   const valores = dados.map((d) => d.valor);
-  const valoresCDI = cdi.map((d) => d.valor);
+  const maxData = valores.length ? Math.max(...valores) : 0;
 
-  const maxData = Math.max(...valores, ...valoresCDI, 0);
+  // step: 20k se passar de 100k, senão 10k
   const stepSize = maxData > 100000 ? 20000 : 10000;
+
+  // maxY arredondado + folga (meio step) pra não cortar o ponto no topo
   const maxY = Math.ceil((maxData + stepSize * 0.5) / stepSize) * stepSize;
 
   const data = {
     labels: dados.map((d) => d.mes),
     datasets: [
       {
-        label: "Retorno Projetado",
         data: valores,
         borderColor: "#0074D9",
         backgroundColor: "#0074D9",
         pointRadius: 4,
         pointHoverRadius: 6,
         tension: 0.4,
+        // evita clipping nas bordas (pode ser número ou objeto)
         clip: { top: 8, right: 12, bottom: 0, left: 0 },
-      },
-      {
-        label: "CDI (15% a.a.)",
-        data: valoresCDI,
-        borderColor: "#2ECC40",
-        backgroundColor: "#2ECC40",
-        borderDash: [6, 4],
-        pointRadius: 3,
-        pointHoverRadius: 5,
-        tension: 0.3,
       },
     ],
   };
@@ -70,13 +59,11 @@ export default function GraficoRetorno() {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: { top: 12, right: 12, left: 12 },
+      // um respiro visual no topo/direita (ajuda contra corte)
+       padding: { top: 12, right: 12, left: 12 }, 
     },
     plugins: {
-      legend: {
-        display: true,
-        labels: { color: "#1a202c", font: { size: 12 } },
-      },
+      legend: { display: false },
       tooltip: {
         callbacks: {
           label: (ctx) =>
@@ -95,8 +82,9 @@ export default function GraficoRetorno() {
       },
       y: {
         min: 0,
+        // use suggestedMax + grace pra dar folga automática
         suggestedMax: maxY,
-        grace: "5%",
+        grace: "5%", // folguinha adicional acima
         ticks: {
           stepSize,
           callback: (value) =>
