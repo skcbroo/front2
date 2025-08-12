@@ -33,8 +33,13 @@ export default function DetalhesCredito() {
   const totalCotas = credito.quantidadeCotas || 0;
   const cotasAdquiridas = credito.cotasAdquiridas ?? 0;
   const cotasDisponiveis = totalCotas - cotasAdquiridas;
-  const precoPorCota = credito.preco / totalCotas;
+  const precoPorCota = totalCotas ? credito.preco / totalCotas : 0;
   const valorTotal = quantidadeSelecionada * precoPorCota;
+
+  // Lucro projetado percentual
+  const lucroProjetado = credito.preco
+    ? (credito.valor / credito.preco) * 100
+    : 0;
 
   const confirmarAquisicao = () => {
     if (cotasDisponiveis <= 0) {
@@ -72,10 +77,7 @@ export default function DetalhesCredito() {
         <div className="bg-[#EBF4FF] border border-[#CBD5E1] text-[#2D3748] p-4 sm:p-8 rounded-xl shadow-md w-full max-w-none sm:max-w-2xl space-y-4">
           <h1 className="text-2xl font-bold text-center text-[#1A202C]">Detalhes do Crédito</h1>
 
-          {/* Processo + Valores + Descrição */}
           <div className="space-y-1 text-sm">
-            {/* <p className="mb-1"><strong>Processo:</strong> {credito.numeroProcesso || '—'}</p>*/}
-
             <div className="space-y-1">
               <p><strong>Expectativa de recebimento:</strong>{' '}
                 <span className="text-green-700">
@@ -90,6 +92,11 @@ export default function DetalhesCredito() {
                   {(desagio * 100).toFixed(2)}%
                 </span>
               </p>
+              <p><strong>Lucro projetado:</strong>{' '}
+                <span className="text-green-700 font-semibold">
+                  {lucroProjetado.toFixed(2)}%
+                </span>
+              </p>
             </div>
 
             <hr className="my-4 border-t border-gray-300" />
@@ -100,7 +107,6 @@ export default function DetalhesCredito() {
 
           <hr className="border-gray-300" />
 
-          {/* Cotas */}
           <div className="space-y-1 text-sm">
             <p><strong>Cotas totais:</strong> {totalCotas}</p>
             <p><strong>Cotas disponíveis:</strong> {cotasDisponiveis}</p>
@@ -113,7 +119,6 @@ export default function DetalhesCredito() {
             )}
           </div>
 
-          {/* Aquisição */}
           {cotasDisponiveis > 0 ? (
             <>
               <hr className="border-gray-300" />
