@@ -210,7 +210,7 @@ export default function MeusAtivos() {
     </div>
     <div>
       <p className="uppercase text-xs font-semibold tracking-wider text-gray-500">
-        Retorno Atual
+        Retorno Presente
       </p>
       <p className="text-lg font-bold">
         {retornoAtual.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
