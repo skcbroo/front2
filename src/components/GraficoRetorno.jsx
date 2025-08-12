@@ -1,64 +1,106 @@
+import { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
   Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+} from "chart.js";
+import axios from "axios";
 
-export default function GraficoRetorno({ dados }) {
-  if (!dados || dados.length === 0) return null;
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
-  const maxValor = Math.max(...dados.map((d) => d.valor));
-  const tickStep = maxValor > 100000 ? 20000 : 10000;
+export default function GraficoRetorno() {
+  const [dados, setDados] = useState([]);
 
-  const ticks = [];
-  for (let i = 0; i <= Math.ceil(maxValor / tickStep) * tickStep; i += tickStep) {
-    ticks.push(i);
-  }
+  useEffect(() => {
+    async function carregar() {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/retorno-projetado`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDados(res.data);
+      } catch (err) {
+        console.error("Erro ao buscar retorno projetado:", err);
+      }
+    }
+
+    carregar();
+  }, []);
+
+  const valores = dados.map((d) => d.valor);
+  const valorMax = valores.length > 0 ? valores[valores.length - 1] : 0;
+  const maxY = Math.ceil((valorMax + 1) / 10000) * 10000;
+
+  const data = {
+    labels: dados.map((d) => d.mes),
+    datasets: [
+      {
+        data: valores,
+        borderColor: "#0074D9",
+        backgroundColor: "#0074D9",
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) =>
+            context.parsed.y.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+          title: () => null,
+        },
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: "#4A5568" },
+      },
+      y: {
+        min: 0,
+        max: maxY,
+        ticks: {
+          stepSize: 10000,
+          callback: (value) =>
+            value.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+              minimumFractionDigits: 2,
+            }),
+          color: "#4A5568",
+        },
+        grid: { display: false },
+      },
+    },
+  };
 
   return (
-    <div className="bg-[#EDF2F7] rounded-xl p-6 shadow-md max-w-6xl mx-auto mt-6">
-      <h2 className="text-xl font-semibold text-center text-[#2D3748] mb-4 select-none cursor-default">
-        Retorno Projetado
-      </h2>
+    <div
+  style={{
+    backgroundColor: "#EBF4FF",
+    border: "1px solid #CBD5E1",
+    borderRadius: "1rem",
+    padding: "1rem",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+    height: "300px"
+  }}
+>
 
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart
-          data={dados}
-          margin={{ top: 10, right: 30, left: 10, bottom: 0 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="mes"
-            tick={{ fontSize: 12 }}
-            stroke="#4A5568"
-          />
-          <YAxis
-            ticks={ticks}
-            tickFormatter={(v) =>
-              v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-            }
-            stroke="#4A5568"
-          />
-          <Tooltip
-            formatter={(v) =>
-              v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-            }
-            labelStyle={{ fontWeight: "bold", color: "#2D3748" }}
-          />
-          <Line
-            type="monotone"
-            dataKey="valor"
-            stroke="#007BFF"
-            strokeWidth={2}
-            dot={{ r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <Line data={data} options={options} />
     </div>
   );
 }
