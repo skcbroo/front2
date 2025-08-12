@@ -60,7 +60,7 @@ export default function GraficoRetorno() {
     maintainAspectRatio: false,
     layout: {
       // um respiro visual no topo/direita (ajuda contra corte)
-      padding: { top: 12, right: 12 },
+       padding: { top: 12, right: 12, left: 12 }, 
     },
     plugins: {
       legend: { display: false },
