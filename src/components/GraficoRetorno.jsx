@@ -106,6 +106,7 @@ export default function GraficoRetorno() {
         grace: "5%",
         ticks: {
           stepSize,
+          maxTicksLimit: 6,
           callback: (value) =>
             value.toLocaleString("pt-BR", {
               style: "currency",
