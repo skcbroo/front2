@@ -1,82 +1,102 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import NavbarLayout from "../components/Navbar";
 
-export default function ResetarSenha() {
+export default function AlterarSenha() {
+  const [senhaAtual, setSenhaAtual] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
-  const [sucesso, setSucesso] = useState("");
-  const { token } = useParams();
-  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setMensagem("");
     setErro("");
-    setSucesso("");
 
     if (novaSenha !== confirmarSenha) {
-      setErro("As senhas não coincidem");
+      setErro("A nova senha e a confirmação não coincidem.");
       return;
     }
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/reset-password`, {
-        token,
-        novaSenha,
-      });
-      setSucesso("Senha redefinida com sucesso!");
-      setTimeout(() => navigate("/"), 2000);
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/alterar-senha`,
+        { senhaAtual, novaSenha },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setMensagem("Senha alterada com sucesso!");
+      setSenhaAtual("");
+      setNovaSenha("");
+      setConfirmarSenha("");
     } catch (err) {
-      setErro("Erro ao redefinir senha. Verifique o link ou tente novamente.");
+      setErro("Erro ao alterar senha. Verifique se a senha atual está correta.");
     }
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B] text-white justify-center items-center px-4">
-      <div className="bg-white text-gray-800 w-full max-w-md p-8 rounded-xl shadow-md">
-        <div className="flex justify-center mb-6">
-          <img src="/logonova.png" alt="Logo" className="h-12" />
-        </div>
+    <NavbarLayout>
+      <div className="flex justify-center items-center min-h-[calc(100vh-80px)] bg-[#F7FAFC]">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md px-8 py-6 w-full max-w-md"
+        >
+          <h2 className="text-2xl font-bold text-[#2D3748] mb-6 text-center select-none cursor-default">
+            Alterar Senha
+          </h2>
 
-        <h2 className="text-2xl font-semibold text-center mb-4">Nova Senha</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Senha atual</label>
+              <input
+                type="password"
+                value={senhaAtual}
+                onChange={(e) => setSenhaAtual(e.target.value)}
+                required
+                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Nova senha</label>
-            <input
-              type="password"
-              className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800"
-              placeholder="********"
-              value={novaSenha}
-              onChange={(e) => setNovaSenha(e.target.value)}
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Nova senha</label>
+              <input
+                type="password"
+                value={novaSenha}
+                onChange={(e) => setNovaSenha(e.target.value)}
+                required
+                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
 
-          <div>
-            <label className="text-sm font-medium">Confirmar nova senha</label>
-            <input
-              type="password"
-              className="w-full p-2 border border-[#CBD5E1] rounded bg-[#F9FAFB] text-gray-800"
-              placeholder="********"
-              value={confirmarSenha}
-              onChange={(e) => setConfirmarSenha(e.target.value)}
-              required
-            />
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Confirmar nova senha</label>
+              <input
+                type="password"
+                value={confirmarSenha}
+                onChange={(e) => setConfirmarSenha(e.target.value)}
+                required
+                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-[#222B3B] hover:bg-[#1A202C] text-white font-semibold py-2 rounded transition"
+            className="w-full mt-6 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-all text-sm font-medium"
           >
-            Redefinir Senha
+            Salvar nova senha
           </button>
 
-          {sucesso && <p className="text-green-600 text-sm text-center">{sucesso}</p>}
-          {erro && <p className="text-red-600 text-sm text-center">{erro}</p>}
+          {mensagem && (
+            <p className="mt-4 text-center text-green-600 text-sm">{mensagem}</p>
+          )}
+          {erro && (
+            <p className="mt-4 text-center text-red-600 text-sm">{erro}</p>
+          )}
         </form>
       </div>
-    </div>
+    </NavbarLayout>
   );
 }
