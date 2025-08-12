@@ -143,24 +143,18 @@ export default function Login() {
           )}
 
           {/* Ações */}
-          <div className="flex gap-2 mt-6">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full p-3 rounded-lg text-white transition ${
-                loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#222B3B] hover:bg-[#1a212f]"
-              }`}
-            >
-              {loading ? "Entrando..." : "Entrar"}
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate("/cadastro")}
-              className="w-full p-3 rounded-lg border border-[#222B3B] text-[#222B3B] hover:bg-[#f0f1f3] transition"
-            >
-              Cadastrar
-            </button>
-          </div>
+         <div className="flex justify-center mt-6">
+  <button
+    type="submit"
+    disabled={loading}
+    className={`w-1/2 p-3 rounded-lg text-white transition ${
+      loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#222B3B] hover:bg-[#1a212f]"
+    }`}
+  >
+    {loading ? "Entrando..." : "Entrar"}
+  </button>
+</div>
+
 
           <p className="text-center text-xs mt-6 text-gray-500 select-none cursor-default">
             © 2025. Todos os direitos reservados.
@@ -170,3 +164,4 @@ export default function Login() {
     </NavbarLayout>
   );
 }
+
