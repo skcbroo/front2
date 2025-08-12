@@ -58,12 +58,11 @@ export default function GraficoRetorno() {
       {
         label: "CDI Acumulado",
         data: valoresCDI,
-        borderColor: "#2ECC40",
-        backgroundColor: "#2ECC40",
+        borderColor: "#FBBF24",           // Amarelo
+        backgroundColor: "#FBBF24",
         pointRadius: 4,
         pointHoverRadius: 6,
         tension: 0.4,
-        borderDash: [5, 5],
         clip: { top: 8, right: 12, bottom: 0, left: 0 },
       },
     ],
