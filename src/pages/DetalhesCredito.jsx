@@ -149,21 +149,13 @@ export default function DetalhesCredito() {
               </div>
 
               <button
-  onClick={confirmarAquisicao}
-  disabled={loading}
-  className={`group relative w-full overflow-hidden rounded-xl text-white transition
-    ${loading
-      ? "bg-gray-500 cursor-not-allowed"
-      : "bg-[#1f2837] hover:brightness-110 active:translate-y-px"}
-    shadow-[0_6px_12px_rgba(0,0,0,0.15)] ring-1 ring-black/10 focus:outline-none`}
->
-  {/* brilho sutil no topo */}
-  <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0))]" />
-  <span className="relative block py-3 text-center font-medium">
-    Confirmar solicitação
-  </span>
-</button>
-
+                onClick={confirmarAquisicao}
+               className={`w-full p-3 rounded-lg text-white transition ${
+                loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#222B3B] hover:bg-[#1a212f]"
+              }`}
+                >
+                Confirmar solicitação via WhatsApp
+              </button>
             </>
           ) : (
             <p className="text-center text-red-600 font-semibold mt-4">
@@ -175,8 +167,6 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
-
-
 
 
 
