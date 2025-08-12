@@ -87,11 +87,7 @@ export default function DetalhesCredito() {
               <p><strong>Valor de aquisição:</strong>{' '}
                 {credito.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
               </p>
-              {/* <p><strong>Deságio:</strong>{' '}
-                <span className="text-red-600 font-semibold">
-                  {(desagio * 100).toFixed(2)}%
-                </span>
-              </p>/*}
+             
               <p><strong>Lucro projetado:</strong>{' '}
                 <span className="text-green-700 font-semibold">
                   {lucroProjetado.toFixed(2)}%
@@ -160,6 +156,7 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
 
 
