@@ -27,13 +27,17 @@ export default function GraficoRetorno() {
         console.error("Erro ao buscar retorno projetado:", err);
       }
     }
-
     carregar();
   }, []);
 
   const valores = dados.map((d) => d.valor);
-  const valorMax = valores.length > 0 ? valores[valores.length - 1] : 0;
-  const maxY = Math.ceil((valorMax + 1) / 10000) * 10000;
+  const maxData = valores.length ? Math.max(...valores) : 0;
+
+  // step: 20k se passar de 100k, senão 10k
+  const stepSize = maxData > 100000 ? 20000 : 10000;
+
+  // maxY arredondado + folga (meio step) pra não cortar o ponto no topo
+  const maxY = Math.ceil((maxData + stepSize * 0.5) / stepSize) * stepSize;
 
   const data = {
     labels: dados.map((d) => d.mes),
@@ -45,6 +49,8 @@ export default function GraficoRetorno() {
         pointRadius: 4,
         pointHoverRadius: 6,
         tension: 0.4,
+        // evita clipping nas bordas (pode ser número ou objeto)
+        clip: { top: 8, right: 12, bottom: 0, left: 0 },
       },
     ],
   };
@@ -52,12 +58,16 @@ export default function GraficoRetorno() {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      // um respiro visual no topo/direita (ajuda contra corte)
+      padding: { top: 12, right: 12 },
+    },
     plugins: {
       legend: { display: false },
       tooltip: {
         callbacks: {
-          label: (context) =>
-            context.parsed.y.toLocaleString("pt-BR", {
+          label: (ctx) =>
+            ctx.parsed.y.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",
             }),
@@ -72,9 +82,11 @@ export default function GraficoRetorno() {
       },
       y: {
         min: 0,
-        max: maxY,
+        // use suggestedMax + grace pra dar folga automática
+        suggestedMax: maxY,
+        grace: "5%", // folguinha adicional acima
         ticks: {
-          stepSize: 10000,
+          stepSize,
           callback: (value) =>
             value.toLocaleString("pt-BR", {
               style: "currency",
@@ -90,16 +102,15 @@ export default function GraficoRetorno() {
 
   return (
     <div
-  style={{
-    backgroundColor: "#EBF4FF",
-    border: "1px solid #CBD5E1",
-    borderRadius: "1rem",
-    padding: "1rem",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-    height: "300px"
-  }}
->
-
+      style={{
+        backgroundColor: "#EBF4FF",
+        border: "1px solid #CBD5E1",
+        borderRadius: "1rem",
+        padding: "1rem",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+        height: "300px",
+      }}
+    >
       <Line data={data} options={options} />
     </div>
   );
