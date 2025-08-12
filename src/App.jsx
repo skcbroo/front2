@@ -13,6 +13,7 @@ import EsqueciSenha from "./pages/EsqueciSenha";
 import ResetarSenha from "./pages/ResetarSenha";
 import VerificarEmail from "./pages/VerificarEmail";
 import Home from "./pages/Home";
+import AlterarSenha from "./pages/AlterarSenha";
 
 
 
@@ -33,11 +34,13 @@ function App() {
                 <Route path="/meus-ativos" element={<MeusAtivos />} />
                 <Route path="/admin/cotas" element={<AdminCotas />} />
                 <Route path="/verificar-email/:token" element={<VerificarEmail />} />
+                <Route path="/alterar-senha" element={<AlterarSenha />} /> 
             </Routes>
         </BrowserRouter>
     );
 }
 
 export default App;
+
 
 
