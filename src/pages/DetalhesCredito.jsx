@@ -152,7 +152,7 @@ export default function DetalhesCredito() {
   onClick={confirmarAquisicao}
   className="w-full px-6 py-2 rounded-lg bg-[#1D2533] text-white hover:brightness-110 transition font-medium"
 >
-  Confirmar solicitação
+  Solicitar aquisição
 </button>
 
             </>
@@ -166,6 +166,7 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
 
 
