@@ -149,11 +149,12 @@ export default function DetalhesCredito() {
               </div>
 
               <button
-                onClick={confirmarAquisicao}
-               className="w-full p-3 rounded-lg border border-[#1D2B40] text-[#1D2B40] hover:bg-[#f0f1f3] transition font-medium"
-                >
-                Confirmar solicitação
-              </button>
+  onClick={confirmarAquisicao}
+  className="w-full px-6 py-2 rounded-lg bg-[#1D2533] text-white hover:brightness-110 transition font-medium"
+>
+  Confirmar solicitação
+</button>
+
             </>
           ) : (
             <p className="text-center text-red-600 font-semibold mt-4">
@@ -165,6 +166,7 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
 
 
