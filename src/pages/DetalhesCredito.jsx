@@ -150,8 +150,8 @@ export default function DetalhesCredito() {
 
               <button
                 onClick={confirmarAquisicao}
-                className="w-full py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition duration-150"
-              >
+               className="w-full p-3 rounded-lg border border-[#222B3B] text-[#222B3B] hover:bg-[#f0f1f3] transition"
+                >
                 Confirmar solicitação via WhatsApp
               </button>
             </>
@@ -165,6 +165,7 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
 
 
