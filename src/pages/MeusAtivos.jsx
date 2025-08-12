@@ -49,7 +49,7 @@ export default function MeusAtivos() {
     disponivel: 3,
   };
 
-  const temCotas = ativos.some(a => (a.cotasCompradas ?? 0) > 0);
+  const temCotas = ativos.some((a) => (a.cotasCompradas ?? 0) > 0);
 
   // Cálculos financeiros
   const valorAplicado = ativos.reduce((total, ativo) => {
@@ -106,7 +106,11 @@ export default function MeusAtivos() {
                 const retornoEsperado = (ativo.valor / ativo.quantidadeCotas) * ativo.cotasCompradas;
 
                 const statusRaw = ativo.status || ativo.creditoJudicial?.status || "";
-                const statusChave = statusRaw.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                const statusChave = statusRaw
+                  .toLowerCase()
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")
+                  .trim();
                 const statusInfo = statusMap[statusChave] || {
                   texto: "Desconhecido",
                   cor: "bg-gray-200 text-gray-700",
@@ -118,12 +122,10 @@ export default function MeusAtivos() {
                     className="bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md hover:shadow-lg transition-all px-6 py-5 text-[#2D3748] cursor-pointer"
                     onClick={() => irParaDetalhes(ativo.id)}
                   >
-                    {/* Badge de status */}
                     <div className={`inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 ${statusInfo.cor}`}>
                       {statusInfo.texto}
                     </div>
 
-                    {/* Número do processo */}
                     <div className="mb-4">
                       <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">
                         Processo
@@ -131,28 +133,39 @@ export default function MeusAtivos() {
                       <p className="text-xl font-bold text-[#1A202C]">{ativo.numeroProcesso}</p>
                     </div>
 
-                    {/* Informações distribuídas em 2 colunas */}
                     <div className="grid grid-cols-2 gap-6 text-sm text-[#4A5568]">
                       <div className="space-y-1">
-                        <p><span className="font-semibold">Valor do crédito:</span><br />
+                        <p>
+                          <span className="font-semibold">Valor do crédito:</span>
+                          <br />
                           {ativo.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                         </p>
-                        <p><span className="font-semibold">Preço por cota:</span><br />
+                        <p>
+                          <span className="font-semibold">Preço por cota:</span>
+                          <br />
                           {precoPorCota.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                         </p>
-                        <p><span className="font-semibold">Valor investido:</span><br />
+                        <p>
+                          <span className="font-semibold">Valor investido:</span>
+                          <br />
                           {valorInvestido.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                         </p>
                       </div>
 
                       <div className="space-y-1">
-                        <p><span className="font-semibold">Cotas adquiridas:</span><br />
+                        <p>
+                          <span className="font-semibold">Cotas adquiridas:</span>
+                          <br />
                           {ativo.cotasCompradas}
                         </p>
-                        <p><span className="font-semibold">Deságio:</span><br />
+                        <p>
+                          <span className="font-semibold">Deságio:</span>
+                          <br />
                           {ativo.desagio.toFixed(2)}%
                         </p>
-                        <p><span className="font-semibold">Retorno esperado:</span><br />
+                        <p>
+                          <span className="font-semibold">Retorno esperado:</span>
+                          <br />
                           {retornoEsperado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                         </p>
                       </div>
@@ -165,49 +178,40 @@ export default function MeusAtivos() {
 
         {temCotas && (
           <div className="mt-10">
-            <h3 className="text-xl font-semibold text-center mb-4 select-none cursor-default">
-              Retorno Projetado
-            </h3>
-            <GraficoRetorno />
-
-            {/* Bloco refinado do resumo financeiro */}
-            <div className="mt-10 max-w-4xl mx-auto bg-white rounded-2xl shadow-lg px-8 py-6">
-              <h3 className="text-xl font-semibold text-center text-gray-800 mb-6 select-none cursor-default">
+            <div className="max-w-4xl mx-auto text-gray-800">
+              <h3 className="text-xl font-semibold text-center mb-6 select-none cursor-default">
                 Resumo Financeiro
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-700">
-                <div className="flex items-start gap-2">
-                  <span className="text-lg">💰</span>
-                  <div>
-                    <p className="font-medium">Valor aplicado:</p>
-                    <p>{valorAplicado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-                  </div>
+              <div className="flex flex-col gap-3 text-sm text-center md:text-left px-4 md:px-0">
+                <div>
+                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Valor aplicado</p>
+                  <p className="text-lg font-bold">
+                    {valorAplicado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                  </p>
                 </div>
-
-                <div className="flex items-start gap-2">
-                  <span className="text-lg">📈</span>
-                  <div>
-                    <p className="font-medium">Retorno projetado:</p>
-                    <p>{retornoProjetado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-                  </div>
+                <div>
+                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Retorno projetado</p>
+                  <p className="text-lg font-bold">
+                    {retornoProjetado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                  </p>
                 </div>
-
-                <div className="flex items-start gap-2">
-                  <span className="text-lg">📊</span>
-                  <div>
-                    <p className="font-medium">Rentabilidade projetada:</p>
-                    <p>{rentabilidade.toFixed(2)}%</p>
-                  </div>
+                <div>
+                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Rentabilidade projetada</p>
+                  <p className="text-lg font-bold">
+                    {rentabilidade.toFixed(2)}%
+                  </p>
                 </div>
-
-                <div className="flex items-start gap-2">
-                  <span className="text-lg">✅</span>
-                  <div>
-                    <p className="font-medium">Retorno atual:</p>
-                    <p>{retornoAtual.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-                  </div>
+                <div>
+                  <p className="text-gray-500 text-xs uppercase font-semibold tracking-wide">Retorno atual</p>
+                  <p className="text-lg font-bold">
+                    {retornoAtual.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                  </p>
                 </div>
               </div>
+            </div>
+
+            <div className="mt-10">
+              <GraficoRetorno />
             </div>
           </div>
         )}
