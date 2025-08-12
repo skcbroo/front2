@@ -93,7 +93,7 @@ export default function DetalhesCredito() {
                 </span>
               </p>
               <p><strong>Lucro projetado:</strong>{' '}
-                <span className="text-green-700 font-semibold">
+                <span className="text-blue-600 font-semibold">
                   {lucroProjetado.toFixed(2)}%
                 </span>
               </p>
@@ -160,3 +160,4 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
