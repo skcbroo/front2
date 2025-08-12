@@ -7,13 +7,17 @@ import {
   PointElement,
   LineElement,
   Tooltip,
+  Legend,
 } from "chart.js";
 import axios from "axios";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export default function GraficoRetorno() {
-  const [dados, setDados] = useState([]);
+  const [dados, setDados] = useState({
+    retornoPorMes: [],
+    comparativoCDI: [],
+  });
 
   useEffect(() => {
     async function carregar() {
@@ -30,26 +34,36 @@ export default function GraficoRetorno() {
     carregar();
   }, []);
 
-  const valores = dados.map((d) => d.valor);
-  const maxData = valores.length ? Math.max(...valores) : 0;
+  const valoresProjetados = dados.retornoPorMes.map((d) => d.valor);
+  const valoresCDI = dados.comparativoCDI.map((d) => d.valor);
+  const labels = dados.retornoPorMes.map((d) => d.mes);
 
-  // step: 20k se passar de 100k, senão 10k
+  const maxData = Math.max(...valoresProjetados, ...valoresCDI, 0);
   const stepSize = maxData > 100000 ? 20000 : 10000;
-
-  // maxY arredondado + folga (meio step) pra não cortar o ponto no topo
   const maxY = Math.ceil((maxData + stepSize * 0.5) / stepSize) * stepSize;
 
   const data = {
-    labels: dados.map((d) => d.mes),
+    labels,
     datasets: [
       {
-        data: valores,
+        label: "Retorno Projetado",
+        data: valoresProjetados,
         borderColor: "#0074D9",
         backgroundColor: "#0074D9",
         pointRadius: 4,
         pointHoverRadius: 6,
         tension: 0.4,
-        // evita clipping nas bordas (pode ser número ou objeto)
+        clip: { top: 8, right: 12, bottom: 0, left: 0 },
+      },
+      {
+        label: "CDI Acumulado",
+        data: valoresCDI,
+        borderColor: "#2ECC40",
+        backgroundColor: "#2ECC40",
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        tension: 0.4,
+        borderDash: [5, 5],
         clip: { top: 8, right: 12, bottom: 0, left: 0 },
       },
     ],
@@ -59,11 +73,16 @@ export default function GraficoRetorno() {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      // um respiro visual no topo/direita (ajuda contra corte)
-       padding: { top: 12, right: 12, left: 12 }, 
+      padding: { top: 12, right: 12, left: 12 },
     },
     plugins: {
-      legend: { display: false },
+      legend: {
+        position: "top",
+        labels: {
+          color: "#2D3748",
+          font: { size: 12, weight: "bold" },
+        },
+      },
       tooltip: {
         callbacks: {
           label: (ctx) =>
@@ -82,9 +101,8 @@ export default function GraficoRetorno() {
       },
       y: {
         min: 0,
-        // use suggestedMax + grace pra dar folga automática
         suggestedMax: maxY,
-        grace: "5%", // folguinha adicional acima
+        grace: "5%",
         ticks: {
           stepSize,
           callback: (value) =>
