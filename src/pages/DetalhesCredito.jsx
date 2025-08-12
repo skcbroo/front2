@@ -93,6 +93,14 @@ export default function DetalhesCredito() {
                   {lucroProjetado.toFixed(2)}%
                 </span>
               </p>
+              {credito.dataEstimadaPagamento && (
+  <p><strong>Data estimada de recebimento:</strong>{' '}
+    <span className="text-blue-700">
+      {new Date(credito.dataEstimadaPagamento).toLocaleDateString('pt-BR')}
+    </span>
+  </p>
+)}
+
             </div>
 
             <hr className="my-4 border-t border-gray-300" />
@@ -156,6 +164,7 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
 
 
