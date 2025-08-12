@@ -4,7 +4,7 @@ import NavbarLayout from "../components/Navbar";
 
 export default function DetalhesCredito() {
   const { id } = useParams();
-  const [credito, setCredito] = useState<any>(null);
+  const [credito, setCredito] = useState(null);
   const [quantidadeSelecionada, setQuantidadeSelecionada] = useState(1);
 
   useEffect(() => {
@@ -33,12 +33,8 @@ export default function DetalhesCredito() {
   const totalCotas = credito.quantidadeCotas || 0;
   const cotasAdquiridas = credito.cotasAdquiridas ?? 0;
   const cotasDisponiveis = totalCotas - cotasAdquiridas;
-  const precoPorCota = totalCotas ? (credito.preco / totalCotas) : 0;
+  const precoPorCota = credito.preco / totalCotas;
   const valorTotal = quantidadeSelecionada * precoPorCota;
-
-  // **Novo cálculo: lucro projetado em percentual (valor / preco * 100)**
-  const lucroProjetadoPercentual =
-    credito.preco ? (credito.valor / credito.preco) * 100 : 0;
 
   const confirmarAquisicao = () => {
     if (cotasDisponiveis <= 0) {
@@ -59,17 +55,16 @@ export default function DetalhesCredito() {
     window.open(link, "_blank");
   };
 
- const handleChange = (e) => {
-  const val = parseInt(e.target.value);
-  if (val > cotasDisponiveis) {
-    setQuantidadeSelecionada(cotasDisponiveis);
-  } else if (val < 1) {
-    setQuantidadeSelecionada(1);
-  } else {
-    setQuantidadeSelecionada(val);
-  }
-};
-
+  const handleChange = (e) => {
+    const val = parseInt(e.target.value);
+    if (val > cotasDisponiveis) {
+      setQuantidadeSelecionada(cotasDisponiveis);
+    } else if (val < 1) {
+      setQuantidadeSelecionada(1);
+    } else {
+      setQuantidadeSelecionada(val);
+    }
+  };
 
   return (
     <NavbarLayout>
@@ -93,13 +88,6 @@ export default function DetalhesCredito() {
               <p><strong>Deságio:</strong>{' '}
                 <span className="text-red-600 font-semibold">
                   {(desagio * 100).toFixed(2)}%
-                </span>
-              </p>
-
-              {/* **Novo campo** */}
-              <p><strong>Lucro projetado (percentual):</strong>{' '}
-                <span className="text-green-700 font-semibold">
-                  {lucroProjetadoPercentual.toFixed(2)}%
                 </span>
               </p>
             </div>
@@ -167,4 +155,3 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
-
