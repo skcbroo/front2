@@ -34,42 +34,51 @@ export default function NavbarLayout({ children }) {
                     </Link>
 
                     {role ? (
-                        <>
-                            {role === "cliente" && (
-                                <Link to="/meus-ativos" className="hover:underline cursor-pointer select-none">
-                                    Meus Ativos
-                                </Link>
-                            )}
+  <>
+    {role === "cliente" && (
+      <>
+        <Link to="/meus-ativos" className="hover:underline cursor-pointer select-none">
+          Meus Ativos
+        </Link>
+        <Link to="/alterar-senha" className="hover:underline cursor-pointer select-none">
+          Alterar Senha
+        </Link>
+      </>
+    )}
 
-                            {role === "admin" && (
-                                <>
-                                    <Link to="/admin/dashboard" className="hover:underline cursor-pointer select-none">
-                                        Dashboard
-                                    </Link>
-                                    <Link to="/admin/creditos" className="hover:underline cursor-pointer select-none">
-                                        Gerenciar Créditos
-                                    </Link>
-                                    <Link to="/admin/cotas" className="hover:underline cursor-pointer select-none">
-                                        Gerenciar Cotas
-                                    </Link>
-                                    <Link to="/admin/usuarios" className="hover:underline cursor-pointer select-none">
-                                        Usuários
-                                    </Link>
-                                </>
-                            )}
+    {role === "admin" && (
+      <>
+        <Link to="/admin/dashboard" className="hover:underline cursor-pointer select-none">
+          Dashboard
+        </Link>
+        <Link to="/admin/creditos" className="hover:underline cursor-pointer select-none">
+          Gerenciar Créditos
+        </Link>
+        <Link to="/admin/cotas" className="hover:underline cursor-pointer select-none">
+          Gerenciar Cotas
+        </Link>
+        <Link to="/admin/usuarios" className="hover:underline cursor-pointer select-none">
+          Usuários
+        </Link>
+        <Link to="/alterar-senha" className="hover:underline cursor-pointer select-none">
+          Alterar Senha
+        </Link>
+      </>
+    )}
 
-                            <button
-                                onClick={handleLogout}
-                                className="hover:underline cursor-pointer select-none bg-transparent border-none text-white"
-                            >
-                                Sair
-                            </button>
-                        </>
-                    ) : (
-                        <Link to="/login" className="hover:underline cursor-pointer select-none">
-                            Entrar
-                        </Link>
-                    )}
+    <button
+      onClick={handleLogout}
+      className="hover:underline cursor-pointer select-none bg-transparent border-none text-white"
+    >
+      Sair
+    </button>
+  </>
+) : (
+  <Link to="/login" className="hover:underline cursor-pointer select-none">
+    Entrar
+  </Link>
+)}
+
                 </div>
             </nav>
 
@@ -80,3 +89,4 @@ export default function NavbarLayout({ children }) {
         </div>
     );
 }
+
