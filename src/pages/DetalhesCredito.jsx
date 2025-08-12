@@ -150,11 +150,9 @@ export default function DetalhesCredito() {
 
               <button
                 onClick={confirmarAquisicao}
-               className={`w-full p-3 rounded-lg text-white transition ${
-                loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#222B3B] hover:bg-[#1a212f]"
-              }`}
+               className="w-full p-3 rounded-lg border border-[#1D2B40] text-[#1D2B40] hover:bg-[#f0f1f3] transition font-medium"
                 >
-                Confirmar solicitação via WhatsApp
+                Confirmar solicitação
               </button>
             </>
           ) : (
@@ -167,6 +165,7 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
+
 
 
 
