@@ -170,46 +170,46 @@ export default function MeusAtivos() {
             </h3>
             <GraficoRetorno />
 
-            {/* Bloco de resumo financeiro */}
+            {/* Bloco refinado do resumo financeiro */}
             <div className="mt-10 max-w-4xl mx-auto bg-white rounded-2xl shadow-lg px-8 py-6">
-  <h3 className="text-xl font-semibold text-center text-gray-800 mb-6 select-none cursor-default">
-    Resumo Financeiro
-  </h3>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-700">
-    <div className="flex items-start gap-2">
-      <span className="text-lg">💰</span>
-      <div>
-        <p className="font-medium">Valor aplicado:</p>
-        <p>{valorAplicado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-      </div>
-    </div>
+              <h3 className="text-xl font-semibold text-center text-gray-800 mb-6 select-none cursor-default">
+                Resumo Financeiro
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="text-lg">💰</span>
+                  <div>
+                    <p className="font-medium">Valor aplicado:</p>
+                    <p>{valorAplicado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                  </div>
+                </div>
 
-    <div className="flex items-start gap-2">
-      <span className="text-lg">📈</span>
-      <div>
-        <p className="font-medium">Retorno projetado:</p>
-        <p>{retornoProjetado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-      </div>
-    </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-lg">📈</span>
+                  <div>
+                    <p className="font-medium">Retorno projetado:</p>
+                    <p>{retornoProjetado.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                  </div>
+                </div>
 
-    <div className="flex items-start gap-2">
-      <span className="text-lg">📊</span>
-      <div>
-        <p className="font-medium">Rentabilidade projetada:</p>
-        <p>{rentabilidade.toFixed(2)}%</p>
-      </div>
-    </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-lg">📊</span>
+                  <div>
+                    <p className="font-medium">Rentabilidade projetada:</p>
+                    <p>{rentabilidade.toFixed(2)}%</p>
+                  </div>
+                </div>
 
-    <div className="flex items-start gap-2">
-      <span className="text-lg">✅</span>
-      <div>
-        <p className="font-medium">Retorno atual:</p>
-        <p>{retornoAtual.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-      </div>
-    </div>
-  </div>
-</div>
-
+                <div className="flex items-start gap-2">
+                  <span className="text-lg">✅</span>
+                  <div>
+                    <p className="font-medium">Retorno atual:</p>
+                    <p>{retornoAtual.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </NavbarLayout>
