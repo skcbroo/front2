@@ -52,9 +52,8 @@ export default function GraficoRetorno() {
         backgroundColor: "#0074D9",
         pointRadius: 4,
         pointHoverRadius: 6,
-        tension: 0.2,
-        spanGaps: true,
-        clip: false,
+        tension: 0.4,
+        clip: { top: 8, right: 12, bottom: 0, left: 0 },
       },
       {
         label: "CDI Acumulado",
@@ -63,9 +62,8 @@ export default function GraficoRetorno() {
         backgroundColor: "#FBBF24",
         pointRadius: 4,
         pointHoverRadius: 6,
-        tension: 0.2,
-        spanGaps: true,
-        clip: false,
+        tension: 0.4,
+        clip: { top: 8, right: 12, bottom: 0, left: 0 },
       },
     ],
   };
@@ -78,10 +76,10 @@ export default function GraficoRetorno() {
     },
     plugins: {
       legend: {
-        position: "bottom",
+        position: "bottom", // legenda na parte inferior
         labels: {
-          usePointStyle: true,
-          pointStyle: "circle",
+          usePointStyle: true, // usa ponto no lugar da caixa
+          pointStyle: "circle", // formato do ponto igual ao do gráfico
           color: "#2D3748",
           font: { size: 12, weight: "bold" },
         },
@@ -99,11 +97,8 @@ export default function GraficoRetorno() {
     },
     scales: {
       x: {
-        type: "category",
         grid: { display: false },
         ticks: { color: "#4A5568" },
-        min: labels[0],
-        max: labels[labels.length - 1],
       },
       y: {
         min: 0,
