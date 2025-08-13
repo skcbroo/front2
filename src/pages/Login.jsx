@@ -35,7 +35,7 @@ export default function Login() {
       if (lembrar) localStorage.setItem("login_email", email);
       else localStorage.removeItem("login_email");
 
-      navigate("/creditos");
+      navigate("/meusativos");
     } catch {
       setErro("E-mail ou senha inválidos.");
     } finally {
@@ -164,4 +164,5 @@ export default function Login() {
     </NavbarLayout>
   );
 }
+
 
