@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
 
 // === Configuração do endereço para o mapa ===
-const ENDERECO = "QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF";
+const ENDERECO = "St. de Habitações Individuais Sul QI 19 casa 19 - Lago Sul, Brasília - DF, 71655-040";
 
 function MapEmbed({ lat, lng, address }) {
   const hasCoords = typeof lat === "number" && typeof lng === "number";
