@@ -223,7 +223,7 @@ export default function MeusAtivos() {
             <div className="mt-10">
               <GraficoRetorno />
               <p className="text-sm text-[#1A202C] mt-6 text-center max-w-4xl mx-auto select-none cursor-default">
-  Para efeito de comparação com o CDI, consideramos uma taxa Selic anual de <strong>15% a.a.</strong>, que reflete o cenário econômico vigente. Esse valor serve como referência de retorno de aplicações tradicionais e ajuda a avaliar a atratividade dos créditos judiciais.  O <strong>retorno projetado</strong> é uma estimativa, que pode sofrer alterações conforme o andamento do processo judicial, podendo ser superior ou inferior ao previsto inicialmente.
+  Para efeito de comparação com o CDI, consideramos uma taxa Selic anual de <strong>15% a.a.</strong>, que reflete o cenário econômico vigente. Esse valor serve como referência de retorno de aplicações tradicionais e ajuda a avaliar a atratividade dos créditos judiciais. Tanto o <strong>retorno projetado</strong> quanto a <strong>data estimada de recebimento</strong> são previsões que podem sofrer alterações conforme o andamento do processo judicial — podendo ser antecipadas, postergadas ou até resultar em valores diferentes do inicialmente previsto.
   <br className="hidden sm:block" />
  
 </p>
