@@ -79,14 +79,14 @@ export default function Creditos() {
                                 </div>
                                 <div className="flex flex-col justify-between items-start h-full">
                                     <div>
-                                        <p className="font-semibold mb-1">Cotas disponíveis:</p>
                                         <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full
                                                 ${disponiveis > 0
                                                 ? 'bg-green-100 text-green-800'
                                                 : 'bg-red-100 text-red-800'}
                                                 `}>
-                                            {disponiveis > 0 ? "Disponível" : "Indisponível"}
+                                            {disponiveis > 0 ? "Cotas disponíveis" : "Cotas indisponíveis"}
                                         </span>
+
                                     </div>
                                     <div className="mt-auto">
                                         <p className="font-semibold text-[#2B6CB0]">Valor de aquisição:</p>
@@ -103,4 +103,5 @@ export default function Creditos() {
         </NavbarLayout>
     );
 }
+
 
