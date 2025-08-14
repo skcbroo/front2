@@ -193,7 +193,7 @@ export default function MeusAtivos() {
       </p>
     </div>
     <div>
-      <p className="inline-block bg-gray-400 text-gray-800 px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider mb-1">
+     <p className="inline-block bg-gray-400 text-gray-800 px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider mb-1">
         Retorno Projetado
       </p>
       <p className="text-lg font-bold">
@@ -201,7 +201,7 @@ export default function MeusAtivos() {
       </p>
     </div>
     <div>
-      <p className="inline-block bg-gray-400 text-gray-800 px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider mb-1">
+     <p className="inline-block bg-gray-400 text-gray-800 px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider mb-1">
         Rentabilidade Projetada
       </p>
       <p className="text-lg font-bold">
