@@ -6,8 +6,19 @@ export default function DetalhesCredito() {
   const { id } = useParams();
   const [credito, setCredito] = useState(null);
   const [quantidadeSelecionada, setQuantidadeSelecionada] = useState(1);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Número do WhatsApp usado em mais de um lugar
+  const numeroEmpresa = "5561996204646";
 
   useEffect(() => {
+    // checa login
+    try {
+      setIsLoggedIn(!!localStorage.getItem('token'));
+    } catch (_) {
+      setIsLoggedIn(false);
+    }
+
     const token = localStorage.getItem('token');
 
     fetch(`${import.meta.env.VITE_API_URL}/api/creditos/${id}`, {
@@ -47,7 +58,6 @@ export default function DetalhesCredito() {
       return;
     }
 
-    const numeroEmpresa = "5561996204646";
     const mensagem = encodeURIComponent(
       `Olá, gostaria de adquirir cotas do crédito judicial:\n\n` +
       ` Processo: ${credito.numeroProcesso}\n` +
@@ -87,27 +97,44 @@ export default function DetalhesCredito() {
               <p><strong>Valor de aquisição:</strong>{' '}
                 {credito.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
               </p>
-             
+
               <p><strong>Lucro projetado:</strong>{' '}
-  <span className="text-green-700 font-semibold">
-    {lucroProjetado.toFixed(2)}%
-  </span>
-</p>
+                <span className="text-green-700 font-semibold">
+                  {lucroProjetado.toFixed(2)}%
+                </span>
+              </p>
 
-{credito.dataEstimadaPagamento && (
-  <p><strong>Data estimada de recebimento:</strong>{' '}
-    <span className="text-blue-700">
-      {new Date(credito.dataEstimadaPagamento).toLocaleDateString('pt-BR')}
-    </span>
-  </p>
-)}
-
+              {credito.dataEstimadaPagamento && (
+                <p><strong>Data estimada de recebimento:</strong>{' '}
+                  <span className="text-blue-700">
+                    {new Date(credito.dataEstimadaPagamento).toLocaleDateString('pt-BR')}
+                  </span>
+                </p>
+              )}
             </div>
 
             <hr className="my-4 border-t border-gray-300" />
 
             <h2 className="text-lg font-semibold text-center text-[#1A202C]">Descrição</h2>
-            <p className="text-justify">{credito.descricao || '—'}</p>
+
+            {/* Só mostra a descrição se estiver logado */}
+            {isLoggedIn ? (
+              <p className="text-justify">{credito.descricao || '—'}</p>
+            ) : (
+              <div className="text-sm text-[#1A202C] bg-white/70 border border-[#CBD5E1] rounded-lg p-3">
+                Para mais informações, acione nossa equipe.
+                {' '}
+                <a
+                  href={`https://wa.me/${numeroEmpresa}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline text-[#2B6CB0] hover:text-[#1A4E86]"
+                >
+                  Falar no WhatsApp
+                </a>
+                .
+              </div>
+            )}
           </div>
 
           <hr className="border-gray-300" />
@@ -149,12 +176,11 @@ export default function DetalhesCredito() {
               </div>
 
               <button
-  onClick={confirmarAquisicao}
-  className="w-full px-6 py-2 rounded-lg bg-[#1D2533] text-white hover:brightness-110 transition font-medium"
->
-  Solicitar aquisição
-</button>
-
+                onClick={confirmarAquisicao}
+                className="w-full px-6 py-2 rounded-lg bg-[#1D2533] text-white hover:brightness-110 transition font-medium"
+              >
+                Solicitar aquisição
+              </button>
             </>
           ) : (
             <p className="text-center text-red-600 font-semibold mt-4">
@@ -166,10 +192,3 @@ export default function DetalhesCredito() {
     </NavbarLayout>
   );
 }
-
-
-
-
-
-
-
