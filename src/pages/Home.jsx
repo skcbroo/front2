@@ -207,7 +207,7 @@ export default function Home() {
           <p className="text-sm mb-3">
             <span className="font-semibold">Endereço: </span>{ENDERECO}
           </p>
-          <MapEmbed address={ENDERECO} />
+          <MapEmbed lat={-15.860222} lng={-47.862396} />
         </div>
       </section>
 
