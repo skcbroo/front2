@@ -1,6 +1,44 @@
-// src/pages/Home.jsx
 import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
+
+// === Configuração do endereço para o mapa ===
+const ENDERECO = "QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF";
+
+function MapEmbed({ lat, lng, address }) {
+  const hasCoords = typeof lat === "number" && typeof lng === "number";
+  const query = hasCoords ? `${lat},${lng}` : encodeURIComponent(address || "");
+
+  if (!query) return null;
+
+  const iframeSrc = `https://www.google.com/maps?q=${query}&z=15&output=embed`;
+  const directionsHref = hasCoords
+    ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
+    : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+
+  return (
+    <div className="space-y-2">
+      <div className="w-full h-64 rounded-lg overflow-hidden border border-[#CBD5E1]">
+        <iframe
+          title="Localização"
+          src={iframeSrc}
+          width="100%"
+          height="100%"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      </div>
+      <a
+        href={directionsHref}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-block text-sm underline text-[#2B6CB0] hover:text-[#1A4E86]"
+      >
+        Ver rota no Google Maps
+      </a>
+    </div>
+  );
+}
 
 export default function Home() {
   const falarComEquipe = () => {
@@ -14,7 +52,6 @@ export default function Home() {
 
   return (
     <NavbarLayout>
-      {/* Título oculto para acessibilidade/SEO */}
       <h1 className="sr-only">Midlej Capital — Plataforma de Créditos Judiciais</h1>
 
       {/* HERO */}
@@ -50,7 +87,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Imagem */}
             <div className="flex justify-center md:justify-end">
               <img
                 src="/buss.jpg"
@@ -161,7 +197,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER INSTITUCIONAL */}
+      {/* LOCALIZAÇÃO */}
+      <section className="max-w-6xl mx-auto mb-8">
+        <h3 className="text-xl font-bold text-center mb-4 select-none cursor-default">
+          Onde estamos
+        </h3>
+
+        <div className="rounded-xl bg-[#EBF4FF] border border-[#CBD5E1] px-6 py-6 shadow-md text-[#2D3748]">
+          <p className="text-sm mb-3">
+            <span className="font-semibold">Endereço: </span>{ENDERECO}
+          </p>
+          <MapEmbed address={ENDERECO} />
+        </div>
+      </section>
+
+      {/* FOOTER */}
       <footer className="bg-transparent text-sm mt-12">
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-6 text-[#2D3748]">
           <p>
@@ -184,7 +234,7 @@ export default function Home() {
 
             <div className="flex flex-col items-center md:items-center">
               <p>
-                <span className="font-semibold">Endereço:</span> QI 19, Conjunto 04, 1º, Lago Sul, Brasília/DF.
+                <span className="font-semibold">Endereço:</span> {ENDERECO}
               </p>
               <p>
                 <span className="font-semibold">Email:</span> contato@midlejcapital.com.br
