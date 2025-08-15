@@ -12,7 +12,7 @@ export default function Creditos() {
             .catch((err) => console.error("Erro ao buscar créditos:", err));
     }, []);
 
-    const statusMap = {//
+    const statusMap = {
         cotizando: { texto: "Cotizando", cor: "bg-yellow-200 text-yellow-800" },
         andamento: { texto: "Em andamento", cor: "bg-blue-200 text-blue-800" },
         pago: { texto: "Pago", cor: "bg-green-200 text-green-800" },
@@ -26,6 +26,14 @@ export default function Creditos() {
     };
 
     const creditosOrdenados = [...creditos].sort((a, b) => {
+        const disponiveisA = a.quantidadeCotas - a.cotasAdquiridas > 0;
+        const disponiveisB = b.quantidadeCotas - b.cotasAdquiridas > 0;
+
+        // Primeiro: os que têm cotas disponíveis vêm antes
+        if (disponiveisA && !disponiveisB) return -1;
+        if (!disponiveisA && disponiveisB) return 1;
+
+        // Depois: segue a ordem do status
         const statusA = (a.status || "").toLowerCase().trim();
         const statusB = (b.status || "").toLowerCase().trim();
         return (ordemStatus[statusA] ?? 99) - (ordemStatus[statusB] ?? 99);
@@ -82,11 +90,9 @@ export default function Creditos() {
                                         <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full
                                                 ${disponiveis > 0
                                                 ? 'bg-green-100 text-green-800'
-                                                : 'bg-red-100 text-red-800'}
-                                                `}>
+                                                : 'bg-red-100 text-red-800'}`}>
                                             {disponiveis > 0 ? "Cotas disponíveis" : "Cotas indisponíveis"}
                                         </span>
-
                                     </div>
                                     <div className="mt-auto">
                                         <p className="font-semibold text-[#2B6CB0]">Valor de aquisição:</p>
@@ -103,5 +109,3 @@ export default function Creditos() {
         </NavbarLayout>
     );
 }
-
-
