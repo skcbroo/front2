@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
+import GraficoRetorno from "../components/GraficoRetorno";
 
 // === Configuração do endereço para o mapa ===
 const ENDERECO = "St. de Habitações Individuais Sul QI 19 casa 19 - Lago Sul, Brasília - DF, 71655-040";
@@ -197,6 +198,20 @@ export default function Home() {
         </div>
       </section>
 
+      {/* GRÁFICO DE RETORNO AGREGADO */}
+<section className="max-w-6xl mx-auto mb-10">
+  <h3 className="text-xl font-bold text-center mb-4 select-none cursor-default">
+    Rentabilidade dos ativos sob gestão
+  </h3>
+  <p className="text-center text-[#4A5568] mb-6 max-w-3xl mx-auto select-none cursor-default text-sm">
+    Acompanhe a evolução do <strong>retorno projetado</strong> mensal agregado de todos os créditos judiciais sob gestão da Midlej Capital.
+    A linha de comparação simula o CDI com base em uma taxa referencial de <strong>15% a.a.</strong>
+  </p>
+
+  <GraficoRetorno />
+</section>
+
+      
       {/* LOCALIZAÇÃO */}
       <section className="max-w-6xl mx-auto mb-8">
         <h3 className="text-xl font-bold text-center mb-4 select-none cursor-default">
