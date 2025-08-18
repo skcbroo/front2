@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import NavbarLayout from "../components/Navbar";
-import GraficoRetorno from "../components/GraficoRetorno";
+import GraficoGeral from "../components/GraficoGeral";
 
 // === Configuração do endereço para o mapa ===
 const ENDERECO = "St. de Habitações Individuais Sul QI 19 casa 19 - Lago Sul, Brasília - DF, 71655-040";
@@ -208,7 +208,7 @@ export default function Home() {
     A linha de comparação simula o CDI com base em uma taxa referencial de <strong>15% a.a.</strong>
   </p>
 
-  <GraficoRetorno />
+  <GraficoGeral />
 </section>
 
       
