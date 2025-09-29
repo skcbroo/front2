@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import NavbarLayout from "../components/Navbar";
 
 export default function TSTTimeEstimator() {
-  const [ano, setAno] = useState("");
+  const [dataChegada, setDataChegada] = useState("");
   const [relator, setRelator] = useState("");
   const [turma, setTurma] = useState("");
   const [turmas, setTurmas] = useState([]);
@@ -22,8 +22,8 @@ export default function TSTTimeEstimator() {
   // === Carregar turmas/relatores do /public ===
   useEffect(() => {
     (async () => {
-      const turmasData = await loadExcel("/turmas_modelo.xlsx");
-      const relatoresData = await loadExcel("/relatores_modelo.xlsx");
+      const turmasData = await loadExcel("/turmas.xlsx");
+      const relatoresData = await loadExcel("/relatores.xlsx");
       setTurmas(turmasData);
       setRelatores(relatoresData);
     })();
@@ -34,22 +34,32 @@ export default function TSTTimeEstimator() {
     const turmaSelecionada = turmas.find((t) => t.turma === turma);
     const relatorSelecionado = relatores.find((r) => r.relator === relator);
 
-    if (!turmaSelecionada || !relatorSelecionado) {
-      alert("Selecione relator e turma válidos!");
+    if (!turmaSelecionada || !relatorSelecionado || !dataChegada) {
+      alert("Preencha todos os campos!");
       return;
     }
 
-    const estimativaPauta = turmaSelecionada.base_pauta_dias || 300;
-    const estimativaTTJ = turmaSelecionada.base_ttj_dias || 500;
+    const estimativaPauta = Number(turmaSelecionada.base_pauta_dias) || 300;
+    const estimativaTTJ = Number(turmaSelecionada.base_ttj_dias) || 500;
     const monocraticas = relatorSelecionado.mono_rate || "N/D";
 
+    const chegadaDate = new Date(dataChegada);
+
+    const dataMaximaPauta = new Date(chegadaDate);
+    dataMaximaPauta.setDate(dataMaximaPauta.getDate() + estimativaPauta);
+
+    const dataMaximaTTJ = new Date(chegadaDate);
+    dataMaximaTTJ.setDate(dataMaximaTTJ.getDate() + estimativaTTJ);
+
     setResultado({
-      ano,
+      dataChegada,
       turma,
       relator,
       estimativaPauta,
       estimativaTTJ,
       monocraticas,
+      dataMaximaPauta,
+      dataMaximaTTJ,
     });
   };
 
@@ -63,21 +73,21 @@ export default function TSTTimeEstimator() {
               Estimador TST
             </h2>
             <p className="text-[#4A5568] mb-6 select-none cursor-default">
-              Informe os dados básicos do processo e veja o tempo estimado até pauta e trânsito em julgado.
+              Informe a data de chegada, relator e turma para obter o tempo
+              estimado até pauta e trânsito em julgado.
             </p>
 
             {/* Formulário */}
             <div className="space-y-4 text-left">
               <div>
                 <label className="block text-sm font-medium mb-1 text-[#1A202C]">
-                  Ano do processo
+                  Data de chegada no TST
                 </label>
                 <input
-                  type="text"
-                  value={ano}
-                  onChange={(e) => setAno(e.target.value)}
+                  type="date"
+                  value={dataChegada}
+                  onChange={(e) => setDataChegada(e.target.value)}
                   className="w-full border border-[#CBD5E1] rounded-lg p-2 text-black"
-                  placeholder="Ex: 2024"
                 />
               </div>
 
@@ -133,11 +143,13 @@ export default function TSTTimeEstimator() {
         <section className="max-w-6xl mx-auto mb-8">
           <div className="rounded-xl bg-white border border-[#CBD5E1] px-6 py-6 shadow-md">
             <h3 className="text-xl font-bold text-[#1A202C] mb-4">📊 Resultado</h3>
-            <p className="text-black"><strong>Ano:</strong> {resultado.ano}</p>
+            <p className="text-black"><strong>Data de chegada:</strong> {new Date(resultado.dataChegada).toLocaleDateString("pt-BR")}</p>
             <p className="text-black"><strong>Relator:</strong> {resultado.relator}</p>
             <p className="text-black"><strong>Turma:</strong> {resultado.turma}</p>
             <p className="text-black"><strong>Tempo até pauta:</strong> {resultado.estimativaPauta} dias</p>
+            <p className="text-black"><strong>Data máxima estimada para pauta:</strong> {resultado.dataMaximaPauta.toLocaleDateString("pt-BR")}</p>
             <p className="text-black"><strong>Tempo até trânsito em julgado:</strong> {resultado.estimativaTTJ} dias</p>
+            <p className="text-black"><strong>Data máxima estimada para TTJ:</strong> {resultado.dataMaximaTTJ.toLocaleDateString("pt-BR")}</p>
             <p className="text-black"><strong>Monocráticas?</strong> {resultado.monocraticas}</p>
           </div>
         </section>
