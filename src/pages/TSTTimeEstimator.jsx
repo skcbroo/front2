@@ -55,7 +55,7 @@ export default function TSTTimeEstimator() {
 
   return (
     <NavbarLayout>
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-white via-[#A6B8C7] to-[#222B3B]">
+     
         <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-8 border border-gray-200">
           <h2 className="text-2xl font-bold text-center mb-6 text-black">
             Estimador TST
@@ -135,7 +135,7 @@ export default function TSTTimeEstimator() {
             </div>
           )}
         </div>
-      </div>
+     
     </NavbarLayout>
   );
 }
