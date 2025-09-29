@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as XLSX from "xlsx";
+import NavbarLayout from "../components/Navbar";
 
 export default function TSTTimeEstimator() {
   const [turmas, setTurmas] = useState([]);
@@ -107,65 +108,83 @@ export default function TSTTimeEstimator() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">📊 TST Time Estimator</h1>
+    <NavbarLayout>
+      <h2 className="text-2xl font-bold text-center mb-6 select-none cursor-default">
+        Estimador TST
+      </h2>
 
       {/* Uploads */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <p className="font-semibold">Turmas XLSX</p>
-          <input type="file" accept=".xlsx" onChange={(e) => handleFileUpload(e, setTurmas)} />
-        </div>
-        <div>
-          <p className="font-semibold">Relatores XLSX</p>
-          <input type="file" accept=".xlsx" onChange={(e) => handleFileUpload(e, setRelatores)} />
-        </div>
-        <div>
-          <p className="font-semibold">Empíricos XLSX</p>
-          <input type="file" accept=".xlsx" onChange={(e) => handleFileUpload(e, setEmpiricos)} />
-        </div>
+      <div className="flex flex-wrap gap-4 justify-center mb-6">
+        <label className="flex flex-col items-center bg-[#EBF4FF] border border-[#CBD5E1] px-4 py-3 rounded-lg cursor-pointer">
+          <span className="text-sm font-medium text-[#2D3748] mb-1">Turmas XLSX</span>
+          <input type="file" accept=".xlsx" className="hidden" onChange={(e) => handleFileUpload(e, setTurmas)} />
+        </label>
+        <label className="flex flex-col items-center bg-[#EBF4FF] border border-[#CBD5E1] px-4 py-3 rounded-lg cursor-pointer">
+          <span className="text-sm font-medium text-[#2D3748] mb-1">Relatores XLSX</span>
+          <input type="file" accept=".xlsx" className="hidden" onChange={(e) => handleFileUpload(e, setRelatores)} />
+        </label>
+        <label className="flex flex-col items-center bg-[#EBF4FF] border border-[#CBD5E1] px-4 py-3 rounded-lg cursor-pointer">
+          <span className="text-sm font-medium text-[#2D3748] mb-1">Empíricos XLSX</span>
+          <input type="file" accept=".xlsx" className="hidden" onChange={(e) => handleFileUpload(e, setEmpiricos)} />
+        </label>
       </div>
 
-      <button
-        onClick={gerarBundle}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
-      >
-        Gerar Bundle
-      </button>
+      <div className="flex justify-center mb-8">
+        <button
+          onClick={gerarBundle}
+          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow hover:bg-blue-700 transition"
+        >
+          Gerar Bundle
+        </button>
+      </div>
 
       {bundle && (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Preview (Turmas)</h2>
-          <table className="w-full border">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="p-2">Turma</th>
-                <th>Pauta (dias)</th>
-                <th>TTJ (dias)</th>
-                <th>Congestão (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bundle.turmas.map((t, idx) => (
-                <tr key={idx} className="border">
-                  <td className="p-2">{t.turma}</td>
-                  <td className="p-2">{t.base_pauta_dias}</td>
-                  <td className="p-2">{t.base_ttj_dias}</td>
-                  <td className="p-2">{t.congestion_proxy_pct.toFixed(1)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {bundle.turmas.map((t, idx) => (
+            <div
+              key={idx}
+              className="bg-[#EBF4FF] border border-[#CBD5E1] rounded-xl shadow-md px-6 py-5 text-[#2D3748]"
+            >
+              {/* Badge de status baseado em congestão */}
+              <div
+                className={`inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 ${
+                  t.congestion_proxy_pct > 50
+                    ? "bg-red-200 text-red-800"
+                    : "bg-green-200 text-green-800"
+                }`}
+              >
+                {t.congestion_proxy_pct.toFixed(1)}% Congestão
+              </div>
 
+              <h3 className="text-lg font-bold mb-2">{t.turma}</h3>
+
+              <p className="text-sm text-gray-600 mb-1">
+                <span className="font-semibold">Prazo até pauta:</span>{" "}
+                {t.base_pauta_dias} dias
+              </p>
+              <p className="text-sm text-gray-600 mb-1">
+                <span className="font-semibold">Prazo até trânsito:</span>{" "}
+                {t.base_ttj_dias} dias
+              </p>
+              <p className="text-sm text-gray-600">
+                <span className="font-semibold">Throughput:</span>{" "}
+                {t.throughput_julgados_sobre_distribuidos.toFixed(2)}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {bundle && (
+        <div className="flex justify-center mt-8">
           <button
             onClick={downloadBundle}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700"
+            className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl shadow hover:bg-green-700 transition"
           >
             Baixar JSON
           </button>
         </div>
       )}
-    </div>
+    </NavbarLayout>
   );
 }
-ccccc
