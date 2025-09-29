@@ -29,7 +29,7 @@ function App() {
                 <Route path="/creditos" element={<Creditos />} />
                 <Route path="/admin/creditos" element={<AdminCreditos />} />
                 <Route path="/admin/usuarios" element={<AdminUsuarios />} />
-                <Route path="/tst-estimator" element={<TSTTimeEstimator />} />
+                <Route path="/tst" element={<TSTTimeEstimator />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/creditos/:id" element={<DetalhesCredito />} /> 
                 <Route path="/meus-ativos" element={<MeusAtivos />} />
@@ -42,6 +42,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
