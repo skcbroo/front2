@@ -14,7 +14,7 @@ import ResetarSenha from "./pages/ResetarSenha";
 import VerificarEmail from "./pages/VerificarEmail";
 import Home from "./pages/Home";
 import AlterarSenha from "./pages/AlterarSenha";
-
+import TSTTimeEstimator from "./pages/TSTTimeEstimator";
 
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
                 <Route path="/creditos" element={<Creditos />} />
                 <Route path="/admin/creditos" element={<AdminCreditos />} />
                 <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+                <Route path="/tst-estimator" element={<TSTTimeEstimator />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/creditos/:id" element={<DetalhesCredito />} /> 
                 <Route path="/meus-ativos" element={<MeusAtivos />} />
@@ -41,6 +42,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
