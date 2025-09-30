@@ -29,6 +29,25 @@ export default function TSTTimeEstimator() {
     })();
   }, []);
 
+  // === Fórmulas auxiliares ===
+  const safeDiv = (a, b) => (Number(b) ? Number(a) / Number(b) : 0);
+
+  const calcularBasesTurma = (t) => {
+    const pend = Number(t.acervo_turma_pendentes_2024);
+    const julg = Number(t.julgados_2024);
+    const dist = Number(t.distribuidos_2024);
+
+    const ef = safeDiv(pend, julg); // estoque/fluxo
+    const thr = safeDiv(julg, dist); // throughput
+    const invThr = thr ? 1 / thr : 0;
+    const cong = (pend + julg) ? pend / (pend + julg) : 0;
+
+    const base_pauta_dias = Math.round(343 * (0.6 * ef + 0.4 * invThr));
+    const base_ttj_dias = Math.round(551 * (0.7 * ef + 0.3 * cong));
+
+    return { base_pauta_dias, base_ttj_dias };
+  };
+
   // === Calcular ===
   const calcular = () => {
     const turmaSelecionada = turmas.find((t) => t.turma === turma);
@@ -39,24 +58,31 @@ export default function TSTTimeEstimator() {
       return;
     }
 
-    const estimativaPauta = Number(turmaSelecionada.base_pauta_dias) ;
-    const estimativaTTJ = Number(turmaSelecionada.base_ttj_dias) ;
-    const monocraticas = relatorSelecionado.mono_rate ;
+    // Bases calculadas
+    const { base_pauta_dias, base_ttj_dias } = calcularBasesTurma(turmaSelecionada);
 
+    // Taxa monocrática
+    let monocraticas = "-";
+    if (relatorSelecionado.decisoes_monocraticas_2024 && relatorSelecionado.processos_julgados_2024) {
+      const dec = Number(relatorSelecionado.decisoes_monocraticas_2024);
+      const proc = Number(relatorSelecionado.processos_julgados_2024);
+      if (proc > 0) monocraticas = (dec / proc * 100).toFixed(1) + "%";
+    }
+
+    // Datas finais
     const chegadaDate = new Date(dataChegada);
-
     const dataMaximaPauta = new Date(chegadaDate);
-    dataMaximaPauta.setDate(dataMaximaPauta.getDate() + estimativaPauta);
+    dataMaximaPauta.setDate(dataMaximaPauta.getDate() + base_pauta_dias);
 
     const dataMaximaTTJ = new Date(chegadaDate);
-    dataMaximaTTJ.setDate(dataMaximaTTJ.getDate() + estimativaTTJ);
+    dataMaximaTTJ.setDate(dataMaximaTTJ.getDate() + base_ttj_dias);
 
     setResultado({
       dataChegada,
       turma,
       relator,
-      estimativaPauta,
-      estimativaTTJ,
+      estimativaPauta: base_pauta_dias,
+      estimativaTTJ: base_ttj_dias,
       monocraticas,
       dataMaximaPauta,
       dataMaximaTTJ,
@@ -150,7 +176,7 @@ export default function TSTTimeEstimator() {
             <p className="text-black"><strong>Data máxima estimada para pauta:</strong> {resultado.dataMaximaPauta.toLocaleDateString("pt-BR")}</p>
             <p className="text-black"><strong>Tempo até trânsito em julgado:</strong> {resultado.estimativaTTJ} dias</p>
             <p className="text-black"><strong>Data máxima estimada para TTJ:</strong> {resultado.dataMaximaTTJ.toLocaleDateString("pt-BR")}</p>
-            <p className="text-black"><strong>Monocráticas?</strong> {resultado.monocraticas}</p>
+            <p className="text-black"><strong>Tendência de decisão monocrática:</strong> {resultado.monocraticas}</p>
           </div>
         </section>
       )}
