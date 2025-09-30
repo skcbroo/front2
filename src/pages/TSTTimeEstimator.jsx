@@ -39,9 +39,9 @@ export default function TSTTimeEstimator() {
       return;
     }
 
-    const estimativaPauta = Number(turmaSelecionada.base_pauta_dias) || 300;
-    const estimativaTTJ = Number(turmaSelecionada.base_ttj_dias) || 500;
-    const monocraticas = relatorSelecionado.mono_rate || "N/D";
+    const estimativaPauta = Number(turmaSelecionada.base_pauta_dias) ;
+    const estimativaTTJ = Number(turmaSelecionada.base_ttj_dias) ;
+    const monocraticas = relatorSelecionado.mono_rate ;
 
     const chegadaDate = new Date(dataChegada);
 
