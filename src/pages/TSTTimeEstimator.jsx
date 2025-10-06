@@ -579,26 +579,30 @@ function Weight({ name, value, onChange }) {
     </div>
   );
 }
+
 function UploadCard({ title, subtitle, onLoad }) {
+  const [fileInfo, setFileInfo] = useState(null);
+
   const onFile = async (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
-    const text = await f.arrayBuffer(); // para lidar com xlsx também
+    const buf = await f.arrayBuffer(); // funciona para .xlsx e .csv
     let rows = [];
 
     if (f.name.endsWith(".csv")) {
-      const str = new TextDecoder().decode(text);
+      const str = new TextDecoder().decode(buf);
       rows = parseCSV(str);
     } else if (f.name.endsWith(".json")) {
-      const str = new TextDecoder().decode(text);
+      const str = new TextDecoder().decode(buf);
       rows = JSON.parse(str);
     } else if (f.name.endsWith(".xlsx")) {
-      const workbook = XLSX.read(text, { type: "array" });
+      const workbook = XLSX.read(buf, { type: "array" });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
       rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
     }
 
+    setFileInfo({ name: f.name, count: rows.length });
     onLoad(rows);
   };
 
@@ -615,9 +619,17 @@ function UploadCard({ title, subtitle, onLoad }) {
           onChange={onFile}
         />
       </label>
+
+      {fileInfo && (
+        <p className="mt-2 text-sm text-green-600 flex items-center space-x-2">
+          <span>✅ {fileInfo.name} carregado</span>
+          <span className="text-gray-500">({fileInfo.count} linhas)</span>
+        </p>
+      )}
     </div>
   );
 }
+
 
 // ----------------- Export/Import de Bundle .json ----------------------------
 function exportBundle(relatores, turmasReady, empiricos, weights) {
