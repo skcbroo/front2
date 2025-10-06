@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-
+import * as XLSX from "xlsx";
 /**
  * TST Time Estimator – Versão Final (Single File)
  * -----------------------------------------------------------------------------
@@ -583,19 +583,37 @@ function UploadCard({ title, subtitle, onLoad }) {
   const onFile = async (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
-    const text = await f.text();
+    const text = await f.arrayBuffer(); // para lidar com xlsx também
     let rows = [];
-    if (f.name.endsWith(".csv")) rows = parseCSV(text);
-    else if (f.name.endsWith(".json")) rows = JSON.parse(text);
+
+    if (f.name.endsWith(".csv")) {
+      const str = new TextDecoder().decode(text);
+      rows = parseCSV(str);
+    } else if (f.name.endsWith(".json")) {
+      const str = new TextDecoder().decode(text);
+      rows = JSON.parse(str);
+    } else if (f.name.endsWith(".xlsx")) {
+      const workbook = XLSX.read(text, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+    }
+
     onLoad(rows);
   };
+
   return (
     <div className="bg-white rounded-2xl shadow p-4">
       <h4 className="font-medium mb-1">{title}</h4>
       <p className="text-xs text-gray-600 mb-3">{subtitle}</p>
       <label className="px-3 py-2 rounded-xl shadow bg-gray-900 text-white cursor-pointer">
         Carregar arquivo
-        <input type="file" accept=".csv,.json" className="hidden" onChange={onFile} />
+        <input
+          type="file"
+          accept=".csv,.json,.xlsx"
+          className="hidden"
+          onChange={onFile}
+        />
       </label>
     </div>
   );
