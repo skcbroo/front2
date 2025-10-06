@@ -485,7 +485,7 @@ export default function TSTTimeEstimatorFinal() {
           )}
         </section>
 
-        {/* Uploads */}
+        {/* Uploads
         <section className="grid md:grid-cols-3 gap-4 mb-8">
           <UploadCard
             title="Carregar Turmas"
@@ -502,7 +502,7 @@ export default function TSTTimeEstimatorFinal() {
             subtitle="chegada_data,relator,turma,pauta_data,transito_data,decisao_tipo"
             onLoad={(rows) => setEmpiricos(rows.map(normalizeEmpirico))}
           />
-        </section>
+        </section> */}
 
         {/* Configuração do Modelo */}
         <section className="bg-white rounded-2xl shadow p-5 mb-8">
