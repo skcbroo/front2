@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 /**
  * TST Time Estimator – Versão Final (Single File)
@@ -24,8 +24,8 @@ import * as XLSX from "xlsx";
  */
 
 // ---------------------------- Utilidades ------------------------------------
+// utilidades parse
 function parseCSV(text) {
-  // Parser simples CSV com vírgula como separador. Para casos complexos, usar PapaParse.
   const lines = text.replace(/\r/g, "").split("\n").filter(Boolean);
   if (!lines.length) return [];
   const headers = lines[0].split(",").map((h) => h.trim());
@@ -36,6 +36,29 @@ function parseCSV(text) {
     return obj;
   });
 }
+
+// helper para carregar qualquer arquivo em /public
+async function loadFile(path) {
+  const res = await fetch(path);
+  if (!res.ok) throw new Error("Erro ao carregar " + path);
+  const buf = await res.arrayBuffer();
+
+  if (path.endsWith(".csv")) {
+    const str = new TextDecoder().decode(buf);
+    return parseCSV(str);
+  } else if (path.endsWith(".json")) {
+    const str = new TextDecoder().decode(buf);
+    return JSON.parse(str);
+  } else if (path.endsWith(".xlsx")) {
+    const workbook = XLSX.read(buf, { type: "array" });
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+    return XLSX.utils.sheet_to_json(sheet, { defval: "" });
+  }
+  return [];
+}
+
+
 const num = (x) => {
   const n = Number(x);
   return Number.isFinite(n) ? n : NaN;
@@ -189,6 +212,13 @@ export default function TSTTimeEstimatorFinal() {
     a_relator_emp: 0.50,
     a_turma_emp: 0.50,
   });
+
+  useEffect(() => {
+    // se você nomear certinho os arquivos na pasta /public
+    loadFile("/turmas.xlsx").then((rows) => setTurmas(rows.map(normalizeTurma))).catch(()=>{});
+    loadFile("/relatores.xlsx").then((rows) => setRelatores(rows.map(normalizeRelator))).catch(()=>{});
+    loadFile("/empiricos.xlsx").then((rows) => setEmpiricos(rows.map(normalizeEmpirico))).catch(()=>{});
+  }, []);
 
   // Turmas com bases finais (usa existentes ou modela)
   const turmasReady = useMemo(() => computeTurmaBases(turmas), [turmas]);
