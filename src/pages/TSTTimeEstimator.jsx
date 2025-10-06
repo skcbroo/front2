@@ -458,17 +458,17 @@ export default function TSTTimeEstimatorFinal() {
         {/* Uploads */}
         <section className="grid md:grid-cols-3 gap-4 mb-8">
           <UploadCard
-            title="Carregar Turmas (CSV)"
+            title="Carregar Turmas"
             subtitle="turma,acervo_turma_pendentes_2024,julgados_2024,distribuidos_2024,(base_pauta_dias?),(base_ttj_dias?)"
             onLoad={(rows) => setTurmas(rows.map(normalizeTurma))}
           />
           <UploadCard
-            title="Carregar Relatores (CSV)"
+            title="Carregar Relatores"
             subtitle="relator,turma,(tempo_despacho_dias_proxy_ITMJ?),(decisoes_monocraticas_2024?),(processos_julgados_2024?)"
             onLoad={(rows) => setRelatores(rows.map(normalizeRelator))}
           />
           <UploadCard
-            title="Carregar Empíricos (CSV) (opcional)"
+            title="Carregar Empíricos (opcional)"
             subtitle="chegada_data,relator,turma,pauta_data,transito_data,decisao_tipo"
             onLoad={(rows) => setEmpiricos(rows.map(normalizeEmpirico))}
           />
