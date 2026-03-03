@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const SESSION_KEY = "midlej_dash_auth_ok";
 
@@ -6,51 +6,22 @@ export default function DashboardComercial() {
   const [pass, setPass] = useState("");
   const [ok, setOk] = useState(sessionStorage.getItem(SESSION_KEY) === "1");
   const [html, setHtml] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  // ✅ senha vem do ENV do Vite (Railway também)
   const DASH_PASS = import.meta.env.VITE_DASH_PASSWORD || "";
-  const SB_URL = import.meta.env.VITE_SB_URL || "";
-  const SB_KEY = import.meta.env.VITE_SB_KEY || "";
-
-  const canBypass = useMemo(() => ok === true, [ok]);
 
   useEffect(() => {
-    if (!canBypass) return;
+    if (!ok) return;
 
     (async () => {
-      setLoading(true);
-      try {
-        const res = await fetch("/dashboards/midlej.html", { cache: "no-store" });
-        const raw = await res.text();
-
-        // injeta variáveis no window (pra dashboard usar)
-        const injected =
-          raw.replace(
-            "</head>",
-            `
-<script>
-  window.__SB_URL__ = ${JSON.stringify(SB_URL)};
-  window.__SB_KEY__ = ${JSON.stringify(SB_KEY)};
-</script>
-</head>`
-          );
-
-        setHtml(injected);
-      } finally {
-        setLoading(false);
-      }
+      const res = await fetch("/dashboards/midlej.html", { cache: "no-store" });
+      const raw = await res.text();
+      setHtml(raw);
     })();
-  }, [canBypass, SB_URL, SB_KEY]);
+  }, [ok]);
 
   function submit(e) {
     e.preventDefault();
-
-    // Se você não setar VITE_DASH_PASSWORD, ele nunca libera (por segurança)
-    if (!DASH_PASS) {
-      alert("Defina VITE_DASH_PASSWORD no ambiente (Railway) antes.");
-      return;
-    }
+    if (!DASH_PASS) return alert("Defina VITE_DASH_PASSWORD no Railway.");
 
     if (pass === DASH_PASS) {
       sessionStorage.setItem(SESSION_KEY, "1");
@@ -58,7 +29,6 @@ export default function DashboardComercial() {
       setPass("");
       return;
     }
-
     alert("Senha incorreta.");
   }
 
@@ -69,7 +39,6 @@ export default function DashboardComercial() {
   }
 
   if (!ok) {
-    // Tela simples (pode estilizar depois, mas já funciona)
     return (
       <div style={{
         minHeight: "100vh",
@@ -78,14 +47,14 @@ export default function DashboardComercial() {
         padding: 24,
         background: "#0C0C0E",
         color: "#F0EDE8",
-        fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+        fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
       }}>
         <form onSubmit={submit} style={{
           width: "min(420px, 100%)",
           background: "#111114",
           border: "1px solid rgba(255,255,255,0.07)",
           borderRadius: 8,
-          padding: 24
+          padding: 24,
         }}>
           <div style={{ fontWeight: 800, letterSpacing: 1, marginBottom: 8 }}>
             Acesso restrito
@@ -107,7 +76,7 @@ export default function DashboardComercial() {
               border: "1px solid rgba(255,255,255,0.10)",
               color: "#F0EDE8",
               outline: "none",
-              marginBottom: 12
+              marginBottom: 12,
             }}
           />
 
@@ -121,7 +90,7 @@ export default function DashboardComercial() {
             fontWeight: 800,
             letterSpacing: 1,
             textTransform: "uppercase",
-            cursor: "pointer"
+            cursor: "pointer",
           }}>
             Entrar
           </button>
@@ -130,7 +99,6 @@ export default function DashboardComercial() {
     );
   }
 
-  // dashboard “fiel” no iframe
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <div style={{
@@ -141,7 +109,7 @@ export default function DashboardComercial() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        fontSize: 12
+        fontSize: 12,
       }}>
         <div style={{ opacity: 0.7 }}>MIDLEJ · Dashboard (protegido)</div>
         <button onClick={logout} style={{
@@ -150,17 +118,11 @@ export default function DashboardComercial() {
           color: "#F0EDE8",
           padding: "6px 10px",
           borderRadius: 6,
-          cursor: "pointer"
+          cursor: "pointer",
         }}>
           Sair
         </button>
       </div>
-
-      {loading && (
-        <div style={{ padding: 12, background: "#0C0C0E", color: "#F0EDE8", opacity: 0.7 }}>
-          Carregando dashboard...
-        </div>
-      )}
 
       <iframe
         title="Dashboard Comercial"
