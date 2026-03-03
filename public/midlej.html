@@ -27,10 +27,6 @@
   .config-title { font-size:13px; font-weight:700; color:var(--amber); margin-bottom:6px; letter-spacing:.5px; }
   .config-text { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:14px; }
   .config-text strong { color:var(--white); }
-  .config-fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
-  .config-input { background:var(--bg3); border:1px solid var(--border); border-radius:3px; color:var(--white); font-family:'DM Mono',monospace; font-size:11px; padding:9px 12px; outline:none; width:100%; transition:border-color .15s; }
-  .config-input:focus { border-color:var(--amber-border); }
-  .config-input::placeholder { color:var(--muted); }
   .btn-config { background:var(--amber-dim); border:1px solid var(--amber-border); color:var(--amber); font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:9px 20px; border-radius:3px; cursor:pointer; transition:all .15s; }
   .btn-config:hover { background:rgba(232,149,90,.22); }
 
@@ -172,7 +168,6 @@
     .vendedores-grid { grid-template-columns:1fr; }
     .form-grid { grid-template-columns:1fr 1fr; }
     .form-grid .btn-add { grid-column:1/-1; }
-    .config-fields { grid-template-columns:1fr; }
     .pg-top { grid-template-columns:1fr; }
   }
 </style>
@@ -180,25 +175,20 @@
 <body>
 <div class="wrap">
 
-  <!-- CONFIG BANNER -->
+  <!-- CONFIG BANNER (agora é login notice) -->
   <div class="config-banner" id="config-banner">
-    <div class="config-title">⚙️ Configuração Supabase — faça isso uma vez só</div>
+    <div class="config-title">🔒 Acesso restrito</div>
     <div class="config-text">
-      Cole abaixo a <strong>URL do projeto</strong> e a <strong>chave anon/public</strong> do seu Supabase.<br>
-      Após salvar, os dados ficam sincronizados em todos os dispositivos automaticamente.
+      Este dashboard usa o <strong>login do sistema</strong>. Se aparecer erro de acesso, faça login na plataforma e tente novamente.
     </div>
-    <div class="config-fields">
-      <input class="config-input" id="cfg-url" placeholder="https://xxxxxxxxxxx.supabase.co" />
-      <input class="config-input" id="cfg-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
-    </div>
-    <button class="btn-config" onclick="saveConfig()">Salvar e conectar →</button>
+    <button class="btn-config" onclick="retry()">Tentar novamente →</button>
   </div>
 
   <!-- HEADER -->
   <header class="header">
     <div>
       <div class="wordmark">MIDLEJ <em>Capital</em></div>
-      <div class="wordmark-sub">Dashboard Comercial · Março 2026</div>
+      <div class="wordmark-sub" id="hdr-sub">Dashboard Comercial · Março 2026</div>
     </div>
     <div class="header-right">
       <div class="sync-status">
@@ -214,8 +204,8 @@
   <div class="painel-geral">
     <div class="pg-top">
       <div>
-        <div class="pg-title">Caixa Gerado · Março 2026</div>
-        <div class="pg-sub">Meta da empresa: Maria Clara (R$ 45k) + Rui (R$ 20k) = R$ 65k</div>
+        <div class="pg-title" id="pg-title">Caixa Gerado · Março 2026</div>
+        <div class="pg-sub" id="pg-sub">Meta da empresa: Maria Clara (R$ 45k) + Rui (R$ 20k) = R$ 65k</div>
       </div>
       <div>
         <div class="pg-total-label">Total gerado</div>
@@ -231,12 +221,12 @@
     </div>
     <div class="pg-vendedores">
       <div class="pg-vend">
-        <div class="pg-vend-name mc">✦ Maria Clara</div>
+        <div class="pg-vend-name mc" id="pg-mc-name">✦ Maria Clara</div>
         <div class="pg-vend-val mc" id="pg-mc-val">R$ 0</div>
         <div class="pg-vend-pct" id="pg-mc-pct">0% da meta · meta R$ 45.000</div>
       </div>
       <div class="pg-vend">
-        <div class="pg-vend-name rui">▲ Rui</div>
+        <div class="pg-vend-name rui" id="pg-rui-name">▲ Rui</div>
         <div class="pg-vend-val rui" id="pg-rui-val">R$ 0</div>
         <div class="pg-vend-pct" id="pg-rui-pct">0% da meta · meta R$ 20.000</div>
       </div>
@@ -250,12 +240,12 @@
       <div class="vend-card-header mc">
         <div class="vc-avatar mc">MC</div>
         <div>
-          <div class="vc-name">Maria Clara</div>
-          <span class="vc-nivel mc">✦ Nível 2 · 3 frentes</span>
+          <div class="vc-name" id="mc-name">Maria Clara</div>
+          <span class="vc-nivel mc" id="mc-nivel">✦ Nível 2 · 3 frentes</span>
         </div>
         <div>
           <div class="vc-meta-label">Meta de caixa</div>
-          <div class="vc-meta-val mc">R$ 45k</div>
+          <div class="vc-meta-val mc" id="mc-meta-label">R$ 45k</div>
         </div>
       </div>
       <div class="vend-card-body">
@@ -279,12 +269,12 @@
       <div class="vend-card-header rui">
         <div class="vc-avatar rui">RU</div>
         <div>
-          <div class="vc-name">Rui</div>
-          <span class="vc-nivel rui">▲ Nível 1 · Rampagem</span>
+          <div class="vc-name" id="rui-name">Rui</div>
+          <span class="vc-nivel rui" id="rui-nivel">▲ Nível 1 · Rampagem</span>
         </div>
         <div>
           <div class="vc-meta-label">Meta de caixa</div>
-          <div class="vc-meta-val rui">R$ 20k</div>
+          <div class="vc-meta-val rui" id="rui-meta-label">R$ 20k</div>
         </div>
       </div>
       <div class="vend-card-body">
@@ -353,7 +343,7 @@
   </div>
 
   <div class="footer">
-    <div class="footer-left">MIDLEJ Capital · Time Comercial · Março 2026</div>
+    <div class="footer-left">MIDLEJ Capital · Time Comercial</div>
     <div class="footer-right">Uso Interno</div>
   </div>
 </div>
@@ -361,130 +351,193 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const METAS = { mc: 45000, rui: 20000, total: 65000 };
-  let SB_URL = localStorage.getItem('midlej_sb_url') || '';
-  let SB_KEY = localStorage.getItem('midlej_sb_key') || '';
+  // ====== STATE ======
+  let SETTINGS = null;
   let vendas = [];
   let connected = false;
 
-  // INIT
-  window.addEventListener('DOMContentLoaded', () => {
-    if (SB_URL && SB_KEY) {
-      document.getElementById('config-banner').classList.add('hidden');
-      connect();
-    }
-  });
-
-  function saveConfig() {
-    const url = document.getElementById('cfg-url').value.trim().replace(/\/$/, '');
-    const key = document.getElementById('cfg-key').value.trim();
-    if (!url || !key) { toast('Preencha URL e chave', true); return; }
-    SB_URL = url; SB_KEY = key;
-    localStorage.setItem('midlej_sb_url', url);
-    localStorage.setItem('midlej_sb_key', key);
-    document.getElementById('config-banner').classList.add('hidden');
-    connect();
+  // ====== AUTH + API (BACKEND) ======
+  function getToken() {
+    // ajuste aqui se seu front salva com outro nome
+    return localStorage.getItem("token") || "";
   }
 
-  // SUPABASE
-  async function sb(path, opts = {}) {
-    const r = await fetch(SB_URL + '/rest/v1/' + path, {
+  async function api(path, opts = {}) {
+    const token = getToken();
+    const r = await fetch(path, {
       ...opts,
       headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': opts.prefer || '',
-        ...(opts.headers || {})
-      }
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(opts.headers || {}),
+      },
     });
+
     if (!r.ok) throw new Error(await r.text());
     const t = await r.text();
     return t ? JSON.parse(t) : null;
   }
 
+  function retry() { connect(); }
+
+  // INIT
+  window.addEventListener("DOMContentLoaded", () => {
+    connect();
+  });
+
   async function connect() {
-    setSync('loading', 'conectando...');
+    setSync("loading", "conectando...");
+
+    // banner aparece apenas se falhar / token ausente
+    document.getElementById("config-banner")?.classList.add("hidden");
+
     try {
-      vendas = await sb('vendas?order=created_at.asc') || [];
+      const state = await api("/api/dashboard/midlej/state");
+      SETTINGS = state.settings || {};
+      vendas = (state.vendas || []).map(v => ({
+        ...v,
+        // normaliza nome do campo pro que o HTML original usava
+        created_at: v.created_at || v.createdAt || v.created_at
+      }));
+
       connected = true;
-      setSync('ok', 'sincronizado');
+      setSync("ok", "sincronizado");
       render();
       setInterval(refresh, 15000);
-    } catch(e) {
-      setSync('error', 'erro de conexão');
-      toast('Erro ao conectar. Verifique URL e chave.', true);
+    } catch (e) {
+      connected = false;
+      setSync("error", "erro");
+
+      const token = getToken();
+      if (!token) {
+        toast("Faça login no sistema antes de acessar o dashboard.", true);
+      } else {
+        toast("Erro ao carregar dados do dashboard.", true);
+      }
+      document.getElementById("config-banner")?.classList.remove("hidden");
+      console.error(e);
     }
   }
 
   async function refresh() {
     if (!connected) return;
     try {
-      vendas = await sb('vendas?order=created_at.asc') || [];
+      const state = await api("/api/dashboard/midlej/state");
+      SETTINGS = state.settings || SETTINGS;
+      vendas = (state.vendas || []).map(v => ({
+        ...v,
+        created_at: v.created_at || v.createdAt || v.created_at
+      }));
       render();
-      setSync('ok', 'sincronizado');
-    } catch(e) { setSync('error', 'erro de sync'); }
+      setSync("ok", "sincronizado");
+    } catch(e) {
+      setSync("error", "erro");
+    }
   }
 
   async function addVenda() {
-    if (!connected) { toast('Conecte o Supabase primeiro', true); return; }
-    const desc = document.getElementById('input-desc').value.trim();
-    const vend = document.getElementById('input-vend').value;
-    const val = parseFloat(document.getElementById('input-val').value);
-    if (!desc) { toast('Adicione uma descrição', true); return; }
-    if (!val || val <= 0) { toast('Informe um valor válido', true); return; }
-    const btn = document.getElementById('btn-add');
-    btn.disabled = true; btn.textContent = 'Salvando...';
+    const desc = document.getElementById("input-desc").value.trim();
+    const vend = document.getElementById("input-vend").value;
+    const val = parseFloat(document.getElementById("input-val").value);
+
+    if (!desc) { toast("Adicione uma descrição", true); return; }
+    if (!val || val <= 0) { toast("Informe um valor válido", true); return; }
+
+    const btn = document.getElementById("btn-add");
+    btn.disabled = true; btn.textContent = "Salvando...";
+
     try {
-      await sb('vendas', { method: 'POST', prefer: 'return=representation', body: JSON.stringify({ descricao: desc, vendedor: vend, valor: val }) });
-      document.getElementById('input-desc').value = '';
-      document.getElementById('input-val').value = '';
+      await api("/api/dashboard/midlej/vendas", {
+        method: "POST",
+        body: JSON.stringify({ descricao: desc, vendedor: vend, valor: val })
+      });
+
+      document.getElementById("input-desc").value = "";
+      document.getElementById("input-val").value = "";
+
       await refresh();
-      toast('Venda registrada ✓');
-    } catch(e) { toast('Erro ao salvar', true); }
-    finally { btn.disabled = false; btn.textContent = '+ Adicionar'; }
+      toast("Venda registrada ✓");
+    } catch (e) {
+      toast("Erro ao salvar (verifique login/permissão)", true);
+      console.error(e);
+    } finally {
+      btn.disabled = false; btn.textContent = "+ Adicionar";
+    }
   }
 
   async function deleteVenda(id) {
-    if (!connected) return;
     try {
-      await sb('vendas?id=eq.' + id, { method: 'DELETE' });
+      await api("/api/dashboard/midlej/vendas/" + id, { method: "DELETE" });
       await refresh();
-      toast('Venda removida');
-    } catch(e) { toast('Erro ao remover', true); }
+      toast("Venda removida");
+    } catch(e) {
+      toast("Erro ao remover (verifique permissão)", true);
+      console.error(e);
+    }
   }
 
-  // RENDER
+  // ====== RENDER ======
   function render() {
-    const mc = vendas.filter(v => v.vendedor === 'mc');
-    const rui = vendas.filter(v => v.vendedor === 'rui');
-    const mcT = mc.reduce((a,v) => a + +v.valor, 0);
-    const ruiT = rui.reduce((a,v) => a + +v.valor, 0);
+    const mcMeta = Number(SETTINGS?.vendedores?.mc?.meta ?? 45000);
+    const ruiMeta = Number(SETTINGS?.vendedores?.rui?.meta ?? 20000);
+    const totalMeta = Number(SETTINGS?.empresa_meta_total ?? (mcMeta + ruiMeta));
+
+    const mcNome = SETTINGS?.vendedores?.mc?.nome || "Maria Clara";
+    const ruiNome = SETTINGS?.vendedores?.rui?.nome || "Rui";
+    const mcNivel = SETTINGS?.vendedores?.mc?.nivel || "✦ Nível 2 · 3 frentes";
+    const ruiNivel = SETTINGS?.vendedores?.rui?.nivel || "▲ Nível 1 · Rampagem";
+
+    // títulos
+    document.title = SETTINGS?.titulo || document.title;
+    set("hdr-sub", SETTINGS?.subtitulo || "Dashboard Comercial · Março 2026");
+    set("pg-title", SETTINGS?.labels?.painel_titulo || "Caixa Gerado · Março 2026");
+    set("pg-sub", SETTINGS?.labels?.painel_sub || "Meta da empresa: ...");
+
+    // nomes e níveis
+    set("pg-mc-name", "✦ " + mcNome);
+    set("pg-rui-name", "▲ " + ruiNome);
+    set("mc-name", mcNome);
+    set("rui-name", ruiNome);
+    set("mc-nivel", mcNivel);
+    set("rui-nivel", ruiNivel);
+
+    // label meta topo do card
+    set("mc-meta-label", "R$ " + Math.round(mcMeta/1000) + "k");
+    set("rui-meta-label", "R$ " + Math.round(ruiMeta/1000) + "k");
+
+    const mc = vendas.filter(v => v.vendedor === "mc");
+    const rui = vendas.filter(v => v.vendedor === "rui");
+    const mcT = mc.reduce((a,v) => a + Number(v.valor), 0);
+    const ruiT = rui.reduce((a,v) => a + Number(v.valor), 0);
     const tot = mcT + ruiT;
 
-    set('pg-total', fmt(tot));
-    set('pg-pct', pct(tot, METAS.total) + '%');
-    set('pg-faltam', tot >= METAS.total ? '✦ Meta batida!' : 'Faltam ' + fmt(METAS.total - tot));
-    document.getElementById('pg-bar').style.width = pct(tot, METAS.total) + '%';
-    set('pg-mc-val', fmt(mcT));
-    set('pg-mc-pct', pct(mcT, METAS.mc) + '% da meta · meta R$ 45.000');
-    set('pg-rui-val', fmt(ruiT));
-    set('pg-rui-pct', pct(ruiT, METAS.rui) + '% da meta · meta R$ 20.000');
+    set("pg-total", fmt(tot));
+    set("pg-pct", pct(tot, totalMeta) + "%");
+    set("pg-faltam", tot >= totalMeta ? "✦ Meta batida!" : "Faltam " + fmt(totalMeta - tot));
+    document.getElementById("pg-bar").style.width = pct(tot, totalMeta) + "%";
 
-    renderVend('mc', mc, mcT, METAS.mc);
-    renderVend('rui', rui, ruiT, METAS.rui);
-    renderTabela();
+    set("pg-mc-val", fmt(mcT));
+    set("pg-mc-pct", pct(mcT, mcMeta) + "% da meta · meta " + fmt(mcMeta));
+
+    set("pg-rui-val", fmt(ruiT));
+    set("pg-rui-pct", pct(ruiT, ruiMeta) + "% da meta · meta " + fmt(ruiMeta));
+
+    renderVend("mc", mc, mcT, mcMeta);
+    renderVend("rui", rui, ruiT, ruiMeta);
+    renderTabela(mcNome, ruiNome);
   }
 
   function renderVend(who, lista, total, meta) {
     const p = pct(total, meta);
-    set(who + '-pct', p + '%');
-    set(who + '-rest', total >= meta ? '✦ Meta batida!' : 'Faltam ' + fmt(meta - total));
-    document.getElementById(who + '-bar').style.width = p + '%';
-    set(who + '-gerado', fmt(total));
-    set(who + '-count', lista.length);
-    const el = document.getElementById(who + '-lista');
+    set(who + "-pct", p + "%");
+    set(who + "-rest", total >= meta ? "✦ Meta batida!" : "Faltam " + fmt(meta - total));
+    document.getElementById(who + "-bar").style.width = p + "%";
+    set(who + "-gerado", fmt(total));
+    set(who + "-count", lista.length);
+
+    const el = document.getElementById(who + "-lista");
     if (!lista.length) { el.innerHTML = '<div class="empty-state">Nenhuma venda ainda</div>'; return; }
+
     el.innerHTML = [...lista].reverse().map(v => `
       <div class="venda-item">
         <div class="venda-item-left">
@@ -495,49 +548,53 @@
           <div class="venda-val ${who}">${fmtFull(+v.valor)}</div>
           <button class="venda-delete" onclick="deleteVenda('${v.id}')" title="Remover">✕</button>
         </div>
-      </div>`).join('');
+      </div>`).join("");
   }
 
-  function renderTabela() {
-    const tbody = document.getElementById('vg-body');
+  function renderTabela(mcNome, ruiNome) {
+    const tbody = document.getElementById("vg-body");
     const n = vendas.length;
-    set('vg-count', n + ' venda' + (n !== 1 ? 's' : '') + ' registrada' + (n !== 1 ? 's' : ''));
+    set("vg-count", n + " venda" + (n !== 1 ? "s" : "") + " registrada" + (n !== 1 ? "s" : ""));
+
     if (!n) { tbody.innerHTML = '<tr><td colspan="5" class="empty-table">Nenhuma venda registrada ainda.</td></tr>'; return; }
+
     tbody.innerHTML = [...vendas].reverse().map(v => {
-      const nome = v.vendedor === 'mc' ? 'Maria Clara' : 'Rui';
+      const nome = v.vendedor === "mc" ? mcNome : ruiNome;
       return `<tr>
-        <td><div class="td-vend"><div class="td-dot ${v.vendedor}"></div><div class="td-name">${nome}</div></div></td>
+        <td><div class="td-vend"><div class="td-dot ${v.vendedor}"></div><div class="td-name">${esc(nome)}</div></div></td>
         <td style="color:var(--muted)">${esc(v.descricao)}</td>
         <td class="td-date">${fmtDate(v.created_at)}</td>
         <td class="td-val ${v.vendedor}">${fmtFull(+v.valor)}</td>
         <td style="text-align:right"><button class="venda-delete" onclick="deleteVenda('${v.id}')" title="Remover">✕</button></td>
       </tr>`;
-    }).join('');
+    }).join("");
   }
 
-  // UTILS
-  function fmt(v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
-  function fmtFull(v) { return 'R$ ' + v.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  // ====== UTILS ======
+  function fmt(v) { return "R$ " + Math.round(v).toLocaleString("pt-BR"); }
+  function fmtFull(v) { return "R$ " + v.toLocaleString("pt-BR", { minimumFractionDigits:2, maximumFractionDigits:2 }); }
   function pct(v, m) { return Math.min(Math.round((v/m)*100), 100); }
-  function fmtDate(iso) { if (!iso) return '—'; const d = new Date(iso); return d.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit'}); }
-  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function fmtDate(iso) { if (!iso) return "—"; const d = new Date(iso); return d.toLocaleDateString("pt-BR", { day:"2-digit", month:"2-digit" }); }
+  function esc(s) { const d = document.createElement("div"); d.textContent = String(s ?? ""); return d.innerHTML; }
   function set(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+
   function setSync(state, label) {
-    const dot = document.getElementById('sync-dot');
-    const lbl = document.getElementById('sync-label');
-    dot.className = 'sync-dot ' + state;
+    const dot = document.getElementById("sync-dot");
+    const lbl = document.getElementById("sync-label");
+    dot.className = "sync-dot " + state;
     lbl.textContent = label;
-    lbl.style.color = state === 'ok' ? 'var(--green)' : state === 'error' ? 'var(--red)' : 'var(--amber)';
-  }
-  function toast(msg, err = false) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast show' + (err ? ' err' : '');
-    setTimeout(() => t.className = 'toast', 2800);
+    lbl.style.color = state === "ok" ? "var(--green)" : state === "error" ? "var(--red)" : "var(--amber)";
   }
 
-  document.getElementById('input-val').addEventListener('keydown', e => { if (e.key === 'Enter') addVenda(); });
-  document.getElementById('input-desc').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('input-val').focus(); });
+  function toast(msg, err = false) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast show" + (err ? " err" : "");
+    setTimeout(() => t.className = "toast", 2800);
+  }
+
+  document.getElementById("input-val").addEventListener("keydown", e => { if (e.key === "Enter") addVenda(); });
+  document.getElementById("input-desc").addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("input-val").focus(); });
 </script>
 </body>
 </html>
