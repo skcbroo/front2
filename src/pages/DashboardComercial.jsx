@@ -52,7 +52,7 @@ export default function DashboardComercial() {
       <iframe
         title="Dashboard Comercial"
         style={{ flex: 1, border: "none", width: "100%" }}
-        src="/dashboards/midlej"
+        src="/dashboards/midlej.html"
         sandbox="allow-scripts allow-forms allow-same-origin"
       />
     </div>
