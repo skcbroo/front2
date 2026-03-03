@@ -15,6 +15,7 @@ import VerificarEmail from "./pages/VerificarEmail";
 import Home from "./pages/Home";
 import AlterarSenha from "./pages/AlterarSenha";
 import TSTTimeEstimator from "./pages/TSTTimeEstimator";
+import DashboardComercial from "./pages/DashboardComercial.jsx";
 
 
 function App() {
@@ -36,12 +37,14 @@ function App() {
                 <Route path="/admin/cotas" element={<AdminCotas />} />
                 <Route path="/verificar-email/:token" element={<VerificarEmail />} />
                 <Route path="/alterar-senha" element={<AlterarSenha />} /> 
+                <Route path="/dashboard-comercial" element={<DashboardComercial />} />
             </Routes>
         </BrowserRouter>
     );
 }
 
 export default App;
+
 
 
 
