@@ -12,20 +12,23 @@ export default function DashboardComercial() {
   useEffect(() => {
     if (!ok) return;
 
+    let alive = true;
+
     (async () => {
       const res = await fetch("/dashboards/midlej.html", { cache: "no-store" });
       const raw = await res.text();
-const token = localStorage.getItem("token") || "";
 
-const injected = raw.replace(
-  "</head>",
-  `<script>
-     window.__AUTH_TOKEN__ = ${JSON.stringify(token)};
-   </script></head>`
-);
+      // injeta token no iframe
+      const token = localStorage.getItem("token") || "";
+      const injected = raw.replace(
+        "</head>",
+        `<script>window.__AUTH_TOKEN__ = ${JSON.stringify(token)};</script></head>`
+      );
 
-setHtml(injected);
+      if (alive) setHtml(injected);
     })();
+
+    return () => { alive = false; };
   }, [ok]);
 
   function submit(e) {
@@ -137,7 +140,7 @@ setHtml(injected);
         title="Dashboard Comercial"
         style={{ flex: 1, border: "none", width: "100%" }}
         srcDoc={html}
-        sandbox="allow-scripts allow-forms allow-same-origin"
+        sandbox="allow-scripts allow-forms allow-same-origin allow-storage-access-by-user-activation"
       />
     </div>
   );
