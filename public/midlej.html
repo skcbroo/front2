@@ -357,10 +357,9 @@
   let connected = false;
 
   // ====== AUTH + API (BACKEND) ======
-  function getToken() {
-    // ajuste aqui se seu front salva com outro nome
-    return localStorage.getItem("token") || "";
-  }
+ function getToken() {
+  return window.__AUTH_TOKEN__ || localStorage.getItem("token") || "";
+}
 
   async function api(path, opts = {}) {
     const token = getToken();
