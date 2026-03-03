@@ -15,7 +15,16 @@ export default function DashboardComercial() {
     (async () => {
       const res = await fetch("/dashboards/midlej.html", { cache: "no-store" });
       const raw = await res.text();
-      setHtml(raw);
+const token = localStorage.getItem("token") || "";
+
+const injected = raw.replace(
+  "</head>",
+  `<script>
+     window.__AUTH_TOKEN__ = ${JSON.stringify(token)};
+   </script></head>`
+);
+
+setHtml(injected);
     })();
   }, [ok]);
 
