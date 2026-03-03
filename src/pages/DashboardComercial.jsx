@@ -15,7 +15,7 @@ export default function DashboardComercial() {
     let alive = true;
 
     (async () => {
-      const res = await fetch("/dashboards/midlej.html", { cache: "no-store" });
+      const res = await fetch("/dashboards/midlej", { cache: "no-store", redirect: "follow" });
       const raw = await res.text();
 
       // injeta token no iframe
